@@ -15,9 +15,9 @@ class CreateOutletsTable extends Migration
     {
         Schema::create('tb_outlet', function (Blueprint $table) {
             $table->increments('id');
-            $table->stirng('nama', 100);
+            $table->string('nama', 100);
             $table->text('alamat');
-            $table->stirng('tlp', 15);
+            $table->string('tlp', 15);
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateOutletsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('outlets');
+        Schema::dropIfExists('tb_outlet');
     }
 }

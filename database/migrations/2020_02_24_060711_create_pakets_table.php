@@ -15,10 +15,10 @@ class CreatePaketsTable extends Migration
     {
         Schema::create('tb_paket', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('id_outlet');
-            $table->unsignedInteger('id_jenis');
+            $table->integer('id_outlet')->unsigned();
+            $table->integer('id_jenis')->unsigned();
             $table->string('nama_paket', 100);
-            $table->integer('harga', 11);
+            $table->integer('harga');
             $table->timestamps();
 
             $table->foreign('id_outlet')->on('tb_outlet')->references('id')->onUpdate('cascade');
@@ -33,6 +33,6 @@ class CreatePaketsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pakets');
+        Schema::dropIfExists('tb_paket');
     }
 }

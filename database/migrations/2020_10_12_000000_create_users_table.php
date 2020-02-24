@@ -18,6 +18,8 @@ class CreateUsersTable extends Migration
             $table->string('username')->unique();
             $table->string('password');
             $table->enum('role', ['admin', 'kasir', 'owner']);
+            $table->unsignedInteger('id_tb_user');
+            $table->foreign('id_tb_user')->on('tb_user')->references('id')->onUpdate('cascade');
             $table->rememberToken();
             $table->timestamps();
         });

@@ -21,9 +21,9 @@ class CreateTransaksisTable extends Migration
             $table->dateTime('tgl');
             $table->dateTime('batas_waktu');
             $table->dateTime('tgl_bayar')->nullable();
-            $table->integer('biaya_tambahan', 11);
+            $table->integer('biaya_tambahan')->nullable();
             $table->double('diskon')->nullable();
-            $table->integer('pajak', 11)->nullable();
+            $table->integer('pajak')->nullable();
             $table->enum('status', ['baru', 'proses', 'selesai', 'diambil'])->default('baru');
             $table->enum('dibayar', ['dibayar', 'belum_dibayar'])->default('belum_dibayar');
             $table->unsignedInteger('id_user'); //
