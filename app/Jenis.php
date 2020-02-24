@@ -9,4 +9,9 @@ class Jenis extends Model
     protected $table = 'jenis';
     protected $primaryKey = 'id';
     protected $guarded = ['id'];
+
+    public function paket()
+    {
+    	return $this->hasMany(Paket::class);
+    }
 }

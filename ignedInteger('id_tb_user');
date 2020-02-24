@@ -1,0 +1,59 @@
+[33mcommit b3f82ea5a5ec5fbcf10775437b89e99895227a76[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: TitamSeptian <Itsmystyles9889@gmail.com>
+Date:   Mon Feb 24 14:17:18 2020 +0700
+
+    migration fix
+
+[33mcommit 4039361a14d4517567785531add771a1862324c0[m
+Author: TitamSeptian <Itsmystyles9889@gmail.com>
+Date:   Mon Feb 24 13:53:22 2020 +0700
+
+    migration done
+
+[33mcommit ec0512f9e534bbd6c3cb9937636cdc8c349f2e7a[m
+Author: TitamSeptian <Itsmystyles9889@gmail.com>
+Date:   Mon Feb 24 13:35:28 2020 +0700
+
+    detail transaksi
+
+[33mcommit a2ad706d346f62acf7479f2d42ecfd719e017dd4[m
+Author: TitamSeptian <Itsmystyles9889@gmail.com>
+Date:   Mon Feb 24 13:30:30 2020 +0700
+
+    transaksi
+
+[33mcommit d3a03ccc04aadab2815925020781e9d940a651f4[m
+Author: TitamSeptian <Itsmystyles9889@gmail.com>
+Date:   Mon Feb 24 13:19:26 2020 +0700
+
+    paket
+
+[33mcommit f32d6a09a64270af9c48a6ae5cb8b2821a0c526a[m
+Author: TitamSeptian <Itsmystyles9889@gmail.com>
+Date:   Mon Feb 24 13:06:31 2020 +0700
+
+    fix users + tb_user
+
+[33mcommit 7dc5475f5699a53abe60c8bc40d4cce85b25b4dd[m
+Author: TitamSeptian <Itsmystyles9889@gmail.com>
+Date:   Mon Feb 24 12:59:42 2020 +0700
+
+    member
+
+[33mcommit 833c4fe86e4f9265842c072b7bbf05a15c55c9a1[m
+Author: TitamSeptian <Itsmystyles9889@gmail.com>
+Date:   Mon Feb 24 12:54:22 2020 +0700
+
+    outlet
+
+[33mcommit 08668e5a55555b33ef0d26eccf8829118f1f8175[m
+Author: TitamSeptian <Itsmystyles9889@gmail.com>
+Date:   Mon Feb 24 12:50:19 2020 +0700
+
+    migration first
+
+[33mcommit 32faf35a5f6359e3e4ea1615b972f108b8e6a2cd[m
+Author: TitamSeptian <Itsmystyles9889@gmail.com>
+Date:   Mon Feb 24 12:33:59 2020 +0700
+
+    First + template

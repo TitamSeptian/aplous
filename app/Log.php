@@ -9,4 +9,9 @@ class Log extends Model
     protected $table = 'logs';
     protected $primaryKey = 'id';
     protected $guarded = ['id'];
+
+    public function user()
+    {
+    	return $this->hasMany(User::class);
+    }
 }
