@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Paket extends Model
+class Transaksi extends Model
 {
-    protected $table = 'tb_paket';
+    protected $table = 'tb_transaksi';
     protected $primaryKey = 'id';
     protected $guarded = ['id'];
 }
