@@ -15,11 +15,9 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('username')->unique();
-            $table->string('password');
+            $table->string('username', 30)->unique();
+            $table->text('password');
             $table->enum('role', ['admin', 'kasir', 'owner']);
-            $table->unsignedInteger('id_tb_user');
-            $table->foreign('id_tb_user')->on('tb_user')->references('id')->onUpdate('cascade');
             $table->rememberToken();
             $table->timestamps();
         });
