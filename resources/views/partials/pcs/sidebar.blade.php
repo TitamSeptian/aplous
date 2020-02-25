@@ -8,6 +8,7 @@
                                 aria-expanded="false"><i data-feather="home" class="feather-icon"></i><span
                                     class="hide-menu">Dashboard</span></a></li>
                         <li class="list-divider"></li>
+                        @if(Auth::user()->role == 'admin' || Auth::user()->role == 'kasir')
                         <li class="nav-small-cap"><span class="hide-menu">Transaksi</span></li>
 
                         <li class="sidebar-item {{ $activePage == 'transaksi' ? 'selected' : '' }}"> <a class="sidebar-link" href="/transaksi"
@@ -17,6 +18,13 @@
                         </li>
                         <li class="list-divider"></li>
                         <li class="nav-small-cap"><span class="hide-menu">Lainya</span></li>
+                        <li class="sidebar-item {{ $activePage == 'member' ? 'selected' : '' }}"> <a class="sidebar-link sidebar-link" href="/outlet"
+                                aria-expanded="false"><i class="fas fa-user"></i><span
+                                    class="hide-menu">Member
+                                </span></a>
+                        </li>
+                        {{-- only admin --}}
+                        @if(Auth::user()->role == 'admin')
                         <li class="sidebar-item {{ $activePage == 'outlet' ? 'selected' : '' }}"> <a class="sidebar-link sidebar-link" href="/outlet"
                                 aria-expanded="false"><i class="fas fa-hospital-alt"></i><span
                                     class="hide-menu">Outlet
@@ -32,8 +40,11 @@
                                     class="hide-menu">pengguna
                                 </span></a>
                         </li>
+                        @endif
+                        {{-- end only admin --}}
                         
                         <li class="list-divider"></li>
+                        @endif
                         <li class="nav-small-cap"><span class="hide-menu">Laporan</span></li>
 
                         <li class="sidebar-item {{ $activePage == 'laporan' ? 'selected' : '' }}"> <a class="sidebar-link sidebar-link" href="/laporan"
@@ -43,16 +54,29 @@
                         </li>
                         
                         <li class="list-divider"></li>
+                        {{-- only admin --}}
+                        @if(Auth::user()->role == 'admin')
                         <li class="nav-small-cap"><span class="hide-menu">Extra</span></li>
-                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="authentication-login1.html"
-                                aria-expanded="false"><i class="fas fa-history"></i><span
-                                    class="hide-menu">Riwayat</span></a></li>
-                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="authentication-login1.html"
-                                aria-expanded="false"><i class="fas fa-exclamation"></i><span
-                                    class="hide-menu">Tentang</span></a></li>
-                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="authentication-login1.html"
-                                aria-expanded="false"><i data-feather="log-out" class="feather-icon"></i><span
-                                    class="hide-menu">Logout</span></a></li>
+                        <li class="sidebar-item"> 
+                            <a class="sidebar-link sidebar-link" href="authentication-login1.html" aria-expanded="false">
+                                <i class="fas fa-history"></i>
+                                <span class="hide-menu">Riwayat</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item"> 
+                            <a class="sidebar-link sidebar-link" href="authentication-login1.html" aria-expanded="false">
+                                <i class="fas fa-exclamation"></i>
+                                <span class="hide-menu">Tentang</span>
+                            </a>
+                        </li>
+                        @endif
+                        {{-- end only admin --}}
+                        <li class="sidebar-item"> 
+                            <a class="sidebar-link sidebar-link" href="authentication-login1.html" aria-expanded="false">
+                                <i data-feather="log-out" class="feather-icon"></i>
+                                <span class="hide-menu">Logout</span>
+                            </a>
+                        </li>
                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->

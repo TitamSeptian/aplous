@@ -4,7 +4,7 @@
     <div class="card-body">
         <div class="d-flex">
             <h3 class="">Outlet</h3>
-            <a href="javascript:void(0)" class="btn btn-primary btn-sm mb-3 ml-auto"><i class="fas fa-plus"></i> Tambah</a>
+            <a href="javascript:void(0)" class="btn btn-primary btn-sm mb-3 ml-auto" data-toggle="modal" data-target="#modal-lg"><i class="fas fa-plus"></i> Tambah</a>
         </div>
         <div class="table-responsive">
             <table id="zero_config" class="table table-striped table-bordered no-wrap">

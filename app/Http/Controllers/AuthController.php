@@ -11,6 +11,7 @@ use App\Http\Requests\LoginRequest;
 
 class AuthController extends Controller
 {
+    // return to view Login
     public function getLogin()
     {
     	return view('pages.auth.login');
@@ -23,13 +24,16 @@ class AuthController extends Controller
     		'password' => $request->pwd,
     	];
 
+        // check credentials
     	if (Auth::attempt($credentials)) {
+            // insert to log
     		Log::create([
     			'user_id' => Auth::id(),
-    			'msg' => Auth::id() . "Login"
+    			'msg' => "Login"
     		]);
     		return response()->json(['msg' => 'Login Berhasil'], 200);
     	}else{
+            // not match
     		$uname = User::where('username', $request->uname)->first();
     		$pwd = User::where('password', $request->pwd)->first();
 
@@ -40,5 +44,18 @@ class AuthController extends Controller
     			return response()->json(['msg' => 'Password tidak valid'], 401);
     		}
     	}
+    }
+
+    public function logout(Request $request)
+    {
+        // create log
+        Log::create([
+            'user_id' => Auth::id(),
+            'msg' => "Logout"
+        ]);
+        // logout
+        Auth::logout();
+
+        return redirect()->route('getLogin');
     }
 }

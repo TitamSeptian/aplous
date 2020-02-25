@@ -25,6 +25,6 @@ class User extends Authenticatable
 
     public function tbUser()
     {
-        return $this->hasMany(TbUser::class);
+        return $this->hasMany(TbUser::class, 'id_user');
     }
 }

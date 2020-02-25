@@ -11,9 +11,10 @@
 |
 */
 
-Route::get('/', 'AuthController@getLogin')->name('getLogin');
-// Route::get('/log', 'AuthController@getLogin')->name('getLogin');
-Route::post('/log1', 'AuthController@postLogin')->name('postLogin');
+// auth
+Route::get('/', 'AuthController@getLogin')->name('getLogin')->middleware('guest');
+Route::post('/log', 'AuthController@postLogin')->name('postLogin');
+Route::post('logout', 'AuthController@logout')->name('logout')->middleware('auth');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

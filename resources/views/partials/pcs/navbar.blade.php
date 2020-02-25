@@ -44,12 +44,14 @@
                     <ul class="navbar-nav float-left mr-auto ml-3 pl-1">
                         <!-- Notification -->
                         <li class="nav-item dropdown">
+                            @if(Auth::user()->role == 'admin')
                             <a class="nav-link dropdown-toggle pl-md-3 position-relative" href="javascript:void(0)"
                                 id="bell" role="button" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">
                                 <span><i class="fa fas fa-history"></i></span>
                                 {{-- <span class="badge badge-primary notify-no rounded-circle">5</span> --}}
                             </a>
+                            @endif
                             <div class="dropdown-menu dropdown-menu-left mailbox animated bounceInDown">
                                 <ul class="list-style-none">
                                     <li>
@@ -92,14 +94,18 @@
                             <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
                                 <span class="ml-2 d-none d-lg-inline-block"><span
-                                        class="text-dark">Jhon Doe</span> <i data-feather="chevron-down"
+                                        class="text-dark">{{ Auth::user()->tbUser[0]->nama }}</span> <i data-feather="chevron-down"
                                         class="svg-icon"></i></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
+                                <form action="{{ route('logout') }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item" id="logout-btn">
+                                        <i data-feather="power" class="svg-icon mr-2 ml-1"></i>
+                                        Logout
+                                    </button>
+                                </form>
                                 
-                                <a class="dropdown-item" href="javascript:void(0)"><i data-feather="power"
-                                        class="svg-icon mr-2 ml-1"></i>
-                                    Logout</a>
                             </div>
                         </li>
                         <!-- ============================================================== -->
