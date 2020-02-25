@@ -16,28 +16,31 @@ Route::get('/', 'AuthController@getLogin')->name('getLogin')->middleware('guest'
 Route::post('/log', 'AuthController@postLogin')->name('postLogin');
 Route::post('logout', 'AuthController@logout')->name('logout')->middleware('auth');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-});
-Route::get('/outlet', function () {
-    return view('pages.outlet.index');
-});
-Route::get('/produk', function () {
-    return view('pages.produk.index');
-});
-Route::get('/laporan', function () {
-    return view('pages.laporan.laporan');
-});
-Route::get('/transaksi', function () {
-	$date = date('Y-m-d');
-    return view('pages.transaksi.index',[
-    	'date' => $date,
-    ]);
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    });
+    Route::get('/outlet', function () {
+        return view('pages.outlet.index');
+    });
+    Route::get('/produk', function () {
+        return view('pages.produk.index');
+    });
+    Route::get('/laporan', function () {
+        return view('pages.laporan.laporan');
+    });
+    Route::get('/transaksi', function () {
+        $date = date('Y-m-d');
+        return view('pages.transaksi.index',[
+            'date' => $date,
+        ]);
+    });
+
+    Route::get('/transaksi/create', function () {
+        $date = date('Y-m-d');
+        return view('pages.transaksi.create',[
+            'date' => $date,
+        ]);
+    });
 });
 
-Route::get('/transaksi/create', function () {
-	$date = date('Y-m-d');
-    return view('pages.transaksi.create',[
-    	'date' => $date,
-    ]);
-});

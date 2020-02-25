@@ -57,7 +57,7 @@
                                 <div class="col-lg-12">
                                     <div class="form-group uname">
                                         <label class="text-dark" for="uname">Username</label>
-                                        <input class="form-control" id="uname" name="uname" type="text" placeholder="masukan username" autofocus>
+                                        <input class="form-control" id="uname" name="uname" type="text" placeholder="masukan username" autofocus autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
