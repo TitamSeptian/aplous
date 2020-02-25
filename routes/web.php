@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('partials.login');
-});
+Route::get('/', 'AuthController@getLogin')->name('getLogin');
+// Route::get('/log', 'AuthController@getLogin')->name('getLogin');
+Route::post('/log1', 'AuthController@postLogin')->name('postLogin');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
