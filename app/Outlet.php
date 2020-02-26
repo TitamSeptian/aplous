@@ -12,16 +12,16 @@ class Outlet extends Model
 
     public function paket()
     {
-    	return $this->hasMany(Paket::class);
+    	return $this->hasMany(Paket::class, 'id_outlet');
     }
 
     public function tbUser()
     {
-    	return $this->hasMany(TbUser::class);
+    	return $this->hasMany(TbUser::class, 'id_outlet');
     }
 
     public function transaksi()
     {
-    	return $this->hasMany(Transaksi::class);
+    	return $this->hasMany(Transaksi::class, 'id_outlet');
     }
 }

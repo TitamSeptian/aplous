@@ -21,8 +21,8 @@ class CreateDetailTransaksisTable extends Migration
             $table->text('keterangan')->nullable();
             $table->timestamps();
 
-            $table->foreign('id_transaksi')->on('tb_transaksi')->references('id')->onUpdate('cascade');
-            $table->foreign('id_paket')->on('tb_paket')->references('id')->onUpdate('cascade');
+            $table->foreign('id_transaksi')->on('tb_transaksi')->references('id')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('id_paket')->on('tb_paket')->references('id')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

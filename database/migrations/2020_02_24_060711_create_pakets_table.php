@@ -1,4 +1,4 @@
-<?php
+->onDelete('cascade')<?php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -21,8 +21,8 @@ class CreatePaketsTable extends Migration
             $table->integer('harga');
             $table->timestamps();
 
-            $table->foreign('id_outlet')->on('tb_outlet')->references('id')->onUpdate('cascade');
-            $table->foreign('id_jenis')->on('jenis')->references('id')->onUpdate('cascade');
+            $table->foreign('id_outlet')->on('tb_outlet')->references('id')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('id_jenis')->on('jenis')->references('id')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

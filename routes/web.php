@@ -20,9 +20,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     });
-    Route::get('/outlet', function () {
-        return view('pages.outlet.index');
-    });
+    // outlet
+    Route::resource('/outlet', 'OutletController');
+
     Route::get('/produk', function () {
         return view('pages.produk.index');
     });

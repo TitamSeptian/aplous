@@ -29,9 +29,9 @@ class CreateTransaksisTable extends Migration
             $table->unsignedInteger('id_user'); //
             $table->timestamps();
 
-            $table->foreign('id_outlet')->on('tb_outlet')->references('id')->onUpdate('cascade');
-            $table->foreign('id_member')->on('tb_member')->references('id')->onUpdate('cascade');
-            $table->foreign('id_user')->on('tb_user')->references('id')->onUpdate('cascade');
+            $table->foreign('id_outlet')->on('tb_outlet')->references('id')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('id_member')->on('tb_member')->references('id')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('id_user')->on('tb_user')->references('id')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

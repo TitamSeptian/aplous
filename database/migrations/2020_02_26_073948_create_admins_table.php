@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLogsTable extends Migration
+class CreateAdminsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,12 @@ class CreateLogsTable extends Migration
      */
     public function up()
     {
-        Schema::create('logs', function (Blueprint $table) {
+        Schema::create('admins', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('nama', 100);
             $table->unsignedInteger('user_id');
-            // $table->unsignedInteger('outlet_id');
-            $table->text('msg');
-            $table->timestamps();
-
             $table->foreign('user_id')->on('users')->references('id')->onUpdate('cascade')->onDelete('cascade');
-            // $table->foreign('outlet_id')->on('tb_outlet')->references('id')->onUpdate('cascade')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 
@@ -32,6 +29,6 @@ class CreateLogsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('logs');
+        Schema::dropIfExists('admins');
     }
 }

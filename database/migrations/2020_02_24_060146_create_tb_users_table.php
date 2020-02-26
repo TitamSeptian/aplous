@@ -18,12 +18,12 @@ class CreateTbUsersTable extends Migration
             $table->string('nama', 100);
             $table->string('username', 30)->unique();
             $table->text('password');
-            $table->enum('role', ['admin', 'kasir', 'owner']);
+            $table->enum('role', ['owner', 'kasir', 'admin']);
             $table->unsignedInteger('id_outlet');
             $table->unsignedInteger('id_user');
             $table->timestamps();
-            $table->foreign('id_user')->on('users')->references('id')->onUpdate('cascade');
-            $table->foreign('id_outlet')->on('tb_outlet')->references('id')->onUpdate('cascade');
+            $table->foreign('id_user')->on('users')->references('id')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('id_outlet')->on('tb_outlet')->references('id')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
