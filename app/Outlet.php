@@ -3,9 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Outlet extends Model
 {
+    use softDeletes;
+    
+    protected $dates = ['deleted_at'];
     protected $table = 'tb_outlet';
     protected $primaryKey = 'id';
     protected $guarded = ['id'];

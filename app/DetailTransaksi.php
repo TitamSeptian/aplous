@@ -3,9 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class DetailTransaksi extends Model
 {
+    use softDeletes;
+    
+    protected $dates = ['deleted_at'];
     protected $table = 'tb_detail_transaksi';
     protected $primaryKey = 'id';
     protected $guarded = ['id'];

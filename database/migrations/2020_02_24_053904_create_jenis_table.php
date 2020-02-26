@@ -17,6 +17,7 @@ class CreateJenisTable extends Migration
             $table->increments('id');
             $table->string('name')->unique();
             $table->text('ket')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

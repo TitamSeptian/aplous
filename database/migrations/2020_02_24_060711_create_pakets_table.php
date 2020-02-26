@@ -19,6 +19,7 @@ class CreatePaketsTable extends Migration
             $table->integer('id_jenis')->unsigned();
             $table->string('nama_paket', 100);
             $table->integer('harga');
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('id_outlet')->on('tb_outlet')->references('id')->onUpdate('cascade')->onDelete('cascade');

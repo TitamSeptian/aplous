@@ -19,6 +19,7 @@ class CreateDetailTransaksisTable extends Migration
             $table->unsignedInteger('id_paket');
             $table->double('qty');
             $table->text('keterangan')->nullable();
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('id_transaksi')->on('tb_transaksi')->references('id')->onUpdate('cascade')->onDelete('cascade');

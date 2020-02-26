@@ -18,6 +18,7 @@ class CreateOutletsTable extends Migration
             $table->string('nama', 100);
             $table->text('alamat');
             $table->string('tlp', 15);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
