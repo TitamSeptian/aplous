@@ -4,123 +4,95 @@
     <div class="card-body">
         <div class="d-flex">
             <h3 class="">Outlet</h3>
-            <a href="javascript:void(0)" class="btn btn-primary btn-sm mb-3 ml-auto" data-toggle="modal" data-target="#modal-lg"><i class="fas fa-plus"></i> Tambah</a>
+            <a href="javascript:void(0)" class="btn btn-success btn-sm mb-3 ml-auto" id="btn-create" data-url="{{ route('outlet.create') }}" data-toggle="modal" data-target="#modal-lg"><i class="fas fa-plus"></i> Tambah</a>
+        </div>
+        <br>
+        <div class="form-row">
+            <div class="col-md-8">
+                
+            </div>
+            <div class="col-md-4">
+                <input type="text" name="cari" class="form-control mt-3 mb-3" id="cari" placeholder="Cari Outlet">
+            </div>
         </div>
         <div class="table-responsive">
-            <table id="zero_config" class="table table-striped table-bordered no-wrap">
+            <table id="tableOutlet" class="table table-striped table-bordered no-wrap" style="width: 100%">
                 <thead>
                     <tr>
                         <th>No</th>
                         <th>Nama</th>
-                        <th>Alamat</th>
                         <th>No. Telp</th>
-                        <th></th>
+                        <th class="text-center"></th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>2</td>
-                        <td>Lous 2</td>
-                        <td>Bandung, Jalan cichaeum 35</td>
-                        <td>08192386123912</td>
-                        <td class="text-center">
-                            <a href="javascript:void(0)" class="badge badge-warning"><i class="fas fa-pencil-alt"></i> Edit</a>
-                            <a href="javascript:void(0)" class="badge badge-danger"><i class="fas fa-trash"></i> Hapus</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Lous 2</td>
-                        <td>Bandung, Jalan cichaeum 35</td>
-                        <td>08192386123912</td>
-                        <td class="text-center">
-                            <a href="javascript:void(0)" class="badge badge-warning"><i class="fas fa-pencil-alt"></i> Edit</a>
-                            <a href="javascript:void(0)" class="badge badge-danger"><i class="fas fa-trash"></i> Hapus</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>Lous 2</td>
-                        <td>Bandung, Jalan cichaeum 35</td>
-                        <td>08192386123912</td>
-                        <td class="text-center">
-                            <a href="javascript:void(0)" class="badge badge-warning"><i class="fas fa-pencil-alt"></i> Edit</a>
-                            <a href="javascript:void(0)" class="badge badge-danger"><i class="fas fa-trash"></i> Hapus</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>Lous 2</td>
-                        <td>Bandung, Jalan cichaeum 35</td>
-                        <td>08192386123912</td>
-                        <td class="text-center">
-                            <a href="javascript:void(0)" class="badge badge-warning"><i class="fas fa-pencil-alt"></i> Edit</a>
-                            <a href="javascript:void(0)" class="badge badge-danger"><i class="fas fa-trash"></i> Hapus</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td>Lous 2</td>
-                        <td>Bandung, Jalan cichaeum 35</td>
-                        <td>08192386123912</td>
-                        <td class="text-center">
-                            <a href="javascript:void(0)" class="badge badge-warning"><i class="fas fa-pencil-alt"></i> Edit</a>
-                            <a href="javascript:void(0)" class="badge badge-danger"><i class="fas fa-trash"></i> Hapus</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>7</td>
-                        <td>Lous 2</td>
-                        <td>Bandung, Jalan cichaeum 35</td>
-                        <td>08192386123912</td>
-                        <td class="text-center">
-                            <a href="javascript:void(0)" class="badge badge-warning"><i class="fas fa-pencil-alt"></i> Edit</a>
-                            <a href="javascript:void(0)" class="badge badge-danger"><i class="fas fa-trash"></i> Hapus</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>8</td>
-                        <td>Lous 2</td>
-                        <td>Bandung, Jalan cichaeum 35</td>
-                        <td>08192386123912</td>
-                        <td class="text-center">
-                            <a href="javascript:void(0)" class="badge badge-warning"><i class="fas fa-pencil-alt"></i> Edit</a>
-                            <a href="javascript:void(0)" class="badge badge-danger"><i class="fas fa-trash"></i> Hapus</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>9</td>
-                        <td>Lous 2</td>
-                        <td>Bandung, Jalan cichaeum 35</td>
-                        <td>08192386123912</td>
-                        <td class="text-center">
-                            <a href="javascript:void(0)" class="badge badge-warning"><i class="fas fa-pencil-alt"></i> Edit</a>
-                            <a href="javascript:void(0)" class="badge badge-danger"><i class="fas fa-trash"></i> Hapus</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>10</td>
-                        <td>Lous 2</td>
-                        <td>Bandung, Jalan cichaeum 35</td>
-                        <td>08192386123912</td>
-                        <td class="text-center">
-                            <a href="javascript:void(0)" class="badge badge-warning"><i class="fas fa-pencil-alt"></i> Edit</a>
-                            <a href="javascript:void(0)" class="badge badge-danger"><i class="fas fa-trash"></i> Hapus</a>
-                        </td>
-                    </tr>
-                </tbody>
             </table>
-            <ul class="pagination float-right">
-                <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1">Previous</a>
-                </li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                    <a class="page-link" href="#">Next</a>
-                </li>
-            </ul>
-            </div>
         </div>
     </div>
 </div>
-
 @endsection
+@push('js')
+<script>
+    let table =$('#tableOutlet').DataTable({
+        responsive: true,
+        processing: true,
+        serverSide: true,
+        bFilter: true,
+        bLengthChange: false, // un active show entri
+        ajax: "{{ route('outlet.data') }}",
+        columns: [
+            { data: "DT_RowIndex", orderable: false, searchable: false },
+            { data: "nama" },
+            { data: "tlp" },
+            { data: 'action', orderable: false, searchable: false },
+        ]
+    })
+
+    // hide default search
+    let def_search = $('div#tableOutlet_filter');
+    def_search.css('display', 'none');
+
+    // define function search
+    var search = $.fn.dataTable.util.throttle(function(val) {
+            table.search(val).draw();
+        }, 400  // Search delay in ms
+    );
+
+    // delay funcyion
+    function delay(callback, ms) {
+        let timer = 0;
+        return function() {
+            let context = this, 
+                args = arguments;
+            clearTimeout(timer);
+            timer = setTimeout(function () {
+              callback.apply(context, args);
+            }, ms || 0);
+        };
+    }
+
+    // fill the serach input
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $('#cari').keyup(delay(e => {
+        search(e.target.value)
+        $.ajax({
+            url: "{{ route('log.search.store') }}",
+            type: 'post',
+            data: {
+                'search' : e.target.value,
+                'place' : 'Outlet'
+            },
+            success: res => {
+                console.log(res)
+            },
+            error: xhr => {
+                console.log(xhr)
+            }
+        })
+    }, 500));
+</script>
+<script src="{{ asset('js/outlet.js') }}"></script>
+@endpush

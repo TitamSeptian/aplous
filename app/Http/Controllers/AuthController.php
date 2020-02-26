@@ -39,10 +39,11 @@ class AuthController extends Controller
 
     		if (!$uname) {
     			return response()->json(['msg' => 'Username tidak valid'], 401);
-    		}
-    		if (!$pwd) {
+    		} else if (!$pwd) {
     			return response()->json(['msg' => 'Password tidak valid'], 401);
-    		}
+    		} else {
+                return response()->json(['msg' => 'Terjadi Kesalahan'], 500);
+            }
     	}
     }
 

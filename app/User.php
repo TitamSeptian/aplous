@@ -30,6 +30,6 @@ class User extends Authenticatable
 
     public function admin()
     {
-        return $this->hasMany(TbUser::class);
+        return $this->hasMany(Admin::class);
     }
 }

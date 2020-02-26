@@ -6,8 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="APlikasi Loundry Basis website">
+    <meta name="author" content="TItam Septian XII RPL 2">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset ('assets/images/favicon.png') }}">
     <title>APLOUS - {{ $titlePage }}</title>
@@ -18,6 +19,8 @@
 	@stack('css')
     <!-- Custom CSS -->
     <link href="{{ asset ('vendor/dist/css/style.min.css') }}" rel="stylesheet">
+    {{-- data tables --}}
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css') }}">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -105,6 +108,10 @@
     <script src="{{ asset('vendor/dist/js/sidebarmenu.js') }}"></script>
     <!--Custom JavaScript -->
     <script src="{{ asset('vendor/dist/js/custom.min.js') }}"></script>
+    {{-- data tables --}}
+    <script src="{{ asset('vendor/assets/extra-libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+    {{-- swal --}}
+    <script src="{{ asset('vendor/assets/extra-libs/swal/sweetalert2.all.js') }}"></script>
     {{-- This page JavaScript --}} 
     {{--<script src="{{ asset('vendor/assets/extra-libs/c3/d3.min.js') }}"></script>
     <script src="{{ asset('vendor/assets/extra-libs/c3/c3.min.js') }}"></script>
