@@ -30,6 +30,23 @@ Route::middleware('auth')->group(function () {
     Route::resource('/outlet', 'OutletController');
     Route::get('d/o', 'OutletController@datatables')->name('outlet.data');
 
+
+
+    Route::group(['prefix' => '/trash'], function () {
+        // Trash form all soft delete
+        Route::get('/', 'HandleController@index')->name('trash.index');
+        // ooutlet soft delete data
+        Route::get('/d/o', 'OutletController@softDeleteData')->name('outlet.softDelete.data');
+        Route::post('/{id}/o', 'OutletController@restoreData')->name('outlet.softDelete.restore');
+        Route::delete('/o/{id}', 'OutletController@deletePermanent')->name('outlet.softDelete.deletePermanent');
+        Route::match(['post', 'delete'],'/rs/all', 'OutletController@all')->name('outlet.softDelete.all');
+        // Route::post('/del/all', 'OutletController@deleteAll')->name('outlet.softDelete.deleteAll');
+
+
+    });
+
+
+
     Route::get('/produk', function () {
         return view('pages.produk.index');
     });

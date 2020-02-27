@@ -1,18 +1,15 @@
-@extends('partials.master', [$titlePage = 'Outlet', $activePage = 'outlet'])
+@extends('partials.master', [$titlePage = 'Sampah', $activePage = 'trash'])
 @section('content')
 <div class="card">
     <div class="card-body">
-        <div class="d-flex">
-            <h3 class="">Outlet</h3>
-            <a href="javascript:void(0)" class="btn btn-success btn-sm mb-3 ml-auto" id="btn-create" data-url="{{ route('outlet.create') }}" data-toggle="modal" data-target="#modal-lg"><i class="fas fa-plus"></i> Tambah</a>
-        </div>
-        <br>
         <div class="form-row">
             <div class="col-md-8">
-                <a href="javascript:void(0)" class="btn btn-sm btn-secondary btn-refresh mt-3">Refresh</a>            
+                <a href="javascript:void(0)" class="btn btn-sm btn-info btn-restore-all-outlet" data-url="{{ route('outlet.softDelete.all') }}">Kembalikan</a>
+                <a href="javascript:void(0)" class="ml-1 btn btn-sm btn-danger btn-delete-all-outlet">Hapus</a>
+                <a href="javascript:void(0)" class="ml-1 btn btn-sm btn-secondary btn-refresh">Segarkan</a>
             </div>
             <div class="col-md-4">
-                <input type="text" name="cari" class="form-control mt-3 mb-3" id="cari" placeholder="Cari Outlet">
+                <input type="text" name="cari" class="form-control mt-3 mb-3" id="cariOutlet" placeholder="Cari Outlet">
             </div>
         </div>
         <div class="table-responsive">
@@ -22,6 +19,7 @@
                         <th>No</th>
                         <th>Nama</th>
                         <th>No. Telp</th>
+                        <th>Dihapus</th>
                         <th class="text-center"></th>
                     </tr>
                 </thead>
@@ -32,17 +30,23 @@
 @endsection
 @push('js')
 <script>
-    let table =$('#tableOutlet').DataTable({
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    let table = $('#tableOutlet').DataTable({
         responsive: true,
         processing: true,
         serverSide: true,
         bFilter: true,
         bLengthChange: false, // un active show entri
-        ajax: "{{ route('outlet.data') }}",
+        ajax: "{{ route('outlet.softDelete.data') }}",
         columns: [
             { data: "DT_RowIndex", orderable: false, searchable: false },
             { data: "nama" },
             { data: "tlp" },
+            { data: "delete_time" },
             { data: 'action', orderable: false, searchable: false },
         ]
     })
@@ -71,12 +75,7 @@
     }
 
     // fill the serach input
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-    $('#cari').keyup(delay(e => {
+    $('#cariOutlet').keyup(delay(e => {
         search(e.target.value)
         $.ajax({
             url: "{{ route('log.search.store') }}",

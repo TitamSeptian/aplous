@@ -47,6 +47,13 @@
                         <span class="hide-menu">Riwayat</span>
                     </a>
                 </li>
+                <li class="sidebar-item {{ $activePage == 'sampah' ? 'selected' : '' }}">
+                    <a class="sidebar-link sidebar-link" href="{{ route('trash.index') }}" aria-expanded="false">
+                        <i class="fas fa-trash"></i>
+                        <span class="hide-menu">Sampah
+                        </span>
+                    </a>
+                </li>
                 @endif
                 <li class="sidebar-item">
                     <a class="sidebar-link sidebar-link" href="authentication-login1.html" aria-expanded="false">

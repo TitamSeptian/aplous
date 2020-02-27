@@ -8,35 +8,23 @@ use App\Log;
 use DataTables;
 use Auth;
 use Validator;
+use Date;
 
 class OutletController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // show index page
     public function index()
     {
         return view('pages.outlet.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // show create form
     public function create()
     {
         return view('pages.outlet.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    // function create (store)
     public function store(Request $request)
     {
         $messages = [
@@ -72,37 +60,24 @@ class OutletController extends Controller
         return response()->json(['msg' => "$data->name Berhasil Ditambahkan"], 200);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    // show one data or selected data
+    // $id is int
     public function show($id)
     {
         $data = Outlet::findOrFail($id);
         return view('pages.outlet.show', compact('data'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    // show create form
+    // $id is int
     public function edit($id)
     {
         $data = Outlet::findOrFail($id);
         return view('pages.outlet.edit', compact('data'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    // function edit (update)
+    // $id is int
     public function update(Request $request, $id)
     {
         $messages = [
@@ -139,22 +114,23 @@ class OutletController extends Controller
         return response()->json(['msg' => "$data->name Berhasil Diubah"], 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    // remove data using soft deletes
     public function destroy($id)
     {
-        \App\TbUser::where('id_outlet', $id)->get();
-        \App\Paket::where('id_outlet', $id)->get();
-        \App\Paket::where('id_outlet', $id)->get();
+        $tUser = \App\TbUser::where('id_outlet', $id)->get();
+        $paket = \App\Paket::where('id_outlet', $id)->get();
+        if (count($tUser) > 0) {
+            return response()->json(['msg' => 'Gagal Membuang'], 401);
+        }
+
+        if (count($paket) > 0) {
+            return response()->json(['msg' => 'Gagal Membuang'], 401);
+        }
         $data = Outlet::findOrFail($id);
         $data->delete();
         Log::create([
             'user_id' => Auth::id(),
-            'msg' => 'Menghapus Outlet '. $data->nama
+            'msg' => 'Membuang Outlet '. $data->nama
         ]);
         return response()->json(['msg' => "$data->name Berhasil Dihapus"], 200);
     }
@@ -171,5 +147,70 @@ class OutletController extends Controller
                 'url_delete' => route('outlet.destroy', $outlet->id),
             ]);
         })->rawColumns(['action'])->addIndexColumn()->make(true);
+    }
+
+    // soft delete data for view trash
+    public function softDeleteData()
+    {
+        $outlet = Outlet::query()->onlyTrashed()->orderBy('deleted_at', "DESC");
+        return DataTables::of($outlet)
+            ->addColumn('delete_time', function ($outlet){
+                $time = Date::parse($outlet->deleted_at)->format('d F Y h:i');
+                return $time;
+            })
+            ->addColumn('action', function ($outlet) {
+                return view('pages.outlet.softDel-action', [
+                    'model' => $outlet,
+                    'url_restore' => route('outlet.softDelete.restore', $outlet->id),
+                    'url_delete' => route('outlet.softDelete.deletePermanent', $outlet->id),
+                ]);
+            })->rawColumns(['action'])->addIndexColumn()->make(true);
+    }
+
+    // function for retore data 
+    public function restoreData(Request $request, $id)
+    {
+        $data = Outlet::onlyTrashed()->where('id', $id);
+        $myData = $data->first();
+        $data->restore();
+        Log::create([
+            'user_id' => Auth::id(),
+            'msg' => "Mengembalikan Outlet ". $myData->nama
+        ]);
+        return response()->json(['msg' => $myData->nama. ' Berhasil Dikembalikan'], 200);
+    }
+
+    // delete permanent spesifik data dorm storrage
+    public function deletePermanent($id)
+    {
+        $data = Outlet::onlyTrashed()->where('id', $id);
+        $myData = $data->first();
+        $data->forceDelete();
+        Log::create([
+            'user_id' => Auth::id(),
+            'msg' => "Menghapus Permanen Outlet ". $myData->nama
+        ]);
+        return response()->json(['msg' => $myData->nama. ' Berhasil Dihapus'], 200);
+    }
+
+    // restore all data
+    public function all(Request $request)
+    {
+        $data = Outlet::onlyTrashed();
+        if (request()->isMethod("POST")) {
+            $data->restore();
+            Log::create([
+                'user_id' => Auth::id(),
+                'msg' => "Mengembalikan Semua Outlet"
+            ]);
+            return response()->json(['msg' => 'Berhasil Dikembalikan'], 200);
+        }else if (request()->isMethod("DELETE")) {
+            $data->delete();
+            Log::create([
+                'user_id' => Auth::id(),
+                'msg' => "Mengembalikan Semua Outlet"
+            ]);
+            return response()->json(['msg' => 'Berhasil Dihapus'], 200);
+        }
     }
 }
