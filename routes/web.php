@@ -29,10 +29,18 @@ Route::middleware('auth')->group(function () {
     // outlet
     Route::resource('/outlet', 'OutletController');
     Route::get('d/o', 'OutletController@datatables')->name('outlet.data');
+    Route::get('d/o/sel2', 'OutletController@findOutlet')->name('outlet.data.sel2'); //data select 2
+    Route::get('d/o/{id}', 'OutletController@findOutletById')->name('outlet.data.id'); //data select 2
 
     // jenis
     Route::resource('/jenis', 'JenisController');
     Route::get('d/j', 'JenisController@datatables')->name('jenis.data');
+    Route::get('d/j/sel2', 'JenisController@findJenis')->name('jenis.data.sel2'); //data select 2
+
+    // paket
+    Route::resource('/paket', 'PaketController');
+    Route::get('d/p', 'PaketController@datatables')->name('paket.data');
+    Route::get('d/p/sel2', 'JenisController@findPaket')->name('paket.data.sel2'); //data select 2
 
 
 
@@ -52,14 +60,19 @@ Route::middleware('auth')->group(function () {
         Route::delete('/j/{id}', 'JenisController@deletePermanent')->name('jenis.softDelete.deletePermanent');
         Route::match(['post', 'put'],'/j/all', 'JenisController@all')->name('jenis.softDelete.all');
 
+        // paket softdelete
+        Route::get('/paket', 'PaketController@softDeleteIndex')->name('paket.softDelete.index');
+        Route::get('d/j', 'PaketController@softDeleteData')->name('paket.softDelete.data');
+        Route::post('/{id}/j', 'PaketController@restoreData')->name('paket.softDelete.restore');
+        Route::delete('/j/{id}', 'PaketController@deletePermanent')->name('paket.softDelete.deletePermanent');
+        Route::match(['post', 'put'],'/j/all', 'PaketController@all')->name('paket.softDelete.all');
+
 
     });
 
 
 
-    Route::get('/produk', function () {
-        return view('pages.produk.index');
-    });
+    
     Route::get('/laporan', function () {
         return view('pages.laporan.laporan');
     });

@@ -220,4 +220,15 @@ class OutletController extends Controller
             return response()->json(['msg' => 'Terjadi Kesalaha'], 500);
         }
     }
+
+    public function findOutlet()
+    {
+        $data = Outlet::where('deleted_at', null)->where('nama', 'LIKE', "%". request('q'). "%")->get();
+        return response()->json(["items" => $data], 200);
+    }
+
+    public function findOutletById($id)
+    {
+        return response()->json(['data' => Outlet::findOrFail($id)]);
+    }
 }

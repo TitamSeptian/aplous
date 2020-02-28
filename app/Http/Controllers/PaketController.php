@@ -3,14 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Paket;
 use App\Jenis;
+use App\Outlet;
 use App\Log;
 use Auth;
+use Validator;
 use Date;
 use DataTables;
-use Validator;
 
-class JenisController extends Controller
+class PaketController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,7 +21,7 @@ class JenisController extends Controller
      */
     public function index()
     {
-        return view('pages.jenis.index');
+        return view('pages.paket.index');
     }
 
     /**
@@ -29,7 +31,7 @@ class JenisController extends Controller
      */
     public function create()
     {
-        return view('pages.jenis.create');
+        return view('pages.paket.create');
     }
 
     /**
@@ -41,28 +43,37 @@ class JenisController extends Controller
     public function store(Request $request)
     {
         $messages = [
-            'nama.required' => 'Nama Harus di isi',
+            'nama.required' => 'Nama Harus diisi',
             'nama.min' => 'Nama Minimal 2 karakter',
             'nama.max' => 'Nama Maksimal 32 karakter',
+            'outlet.required' => 'Pilih Outlet',
+            'jenis.required' => 'Pilih Jenis',
+            'harga.required' => 'Harga Harus diisi',
+            'harga.numeric' => 'Harga hanya diisi angka',
         ];
         $validator = Validator::make($request->all(), [
             'nama' => 'required|min:2|max:32',
+            'outlet' => 'required',
+            'jenis' => 'required',
+            'harga' => 'required|numeric',
         ], $messages);
         if ($validator->fails()) {
             return response()->json(["errors" => $validator->errors()], 422);
         }
 
-        $data = Jenis::create([
-            'name' => $request->nama,
-            'ket' => $request->ket,
+        $data = Paket::create([
+            'nama_paket' => $request->nama,
+            'id_outlet' => $request->outlet,
+            'id_jenis' => $request->jenis,
+            'harga' => $request->harga,
         ]);
 
         Log::create([
             'user_id' => Auth::id(),
-            'msg' => 'Menambahkan Jenis '. $data->name
+            'msg' => 'Menambahkan Paket '. $data->nama_paket
         ]);
 
-        return response()->json(['msg' => "$data->name Berhasil Ditambahkan"], 200);
+        return response()->json(['msg' => "$data->nama_paket Berhasil Ditambahkan"], 200);
     }
 
     /**
@@ -73,7 +84,8 @@ class JenisController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = Paket::findOrFail($id);
+        return view('pages.paket.show', compact('data'));
     }
 
     /**
@@ -84,8 +96,11 @@ class JenisController extends Controller
      */
     public function edit($id)
     {
-        $data = Jenis::findOrFail($id);
-        return view('pages.jenis.edit', compact('data'));
+        $data = [];
+        $data['data'] = Paket::findOrFail($id);
+        $data['jenis'] = Jenis::all();
+        $data['outlet'] = Outlet::all();
+        return view('pages.paket.edit', $data);
     }
 
     /**
@@ -98,29 +113,37 @@ class JenisController extends Controller
     public function update(Request $request, $id)
     {
         $messages = [
-            'nama.required' => 'Nama Harus di isi',
+            'nama.required' => 'Nama Harus diisi',
             'nama.min' => 'Nama Minimal 2 karakter',
             'nama.max' => 'Nama Maksimal 32 karakter',
+            'outlet.required' => 'Pilih Outlet',
+            'jenis.required' => 'Pilih Jenis',
+            'harga.required' => 'Harga Harus diisi',
+            'harga.numeric' => 'Harga hanya diisi angka',
         ];
         $validator = Validator::make($request->all(), [
             'nama' => 'required|min:2|max:32',
+            'outlet' => 'required',
+            'jenis' => 'required',
+            'harga' => 'required|numeric',
         ], $messages);
         if ($validator->fails()) {
             return response()->json(["errors" => $validator->errors()], 422);
         }
-
-        $data = Jenis::findOrFail($id);
+        $data = Paket::findOrFail($id);
         $data->update([
-            'name' => $request->nama,
-            'ket' => $request->ket,
+            'nama_paket' => $request->nama,
+            'id_outlet' => $request->outlet,
+            'id_jenis' => $request->jenis,
+            'harga' => $request->harga,
         ]);
 
         Log::create([
             'user_id' => Auth::id(),
-            'msg' => 'Merubah Jenis '. $data->name
+            'msg' => 'Merubah Paket '. $data->nama_paket
         ]);
 
-        return response()->json(['msg' => "$data->name Berhasil Dirubah"], 200);
+        return response()->json(['msg' => "$data->nama_paket Berhasil Dirubah"], 200);
     }
 
     /**
@@ -131,52 +154,44 @@ class JenisController extends Controller
      */
     public function destroy($id)
     {
-        $paket = \App\Paket::where('id_jenis', $id)->get();
-        if (count($paket) > 0) {
-            return response()->json(['msg' => 'Jenis digunakan di salah satu paket']);
-        }
-        $data = Jenis::findOrFail($id);
+        $data = Paket::findOrFail($id);
         $data->delete();
-        Log::create([
-            'user_id' => Auth::id(),
-            'msg' => 'Menghapus Jenis '. $data->name,
-        ]);
-
-        return response()->json(['msg' => "$data->name Berhasil dihapus"]);
+        return response()->json(['msg' => "$data->nama_paket Berhasil Dibuang"], 200);
     }
 
     public function datatables()
     {
-        $jenis = Jenis::query()->orderBy('created_at', 'DESC');
+        $paket = Paket::query()->orderBy('created_at', 'DESC')->with(['outlet', 'jenis']);
 
-        return DataTables::of($jenis)
-            ->addColumn('action', function($jenis){
-                return view('pages.jenis.action', [
-                    'model' => $jenis,
-                    'url_edit' => route('jenis.edit', $jenis->id),
-                    'url_delete' => route('jenis.destroy', $jenis->id),
+        return DataTables::of($paket)
+            ->addColumn('action', function($paket){
+                return view('pages.paket.action', [
+                    'model' => $paket,
+                    'url_edit' => route('paket.edit', $paket->id),
+                    'url_show' => route('paket.show', $paket->id),
+                    'url_delete' => route('paket.destroy', $paket->id),
                 ]);
             })->rawColumns(['action'])->addIndexColumn()->make(true);
     }
 
     public function softDeleteIndex()
     {
-        return view('pages.trash.jenis');
+        return view('pages.trash.paket');
     }
 
      public function softDeleteData()
     {
-        $jenis = Jenis::query()->onlyTrashed()->orderBy('deleted_at', "DESC");
-        return DataTables::of($jenis)
-            ->addColumn('delete_time', function ($jenis){
-                $time = Date::parse($jenis->deleted_at)->format('d F Y h:i');
+        $paket = Paket::query()->onlyTrashed()->orderBy('deleted_at', "DESC")->with(['jenis', 'outlet']);
+        return DataTables::of($paket)
+            ->addColumn('delete_time', function ($paket){
+                $time = Date::parse($paket->deleted_at)->format('d F Y h:i');
                 return $time;
             })
-            ->addColumn('action', function ($jenis) {
-                return view('pages.jenis.softDel-action', [
-                    'model' => $jenis,
-                    'url_restore' => route('jenis.softDelete.restore', $jenis->id),
-                    'url_delete' => route('jenis.softDelete.deletePermanent', $jenis->id),
+            ->addColumn('action', function ($paket) {
+                return view('pages.paket.softDel-action', [
+                    'model' => $paket,
+                    'url_restore' => route('paket.softDelete.restore', $paket->id),
+                    'url_delete' => route('paket.softDelete.deletePermanent', $paket->id),
                 ]);
             })->rawColumns(['action'])->addIndexColumn()->make(true);
     }
@@ -184,12 +199,12 @@ class JenisController extends Controller
     // function for retore data 
     public function restoreData(Request $request, $id)
     {
-        $data = Jenis::onlyTrashed()->where('id', $id);
+        $data = Paket::onlyTrashed()->where('id', $id);
         $myData = $data->first();
         $data->restore();
         Log::create([
             'user_id' => Auth::id(),
-            'msg' => "Mengembalikan Jenis ". $myData->name
+            'msg' => "Mengembalikan Paket ". $myData->name
         ]);
         return response()->json(['msg' => $myData->name. ' Berhasil Dikembalikan'], 200);
     }
@@ -197,12 +212,12 @@ class JenisController extends Controller
     // delete permanent spesifik data dorm storrage
     public function deletePermanent($id)
     {
-        $data = Jenis::onlyTrashed()->where('id', $id);
+        $data = Paket::onlyTrashed()->where('id', $id);
         $myData = $data->first();
         $data->forceDelete();
         Log::create([
             'user_id' => Auth::id(),
-            'msg' => "Menghapus Permanen Jenis ". $myData->name
+            'msg' => "Menghapus Permanen Paket ". $myData->name
         ]);
         return response()->json(['msg' => $myData->name. ' Berhasil Dihapus'], 200);
     }
@@ -210,27 +225,27 @@ class JenisController extends Controller
     // restore all data
     public function all(Request $request)
     {
-        $data = Jenis::onlyTrashed();
+        $data = Paket::onlyTrashed();
         if (request()->isMethod("POST")) {
             $data->restore();
             Log::create([
                 'user_id' => Auth::id(),
-                'msg' => "Mengembalikan Semua Jenis"
+                'msg' => "Mengembalikan Semua Paket"
             ]);
             return response()->json(['msg' => 'Berhasil Dikembalikan'], 200);
         }else if (request()->isMethod("PUT")) {
             $data->forceDelete();
             Log::create([
                 'user_id' => Auth::id(),
-                'msg' => "Mengembalikan Semua Jenis"
+                'msg' => "Mengembalikan Semua Paket"
             ]);
             return response()->json(['msg' => 'Berhasil Dihapus'], 200);
         }
     }
 
-    public function findJenis()
+    public function findPaket()
     {
-        $data = Jenis::where('deleted_at', null)->where('name', 'LIKE', "%". request('q'). "%")->get();
+        $data = Paket::where('deleted_at', null)->where('nama_paket', 'LIKE', "%". request('q'). "%")->get();
         return response()->json(["items" => $data], 200);
     }
 }

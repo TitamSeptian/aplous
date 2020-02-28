@@ -13,7 +13,7 @@ $('body').on('click', '#btn-create', function (e) {
 		dataType: 'html',
 		success: (res) => {
 			$('#modal-body').html(res)
-			$('#modal-title').html("Tambah Jenis")
+			$('#modal-title').html("Tambah Paket")
 			$('#modal-lg').modal('show');		
 		}
 	})
@@ -31,7 +31,7 @@ $('body').on('submit', '#form-store', function (e) {
 		type: 'POST',
 		data: data,
 		success: res => {
-			$('#tableJenis').DataTable().ajax.reload();
+			$('#tablePaket').DataTable().ajax.reload();
 			Swal.fire({
 				title:'Sukses !',
 				type:'success',
@@ -55,8 +55,8 @@ $('body').on('submit', '#form-store', function (e) {
 
 			errors = xhr.responseJSON;
 			$.each(errors.errors, function (key, value) {
-				$('input[name='+key+']').closest('.form-group .form-control').addClass('is-invalid')
-				$('input[name='+key+']').closest('.form-group').append(`<span class="help-block">`+value+`</span>`)
+				$('#'+key).closest('.form-group .form-control').addClass('is-invalid')
+				$('#' + key).closest('.form-group').append(`<span class="help-block">`+value+`</span>`)
 			});
 		}
 	})
@@ -90,7 +90,7 @@ $('body').on('submit', '#form-edit', function (e) {
 		type: 'POST',
 		data: data,
 		success: res => {
-			$('#tableJenis').DataTable().ajax.reload();
+			$('#tablePaket').DataTable().ajax.reload();
 			Swal.fire({
 				title:'Sukses !',
 				type:'success',
@@ -131,20 +131,20 @@ $('body').on('submit', '#form-edit', function (e) {
 	})
 });
 
-// $('body').on('click', '.btn-show', function (e) {
-// 	e.preventDefault();
-// 	const url = $(this).data('url');
-// 	const title = $(this).data('title');
-// 	$.ajax({
-// 		url: url,
-// 		dataType: 'html',
-// 		success: (res) => {
-// 			$('#modal-body').html(res)
-// 			$('#modal-title').html(title)
-// 			$('#modal-lg').modal('show');
-// 		}
-// 	})
-// });
+$('body').on('click', '.btn-show', function (e) {
+	e.preventDefault();
+	const url = $(this).data('url');
+	const title = $(this).data('title');
+	$.ajax({
+		url: url,
+		dataType: 'html',
+		success: (res) => {
+			$('#modal-body').html(res)
+			$('#modal-title').html("Paket "+title)
+			$('#modal-lg').modal('show');
+		}
+	})
+});
 
 // when click button delete will be delete spesifik data form storage using softDeelet
 $('body').on('click', '.btn-delete', function (e) {
@@ -181,7 +181,7 @@ $('body').on('click', '.btn-delete', function (e) {
 						timer: 1800
 					});
 
-					$('#tableJenis').DataTable().ajax.reload();
+					$('#tablePaket').DataTable().ajax.reload();
 				},
 
 				error: function(xhr){
@@ -231,7 +231,7 @@ $('body').on('click', '.btn-restore', function (e) {
 						timer: 1800
 					});
 
-					$('#tableJenis').DataTable().ajax.reload();
+					$('#tablePaket').DataTable().ajax.reload();
 				},
 
 				error: function(xhr){
@@ -283,7 +283,7 @@ $('body').on('click', '.btn-force-delete', function (e) {
 						timer: 1800
 					});
 
-					$('#tableJenis').DataTable().ajax.reload();
+					$('#tablePaket').DataTable().ajax.reload();
 				},
 
 				error: function(xhr){
@@ -302,7 +302,7 @@ $('body').on('click', '.btn-force-delete', function (e) {
 
 // restore all data
 $('body').on('click', '.btn-restore-all-outlet', function (e) {
-	let empty = $('#tableJenis tbody').find('.dataTables_empty');
+	let empty = $('#tablePaket tbody').find('.dataTables_empty');
 	e.preventDefault();
 	const url = $(this).data('url');
 	if (empty.length == 0) {
@@ -333,7 +333,7 @@ $('body').on('click', '.btn-restore-all-outlet', function (e) {
 							timer: 1800
 						});
 
-						$('#tableJenis').DataTable().ajax.reload();
+						$('#tablePaket').DataTable().ajax.reload();
 					},
 
 					error: function(xhr){
@@ -361,7 +361,7 @@ $('body').on('click', '.btn-restore-all-outlet', function (e) {
 $('body').on('click', '.btn-delete-all-outlet', function (e) {
 	e.preventDefault();
 	const url = $(this).data('url');
-	let empty = $('#tableJenis tbody').find('.dataTables_empty');
+	let empty = $('#tablePaket tbody').find('.dataTables_empty');
 	if (empty.length == 0) {
 		Swal.fire({
 			title:'Anda Yakin ?',
@@ -370,7 +370,7 @@ $('body').on('click', '.btn-delete-all-outlet', function (e) {
 			showCancelButton: true,
 			confirmButtonColor:'##5f76e8;',
 			cancelButtonColor:'#8A8A8A',
-			confirmButtonText:'Ya, Kembalikan !',
+			confirmButtonText:'Ya, Hapus !',
 			cancelButtonText:'Batal',
 		})
 		.then(res=>{
@@ -379,7 +379,7 @@ $('body').on('click', '.btn-delete-all-outlet', function (e) {
 					url:url,
 					type:'POST',
 					data: {
-						'_method': 'DELETE'
+						'_method': 'PUT'
 					},
 					success: function(res){
 						$('#myModal').modal('hide');
@@ -392,7 +392,7 @@ $('body').on('click', '.btn-delete-all-outlet', function (e) {
 							timer: 1800
 						});
 
-						$('#tableJenis').DataTable().ajax.reload();
+						$('#tablePaket').DataTable().ajax.reload();
 					},
 
 					error: function(xhr){
@@ -417,5 +417,5 @@ $('body').on('click', '.btn-delete-all-outlet', function (e) {
 })
 
 $('body').on('click', '.btn-refresh', function (e) {
-	$('#tableJenis').DataTable().ajax.reload();
+	$('#tablePaket').DataTable().ajax.reload();
 });

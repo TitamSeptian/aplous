@@ -22,7 +22,7 @@
                 <li class="sidebar-item {{ $activePage == 'outlet' ? 'selected' : '' }}"> <a class="sidebar-link sidebar-link" href="{{ route('outlet.index') }}" aria-expanded="false"><i class="fas fa-hospital-alt"></i><span class="hide-menu">Outlet
                         </span></a>
                 </li>
-                <li class="sidebar-item {{ $activePage == 'produk' ? 'selected' : '' }}"> <a class="sidebar-link sidebar-link" href="/produk" aria-expanded="false"><i class="fas fa-shopping-cart"></i><span class="hide-menu">Produk
+                <li class="sidebar-item {{ $activePage == 'paket' ? 'selected' : '' }}"> <a class="sidebar-link sidebar-link" href="/produk" aria-expanded="false"><i class="fas fa-shopping-cart"></i><span class="hide-menu">Paket
                         </span></a>
                 </li>
                 <li class="sidebar-item {{ $activePage == 'jenis' ? 'selected' : '' }}"> <a class="sidebar-link sidebar-link" href="{{ route('jenis.index') }}" aria-expanded="false"><i class="fas fa-archive"></i><span class="hide-menu">Jenis
@@ -69,6 +69,11 @@
                         <li class="sidebar-item">
                             <a href="{{ route('jenis.softDelete.index') }}" class="sidebar-link {{ $miniMenu == 'outlet' ? 'active' : '' }}">
                                 <span class="hide-menu"> Jenis</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="{{ route('paket.softDelete.index') }}" class="sidebar-link {{ $miniMenu == 'paket' ? 'active' : '' }}">
+                                <span class="hide-menu"> Paket</span>
                             </a>
                         </li>
                     </ul>
