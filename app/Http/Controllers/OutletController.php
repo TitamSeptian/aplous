@@ -149,6 +149,11 @@ class OutletController extends Controller
         })->rawColumns(['action'])->addIndexColumn()->make(true);
     }
 
+    public function softDeleteIndex()
+    {
+        return view('pages.trash.outlet');
+    }
+
     // soft delete data for view trash
     public function softDeleteData()
     {
@@ -204,13 +209,15 @@ class OutletController extends Controller
                 'msg' => "Mengembalikan Semua Outlet"
             ]);
             return response()->json(['msg' => 'Berhasil Dikembalikan'], 200);
-        }else if (request()->isMethod("DELETE")) {
-            $data->delete();
+        }else if (request()->isMethod("PUT")) {
+            $data->forceDelete();
             Log::create([
                 'user_id' => Auth::id(),
                 'msg' => "Mengembalikan Semua Outlet"
             ]);
             return response()->json(['msg' => 'Berhasil Dihapus'], 200);
+        }else{
+            return response()->json(['msg' => 'Terjadi Kesalaha'], 500);
         }
     }
 }

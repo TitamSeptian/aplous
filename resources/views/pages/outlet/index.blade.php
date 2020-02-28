@@ -1,4 +1,4 @@
-@extends('partials.master', [$titlePage = 'Outlet', $activePage = 'outlet'])
+@extends('partials.master', [$titlePage = 'Outlet', $activePage = 'outlet', $miniMenu = ''])
 @section('content')
 <div class="card">
     <div class="card-body">

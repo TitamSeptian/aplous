@@ -25,6 +25,10 @@
                 <li class="sidebar-item {{ $activePage == 'produk' ? 'selected' : '' }}"> <a class="sidebar-link sidebar-link" href="/produk" aria-expanded="false"><i class="fas fa-shopping-cart"></i><span class="hide-menu">Produk
                         </span></a>
                 </li>
+                <li class="sidebar-item {{ $activePage == 'jenis' ? 'selected' : '' }}"> <a class="sidebar-link sidebar-link" href="{{ route('jenis.index') }}" aria-expanded="false"><i class="fas fa-archive"></i><span class="hide-menu">Jenis
+                        </span></a>
+                </li>
+                
                 <li class="sidebar-item {{ $activePage == 'pengguna' ? 'selected' : '' }}"> <a class="sidebar-link sidebar-link" href="/pengguna" aria-expanded="false"><i class="fas fa-users"></i><span class="hide-menu">pengguna
                         </span></a>
                 </li>
@@ -47,12 +51,27 @@
                         <span class="hide-menu">Riwayat</span>
                     </a>
                 </li>
-                <li class="sidebar-item {{ $activePage == 'sampah' ? 'selected' : '' }}">
+                {{-- <li class="sidebar-item {{ $activePage == 'sampah' ? 'selected' : '' }}">
                     <a class="sidebar-link sidebar-link" href="{{ route('trash.index') }}" aria-expanded="false">
                         <i class="fas fa-trash"></i>
                         <span class="hide-menu">Sampah
                         </span>
                     </a>
+                </li> --}}
+                <li class="sidebar-item {{ $activePage == 'laporan' ? 'selected' : '' }}"> <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-trash"></i><span
+                            class="hide-menu"> Sampah </span></a>
+                    <ul aria-expanded="false" class="collapse  first-level base-level-line">
+                        <li class="sidebar-item">
+                            <a href="{{ route('outlet.softDelete.index') }}" class="sidebar-link {{ $miniMenu == 'outlet' ? 'active' : '' }}">
+                                <span class="hide-menu"> Outlet</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="{{ route('jenis.softDelete.index') }}" class="sidebar-link {{ $miniMenu == 'outlet' ? 'active' : '' }}">
+                                <span class="hide-menu"> Jenis</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 @endif
                 <li class="sidebar-item">

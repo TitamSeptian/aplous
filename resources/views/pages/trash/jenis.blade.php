@@ -1,18 +1,19 @@
-@extends('partials.master', [$titlePage = 'Sampah', $activePage = 'trash', $miniMenu = ''])
+@extends('partials.master', [$titlePage = 'Sampah', $activePage = 'trash', $miniMenu = 'jenis'])
 @section('content')
 {{-- =============================================================== --}}
 {{-- ========================        Outlet     =================== --}}
 {{-- =============================================================== --}}
 <div class="card">
     <div class="card-body">
+        <h3 class="mb-3">Jenis</h3>
         <div class="form-row">
-            <div class="col-md-8">
-                <a href="javascript:void(0)" class="btn btn-sm btn-info btn-restore-all-outlet" data-url="{{ route('outlet.softDelete.all') }}">Kembalikan</a>
-                <a href="javascript:void(0)" class="ml-1 btn btn-sm btn-danger btn-delete-all-outlet">Hapus</a>
+            <div class="col-md-8 mt-3">
+                <a href="javascript:void(0)" class="btn btn-sm btn-info btn-restore-all-outlet" data-url="{{ route('jenis.softDelete.all') }}">Kembalikan</a>
+                <a href="javascript:void(0)" class="ml-1 btn btn-sm btn-danger btn-delete-all-outlet" data-url="{{ route('jenis.softDelete.all') }}">Hapus</a>
                 <a href="javascript:void(0)" class="ml-1 btn btn-sm btn-secondary btn-refresh">Segarkan</a>
             </div>
             <div class="col-md-4">
-                <input type="text" name="cari" class="form-control mt-3 mb-3" id="cariOutlet" placeholder="Cari Outlet">
+                <input type="text" name="cari" class="form-control mt-3 mb-3" id="cariOutlet" placeholder="Cari Jenis">
             </div>
         </div>
         <div class="table-responsive">
@@ -21,7 +22,7 @@
                     <tr>
                         <th>No</th>
                         <th>Nama</th>
-                        <th>No. Telp</th>
+                        <th>Ket</th>
                         <th>Dihapus</th>
                         <th class="text-center"></th>
                     </tr>
@@ -44,18 +45,18 @@
         serverSide: true,
         bFilter: true,
         bLengthChange: false, // un active show entri
-        ajax: "{{ route('outlet.softDelete.data') }}",
+        ajax: "{{ route('jenis.softDelete.data') }}",
         columns: [
             { data: "DT_RowIndex", orderable: false, searchable: false },
-            { data: "nama" },
-            { data: "tlp" },
+            { data: "name" },
+            { data: "ket" },
             { data: "delete_time" },
             { data: 'action', orderable: false, searchable: false },
         ]
     })
 
     // hide default search
-    let def_search = $('div#tableOutlet_filter');
+    let def_search = $('div#tableJenis_filter');
     def_search.css('display', 'none');
 
     // define function search
@@ -85,7 +86,7 @@
             type: 'post',
             data: {
                 'search' : e.target.value,
-                'place' : 'Outlet'
+                'place' : 'Jenis'
             },
             success: res => {
                 console.log(res)

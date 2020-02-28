@@ -1,28 +1,27 @@
-@extends('partials.master', [$titlePage = 'Sampah', $activePage = 'trash', $miniMenu = ''])
+@extends('partials.master', [$titlePage = 'Jenis', $activePage = 'jenis', $miniMenu = ''])
 @section('content')
-{{-- =============================================================== --}}
-{{-- ========================        Outlet     =================== --}}
-{{-- =============================================================== --}}
 <div class="card">
     <div class="card-body">
+        <div class="d-flex">
+            <h3 class="">Jenis</h3>
+            <a href="javascript:void(0)" class="btn btn-success btn-sm mb-3 ml-auto" id="btn-create" data-url="{{ route('jenis.create') }}" data-toggle="modal" data-target="#modal-lg"><i class="fas fa-plus"></i> Tambah</a>
+        </div>
+        <br>
         <div class="form-row">
             <div class="col-md-8">
-                <a href="javascript:void(0)" class="btn btn-sm btn-info btn-restore-all-outlet" data-url="{{ route('outlet.softDelete.all') }}">Kembalikan</a>
-                <a href="javascript:void(0)" class="ml-1 btn btn-sm btn-danger btn-delete-all-outlet">Hapus</a>
-                <a href="javascript:void(0)" class="ml-1 btn btn-sm btn-secondary btn-refresh">Segarkan</a>
+                <a href="javascript:void(0)" class="btn btn-sm btn-secondary btn-refresh mt-3">Refresh</a>            
             </div>
             <div class="col-md-4">
-                <input type="text" name="cari" class="form-control mt-3 mb-3" id="cariOutlet" placeholder="Cari Outlet">
+                <input type="text" name="cari" class="form-control mt-3 mb-3" id="cari" placeholder="Cari Jenis">
             </div>
         </div>
         <div class="table-responsive">
-            <table id="tableOutlet" class="table table-striped table-bordered no-wrap" style="width: 100%">
+            <table id="tableJenis" class="table table-striped table-bordered no-wrap" style="width: 100%">
                 <thead>
                     <tr>
                         <th>No</th>
                         <th>Nama</th>
-                        <th>No. Telp</th>
-                        <th>Dihapus</th>
+                        <th>Ket</th>
                         <th class="text-center"></th>
                     </tr>
                 </thead>
@@ -33,29 +32,29 @@
 @endsection
 @push('js')
 <script>
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-    let table = $('#tableOutlet').DataTable({
+    let table =$('#tableJenis').DataTable({
         responsive: true,
         processing: true,
         serverSide: true,
         bFilter: true,
         bLengthChange: false, // un active show entri
-        ajax: "{{ route('outlet.softDelete.data') }}",
+        ajax: "{{ route('jenis.data') }}",
         columns: [
             { data: "DT_RowIndex", orderable: false, searchable: false },
-            { data: "nama" },
-            { data: "tlp" },
-            { data: "delete_time" },
+            { data: "name" },
+            { data: "ket", "render" : (a,b,c) => {
+                if (c.ket == null){
+                    return '-'
+                }else{
+                    return c.ket
+                }
+            } },
             { data: 'action', orderable: false, searchable: false },
         ]
     })
 
     // hide default search
-    let def_search = $('div#tableOutlet_filter');
+    let def_search = $('div#tableJenis_filter');
     def_search.css('display', 'none');
 
     // define function search
@@ -78,14 +77,19 @@
     }
 
     // fill the serach input
-    $('#cariOutlet').keyup(delay(e => {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $('#cari').keyup(delay(e => {
         search(e.target.value)
         $.ajax({
             url: "{{ route('log.search.store') }}",
             type: 'post',
             data: {
                 'search' : e.target.value,
-                'place' : 'Outlet'
+                'place' : 'Jenis'
             },
             success: res => {
                 console.log(res)
@@ -96,5 +100,5 @@
         })
     }, 500));
 </script>
-<script src="{{ asset('js/outlet.js') }}"></script>
+<script src="{{ asset('js/jenis.js') }}"></script>
 @endpush

@@ -5,5 +5,5 @@
 	<i class="fas fa-pencil-alt"></i> Edit
 </a>
 <a href="javascript:void(0)" data-title="{{ $model->nama }}" data-url="{{ $url_delete }}" class="badge badge-danger btn-delete">
-	<i class="fas fa-trash"></i> Hapus
+	<i class="fas fa-trash"></i> Buang
 </a>

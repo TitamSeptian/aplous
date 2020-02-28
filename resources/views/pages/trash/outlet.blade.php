@@ -1,14 +1,15 @@
-@extends('partials.master', [$titlePage = 'Sampah', $activePage = 'trash', $miniMenu = ''])
+@extends('partials.master', [$titlePage = 'Sampah', $activePage = 'trash', $miniMenu = 'outlet'])
 @section('content')
 {{-- =============================================================== --}}
 {{-- ========================        Outlet     =================== --}}
 {{-- =============================================================== --}}
 <div class="card">
     <div class="card-body">
+        <h3 class="mb-3">Outlet</h3>
         <div class="form-row">
-            <div class="col-md-8">
+            <div class="col-md-8 mt-3">
                 <a href="javascript:void(0)" class="btn btn-sm btn-info btn-restore-all-outlet" data-url="{{ route('outlet.softDelete.all') }}">Kembalikan</a>
-                <a href="javascript:void(0)" class="ml-1 btn btn-sm btn-danger btn-delete-all-outlet">Hapus</a>
+                <a href="javascript:void(0)" class="ml-1 btn btn-sm btn-danger btn-delete-all-outlet" data-url="{{ route('outlet.softDelete.all') }}">Hapus</a>
                 <a href="javascript:void(0)" class="ml-1 btn btn-sm btn-secondary btn-refresh">Segarkan</a>
             </div>
             <div class="col-md-4">
