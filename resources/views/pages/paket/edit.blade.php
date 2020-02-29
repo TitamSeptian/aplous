@@ -1,4 +1,4 @@
-<form id="form-update" action="{{ route('paket.update', $data->id) }}">
+<form id="form-edit" action="{{ route('paket.update', $data->id) }}" method="POST">
     @csrf
     @method('PUT')
     <div class="form-group">
@@ -9,7 +9,8 @@
         <label>Outlet</label>
         <select class="form-control" name="outlet" id="outlet" style="width: 100%">
             @foreach($outlet as $o)
-            <option value="{{ $o->id }}" {{ $o->id == $data->id ? 'selected' : '' }}>{{ $o->nama }}</option>
+            {{ $data->id == $o->id ? 'selected' : '' }}
+            <option value="{{ $o->id }}" {{ $o->id == $data->id_outlet ? "selected" : "" }}>{{ $o->nama }}</option>
             @endforeach
         </select>
     </div>
@@ -17,7 +18,7 @@
         <label>Jenis</label>
         <select class="form-control" name="jenis" id="jenis" style="width: 100%">
             @foreach($jenis as $o)
-            <option value="{{ $o->id }}" {{ $o->id == $data->id ? 'selected' : '' }}>{{ $o->name }}</option>
+            <option value="{{ $o->id }}" {{ $o->id == $data->id_jenis ? 'selected' : '' }}>{{ $o->name }}</option>
             @endforeach
         </select>
     </div>
@@ -29,7 +30,6 @@
 </form>
 <script>
 $(document).ready(function() {
-    $('#outlet').val('{{ $data->id }}')
     $('#outlet').select2({
         ajax: {
             url: "{{ route('outlet.data.sel2') }}",
@@ -82,9 +82,9 @@ $(document).ready(function() {
         },
     });
 
-    var outlet = $('#outlet');
-    outlet.val('{{ $data->id }}');
-    outlet.trigger('select2:select');
+    // var outlet = $('#outlet');
+    // outlet.val('{{ $data->id }}');
+    // outlet.trigger('select2:select');
 
     $('#jenis').select2({
         ajax: {

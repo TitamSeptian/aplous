@@ -8,8 +8,8 @@
         <h3 class="mb-3">Paket</h3>
         <div class="form-row">
             <div class="col-md-8 mt-3">
-                <a href="javascript:void(0)" class="btn btn-sm btn-info btn-restore-all-outlet" data-url="{{ route('outlet.softDelete.all') }}">Kembalikan</a>
-                <a href="javascript:void(0)" class="ml-1 btn btn-sm btn-danger btn-delete-all-outlet" data-url="{{ route('outlet.softDelete.all') }}">Hapus</a>
+                <a href="javascript:void(0)" class="btn btn-sm btn-info btn-restore-all-paket" data-url="{{ route('paket.softDelete.all') }}">Kembalikan</a>
+                <a href="javascript:void(0)" class="ml-1 btn btn-sm btn-danger btn-delete-all-paket" data-url="{{ route('paket.softDelete.all') }}">Hapus</a>
                 <a href="javascript:void(0)" class="ml-1 btn btn-sm btn-secondary btn-refresh">Segarkan</a>
             </div>
             <div class="col-md-4">
@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="table-responsive">
-            <table id="tableOutlet" class="table table-striped table-bordered no-wrap" style="width: 100%">
+            <table id="tablePaket" class="table table-striped table-bordered no-wrap" style="width: 100%">
                 <thead>
                     <tr>
                         <th>No</th>
@@ -40,7 +40,7 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-    let table = $('#tableOutlet').DataTable({
+    let table = $('#tablePaket').DataTable({
         responsive: true,
         processing: true,
         serverSide: true,
@@ -99,5 +99,5 @@
         })
     }, 500));
 </script>
-<script src="{{ asset('js/outlet.js') }}"></script>
+<script src="{{ asset('js/paket.js') }}"></script>
 @endpush

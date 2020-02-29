@@ -34,10 +34,10 @@ $('body').on('submit', '#formLogin', function (e) {
 			if (xhr.status = 401) {
 				if (errors.msg == 'Username tidak valid') {
 					$('.form-group input[name=uname]').addClass('is-invalid')
-					$('.form-group.uname').append(`<span class="help-block">`+errors.msg+`</span>`);
+					$('.form-group.uname').append(`<span class="help-block text-danger">`+errors.msg+`</span>`);
 				} else if (errors.msg == 'Password tidak valid') {
 					$('.form-group input[name=pwd]').addClass('is-invalid')
-					$('.form-group.pwd').append(`<span class="help-block">`+errors.msg+`</span>`);
+					$('.form-group.pwd').append(`<span class="help-block text-danger">`+errors.msg+`</span>`);
 				} else {
 					console.log(errors.msg)
 				}

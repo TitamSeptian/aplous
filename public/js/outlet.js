@@ -56,7 +56,7 @@ $('body').on('submit', '#form-store', function (e) {
 			errors = xhr.responseJSON;
 			$.each(errors.errors, function (key, value) {
 				$('#'+key).closest('.form-group .form-control').addClass('is-invalid')
-				$('#' + key).closest('.form-group').append(`<span class="help-block">`+value+`</span>`)
+				$('#' + key).closest('.form-group').append(`<span class="help-block text-danger">`+value+`</span>`)
 			});
 		}
 	})
@@ -125,7 +125,7 @@ $('body').on('submit', '#form-edit', function (e) {
 			errors = xhr.responseJSON;
 			$.each(errors.errors, function (key, value) {
 				$('#'+key).closest('.form-group .form-control').addClass('is-invalid')
-				$('#' + key).closest('.form-group').append(`<span class="help-block">`+value+`</span>`)
+				$('#' + key).closest('.form-group').append(`<span class="help-block text-danger">`+value+`</span>`)
 			});
 		}
 	})

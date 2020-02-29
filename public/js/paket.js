@@ -56,7 +56,7 @@ $('body').on('submit', '#form-store', function (e) {
 			errors = xhr.responseJSON;
 			$.each(errors.errors, function (key, value) {
 				$('#'+key).closest('.form-group .form-control').addClass('is-invalid')
-				$('#' + key).closest('.form-group').append(`<span class="help-block">`+value+`</span>`)
+				$('#' + key).closest('.form-group').append(`<span class="help-block text-danger">`+value+`</span>`)
 			});
 		}
 	})
@@ -125,7 +125,7 @@ $('body').on('submit', '#form-edit', function (e) {
 			errors = xhr.responseJSON;
 			$.each(errors.errors, function (key, value) {
 				$('#'+key).closest('.form-group .form-control').addClass('is-invalid')
-				$('#' + key).closest('.form-group').append(`<span class="help-block">`+value+`</span>`)
+				$('#' + key).closest('.form-group').append(`<span class="help-block text-danger">`+value+`</span>`)
 			});
 		}
 	})
@@ -301,7 +301,7 @@ $('body').on('click', '.btn-force-delete', function (e) {
 });
 
 // restore all data
-$('body').on('click', '.btn-restore-all-outlet', function (e) {
+$('body').on('click', '.btn-restore-all-paket', function (e) {
 	let empty = $('#tablePaket tbody').find('.dataTables_empty');
 	e.preventDefault();
 	const url = $(this).data('url');
@@ -358,7 +358,7 @@ $('body').on('click', '.btn-restore-all-outlet', function (e) {
 })
 
 // delete all data
-$('body').on('click', '.btn-delete-all-outlet', function (e) {
+$('body').on('click', '.btn-delete-all-paket', function (e) {
 	e.preventDefault();
 	const url = $(this).data('url');
 	let empty = $('#tablePaket tbody').find('.dataTables_empty');
