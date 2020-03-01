@@ -133,7 +133,7 @@ class JenisController extends Controller
     {
         $paket = \App\Paket::where('id_jenis', $id)->get();
         if (count($paket) > 0) {
-            return response()->json(['msg' => 'Jenis digunakan di salah satu paket']);
+            return response()->json(['msg' => 'Jenis digunakan di salah satu paket'], 401);
         }
         $data = Jenis::findOrFail($id);
         $data->delete();

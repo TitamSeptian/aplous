@@ -42,6 +42,11 @@ Route::middleware('auth')->group(function () {
     Route::get('d/p', 'PaketController@datatables')->name('paket.data');
     Route::get('d/p/sel2', 'JenisController@findPaket')->name('paket.data.sel2'); //data select 2
 
+    // member
+    Route::resource('/member', 'MemberController');
+    Route::get('d/m', 'MemberController@datatables')->name('member.data');
+    // Route::get('d/p/sel2', 'JenisController@findPaket')->name('paket.data.sel2'); //data select 2
+
 
 
     Route::group(['prefix' => '/trash'], function () {
@@ -62,10 +67,18 @@ Route::middleware('auth')->group(function () {
 
         // paket softdelete
         Route::get('/paket', 'PaketController@softDeleteIndex')->name('paket.softDelete.index');
-        Route::get('d/j', 'PaketController@softDeleteData')->name('paket.softDelete.data');
-        Route::post('/{id}/j', 'PaketController@restoreData')->name('paket.softDelete.restore');
-        Route::delete('/j/{id}', 'PaketController@deletePermanent')->name('paket.softDelete.deletePermanent');
-        Route::match(['post', 'put'],'/j/all', 'PaketController@all')->name('paket.softDelete.all');
+        Route::get('d/p', 'PaketController@softDeleteData')->name('paket.softDelete.data');
+        Route::post('/{id}/p', 'PaketController@restoreData')->name('paket.softDelete.restore');
+        Route::delete('/p/{id}', 'PaketController@deletePermanent')->name('paket.softDelete.deletePermanent');
+        Route::match(['post', 'put'],'/p/all', 'PaketController@all')->name('paket.softDelete.all');
+
+
+        // member softdelete
+        Route::get('/member', 'MemberController@softDeleteIndex')->name('member.softDelete.index');
+        Route::get('d/m', 'MemberController@softDeleteData')->name('member.softDelete.data');
+        Route::post('/{id}/m', 'MemberController@restoreData')->name('member.softDelete.restore');
+        Route::delete('/m/{id}', 'MemberController@deletePermanent')->name('member.softDelete.deletePermanent');
+        Route::match(['post', 'put'],'/m/all', 'MemberController@all')->name('member.softDelete.all');
 
 
     });

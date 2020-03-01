@@ -14,7 +14,7 @@
                 </li>
                 <li class="list-divider"></li>
                 <li class="nav-small-cap"><span class="hide-menu">Lainya</span></li>
-                <li class="sidebar-item {{ $activePage == 'a' ? 'selected' : '' }}"> <a class="sidebar-link sidebar-link" href="/member" aria-expanded="false"><i class="fas fa-user"></i><span class="hide-menu">Member
+                <li class="sidebar-item {{ $activePage == 'member' ? 'selected' : '' }}"> <a class="sidebar-link sidebar-link" href="{{ route('member.index') }}" aria-expanded="false"><i class="fas fa-user"></i><span class="hide-menu">Member
                         </span></a>
                 </li>
                 {{-- only admin --}}
@@ -74,6 +74,11 @@
                         <li class="sidebar-item">
                             <a href="{{ route('paket.softDelete.index') }}" class="sidebar-link {{ $miniMenu == 'paket' ? 'active' : '' }}">
                                 <span class="hide-menu"> Paket</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="{{ route('member.softDelete.index') }}" class="sidebar-link {{ $miniMenu == 'paket' ? 'active' : '' }}">
+                                <span class="hide-menu"> Member</span>
                             </a>
                         </li>
                     </ul>

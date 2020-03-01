@@ -57,7 +57,7 @@ class OutletController extends Controller
             'msg' => 'Menambahkan Outlet '. $data->nama
         ]);
 
-        return response()->json(['msg' => "$data->name Berhasil Ditambahkan"], 200);
+        return response()->json(['msg' => "$data->nama Berhasil Ditambahkan"], 200);
     }
 
     // show one data or selected data
