@@ -25,11 +25,11 @@ class User extends Authenticatable
 
     public function tbUser()
     {
-        return $this->hasMany(TbUser::class, 'id_user');
+        return $this->hasOne(TbUser::class, 'id_user');
     }
 
     public function admin()
     {
-        return $this->hasMany(Admin::class);
+        return $this->hasOne(Admin::class);
     }
 }

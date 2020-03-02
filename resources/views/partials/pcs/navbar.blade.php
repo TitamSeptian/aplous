@@ -83,7 +83,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="ml-2 d-none d-lg-inline-block"><span class="text-dark">
-                            {{ Auth::user()->level == 'admin' ? Auth::user()->admin[0]->nama : Auth::user()->tbUser[0]->nama }}
+                            {{ Auth::user()->level == 'admin' ? Auth::user()->admin->nama : Auth::user()->tbUser->nama }}
                         </span> <i data-feather="chevron-down" class="svg-icon"></i></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">

@@ -18,7 +18,7 @@ Route::post('logout', 'AuthController@logout')->name('logout')->middleware('auth
 
 
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', function () {
+    Route::get('dashboard', function () {
         return view('dashboard');
     });
 
@@ -47,10 +47,19 @@ Route::middleware('auth')->group(function () {
     Route::get('d/m', 'MemberController@datatables')->name('member.data');
     // Route::get('d/p/sel2', 'JenisController@findPaket')->name('paket.data.sel2'); //data select 2
 
+    // user (people can login[kasir,owner]) 
+    // Route::get('d/u/sel2', 'UserController@findUser')->name('user.data.sel2'); //data select 2
 
+    // admin
+    Route::group(['prefix' => '/pengguna'], function () {
+        Route::resource('/user', 'UserController');
+        Route::get('d/u', 'UserController@datatables')->name('user.data');
+
+        Route::resource('/admin', 'AdminController');
+        Route::get('d/a', 'AdminController@datatables')->name('admin.data');
+    });
 
     Route::group(['prefix' => '/trash'], function () {
-
         // ooutlet soft delete data
         Route::get('/outlet', 'OutletController@softDeleteIndex')->name('outlet.softDelete.index');
         Route::get('/d/o', 'OutletController@softDeleteData')->name('outlet.softDelete.data');
@@ -79,7 +88,6 @@ Route::middleware('auth')->group(function () {
         Route::post('/{id}/m', 'MemberController@restoreData')->name('member.softDelete.restore');
         Route::delete('/m/{id}', 'MemberController@deletePermanent')->name('member.softDelete.deletePermanent');
         Route::match(['post', 'put'],'/m/all', 'MemberController@all')->name('member.softDelete.all');
-
 
     });
 

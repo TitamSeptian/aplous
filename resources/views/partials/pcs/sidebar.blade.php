@@ -29,8 +29,23 @@
                         </span></a>
                 </li>
                 
-                <li class="sidebar-item {{ $activePage == 'pengguna' ? 'selected' : '' }}"> <a class="sidebar-link sidebar-link" href="/pengguna" aria-expanded="false"><i class="fas fa-users"></i><span class="hide-menu">pengguna
+                {{-- <li class="sidebar-item {{ $activePage == 'pengguna' ? 'selected' : '' }}"> <a class="sidebar-link sidebar-link" href="{{ route('user.index') }}" aria-expanded="false"><i class="fas fa-users"></i><span class="hide-menu">Pengguna
                         </span></a>
+                </li> --}}
+                <li class="sidebar-item {{ $activePage == 'pengguna' ? 'selected' : '' }}"> <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-users"></i><span
+                            class="hide-menu"> Pengguna </span></a>
+                    <ul aria-expanded="false" class="collapse  first-level base-level-line">
+                        <li class="sidebar-item">
+                            <a href="{{ route('user.index') }}" class="sidebar-link {{ $miniMenu == 'admin' ? 'active' : '' }}">
+                                <span class="hide-menu"> Petugas</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="{{ route('jenis.softDelete.index') }}" class="sidebar-link {{ $miniMenu == 'outlet' ? 'active' : '' }}">
+                                <span class="hide-menu"> Admin</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 @endif
                 {{-- end only admin --}}
