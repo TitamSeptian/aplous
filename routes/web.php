@@ -55,7 +55,9 @@ Route::middleware('auth')->group(function () {
         Route::resource('/user', 'UserController');
         Route::get('d/u', 'UserController@datatables')->name('user.data');
 
-        Route::resource('/admin', 'AdminController');
+        Route::resource('/admin', 'AdminController')->except([
+            'show'
+        ]);
         Route::get('d/a', 'AdminController@datatables')->name('admin.data');
     });
 

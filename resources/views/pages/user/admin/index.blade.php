@@ -1,13 +1,13 @@
-@extends('partials.master', [$titlePage = 'Pengguna', $activePage = 'pengguna', $miniMenu = ''])
+@extends('partials.master', [$titlePage = 'Pengguna', $activePage = 'pengguna', $miniMenu = 'admin'])
 @push('css')
-<link rel="stylesheet" type="text/css" href="{{ asset('vendor/assets/extra-libs/select2/css/select2.min.css') }}">
+{{-- <link rel="stylesheet" type="text/css" href="{{ asset('vendor/assets/extra-libs/select2/css/select2.min.css') }}"> --}}
 @endpush
 @section('content')
 <div class="card">
     <div class="card-body">
         <div class="d-flex">
-            <h3 class="">Pengguna</h3>
-            <a href="javascript:void(0)" class="btn btn-success btn-sm mb-3 ml-auto" id="btn-create" data-url="{{ route('user.create') }}" data-toggle="modal" data-target="#modal-lg"><i class="fas fa-plus"></i> Tambah</a>
+            <h3 class="">Admin</h3>
+            <a href="javascript:void(0)" class="btn btn-success btn-sm mb-3 ml-auto" id="btn-create" data-url="{{ route('admin.create') }}" data-toggle="modal" data-target="#modal-lg"><i class="fas fa-plus"></i> Tambah</a>
         </div>
         <br>
         <div class="form-row">
@@ -19,10 +19,11 @@
             </div>
         </div>
         <div class="table-responsive">
-            <table id="tableUser" class="table table-striped table-bordered no-wrap" style="width: 100%">
+            <table id="tableAdmin" class="table table-striped table-bordered no-wrap" style="width: 100%">
                 <thead>
                     <tr>
                         <th>No</th>
+                        <th>Nama</th>
                         <th>Nama Pengguna</th>
                         <th class="text-center"></th>
                     </tr>
@@ -33,24 +34,25 @@
 </div>
 @endsection
 @push('js')
-<script src="{{ asset('vendor/assets/extra-libs/select2/js/select2.min.js') }}"></script>
+{{-- <script src="{{ asset('vendor/assets/extra-libs/select2/js/select2.min.js') }}"></script> --}}
 <script>
-    let table =$('#tableUser').DataTable({
+    let table =$('#tableAdmin').DataTable({
         responsive: true,
         processing: true,
         serverSide: true,
         bFilter: true,
         bLengthChange: false, // un active show entri
-        ajax: "{{ route('user.data') }}",
+        ajax: "{{ route('admin.data') }}",
         columns: [
             { data: "DT_RowIndex", orderable: false, searchable: false },
+            { data: "admin.nama" },
             { data: "username" },
             { data: 'action', orderable: false, searchable: false },
         ]
     })
 
     // hide default search
-    let def_search = $('div#tableUser_filter');
+    let def_search = $('div#tableAdmin_filter');
     def_search.css('display', 'none');
 
     // define function search

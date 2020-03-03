@@ -35,11 +35,11 @@
 	</div>
 	<div class="form-group">
 		<label>Password</label>
-		<input name="password" id="password" class="form-control" placeholder="Tidak Perlu diisi jika tidak ada perubahan">
+		<input name="password" type="password" id="password" class="form-control" placeholder="Tidak Perlu diisi jika tidak ada perubahan">
 	</div>
 	<div class="form-group">
 		<label>Konfirmasi Password</label>
-		<input name="password_confirmation" id="password" class="form-control" placeholder="Tidak Perlu diisi jika tidak ada perubahan">
+		<input name="password_confirmation" type="password" id="password" class="form-control" placeholder="Tidak Perlu diisi jika tidak ada perubahan">
 	</div>
 	<button type="submit" class="btn btn-primary btn-sm float-right">Ubah</button>
 </form>

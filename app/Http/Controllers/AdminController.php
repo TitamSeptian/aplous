@@ -3,6 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Admin;
+use App\User;
+use App\Log;
+use Date;
+use Auth;
+use DataTables;
+use Validator;
+
 
 class AdminController extends Controller
 {
@@ -13,7 +21,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        //
+        return view('pages.user.admin.index');
     }
 
     /**
@@ -23,7 +31,7 @@ class AdminController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.user.admin.create');
     }
 
     /**
@@ -34,7 +42,42 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $messages = [
+            'nama.required' => 'Nama Harus di isi',
+            'nama.min' => 'Nama Minimal 2 karakter',
+            'nama.max' => 'Nama Maksimal 32 karakter',
+            'username.required' => 'Username Harus Diisi',
+            'password.required' => 'Password Harus Diisi',
+            'password.confirmed' => 'Password tidak Cocok',
+            'username.unique' => 'Username Sudah Ada',
+        ];
+        $validator = Validator::make($request->all(), [
+            'nama' => 'required|min:2|max:32',
+            'username' => 'required|unique:users',
+            'password' => 'required|confirmed',
+        ], $messages);
+        if ($validator->fails()) {
+            return response()->json(["errors" => $validator->errors()], 422);
+        }
+
+        $data = User::create([
+            'username' => $request->username,
+            'password' => bcrypt($request->password),
+            'level' => 'admin',
+        ]);
+
+        $admin = Admin::create([
+            'nama' => $request->nama,
+            'user_id' => $data->id,
+        ]);
+
+
+        Log::create([
+            'user_id' => Auth::id(),
+            'msg' => 'Menambahkan Admin '. $admin->nama
+        ]);
+
+        return response()->json(['msg' => "$admin->nama Berhasil Ditambahkan"], 200);
     }
 
     /**
@@ -45,7 +88,8 @@ class AdminController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = User::findOrFail($id);
+        return 'aasdas';
     }
 
     /**
@@ -56,7 +100,8 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = User::findOrFail($id);
+        return view('pages.user.admin.edit', compact('data'));
     }
 
     /**
@@ -68,7 +113,51 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $messages = [
+            'nama.required' => 'Nama Harus di isi',
+            'nama.min' => 'Nama Minimal 2 karakter',
+            'nama.max' => 'Nama Maksimal 32 karakter',
+            'username.required' => 'Username Harus Diisi',
+            'password.confirmed' => 'Password tidak Cocok',
+        ];
+        $validator = Validator::make($request->all(), [
+            'nama' => 'required|min:2|max:32',
+            'username' => 'required',
+            'password' => 'confirmed',
+        ], $messages);
+        if ($validator->fails()) {
+            return response()->json(["errors" => $validator->errors()], 422);
+        }
+
+        $data = User::findOrFail($id);
+        $data_update = [];
+        $data_admin = [];
+        if ($request->password == null) {
+            $data_update = [
+                'username' => $request->username,
+            ];
+            $data_admin = [
+                'nama' => $request->nama,
+            ];
+        }else{
+            $data_update = [
+                'username' => $request->username,
+                'password' => bcrypt($request->password),
+            ];
+            $data_admin = [
+                'nama' => $request->nama,
+            ];
+        }
+        $data->update($data_update);
+        $data->admin->update($data_admin);
+
+
+        Log::create([
+            'user_id' => Auth::id(),
+            'msg' => 'Mengubah Admin '. $data->admin->nama
+        ]);
+
+        return response()->json(['msg' => $data->admin->nama ." Berhasil Diubah"], 200);
     }
 
     /**
@@ -79,6 +168,32 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = User::findOrFail($id);
+        if (Auth::id() == $id) {
+            return response()->json(['msg' => 'User Sedang Login'], 401);
+        }else{
+            $user = Admin::where('user_id', $data->id)->delete();
+            $data->delete();
+            Log::create([
+                'user_id' => Auth::id(),
+                'msg' => 'Menghapus Admin '. $data->username
+            ]);
+
+            return response()->json(['msg' => $data->username." Berhasil dihapus"], 200);
+        }
+
+    }
+
+    public function datatables()
+    {
+        $admin = User::query()->where('level', 'admin')->with(['admin']);
+        return DataTables::of($admin)->addColumn('action', function ($admin){
+            return view('pages.user.admin.action', [
+                'model' => $admin,
+                // 'url_show' => route('admin.show', $admin->id),
+                'url_edit' => route('admin.edit', $admin->id),
+                'url_delete' => route('admin.destroy', $admin->id),
+            ]);
+        })->rawColumns(['action'])->addIndexColumn()->make(true);
     }
 }

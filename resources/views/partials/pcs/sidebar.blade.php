@@ -36,12 +36,12 @@
                             class="hide-menu"> Pengguna </span></a>
                     <ul aria-expanded="false" class="collapse  first-level base-level-line">
                         <li class="sidebar-item">
-                            <a href="{{ route('user.index') }}" class="sidebar-link {{ $miniMenu == 'admin' ? 'active' : '' }}">
+                            <a href="{{ route('user.index') }}" class="sidebar-link {{ $miniMenu == 'outlet' ? 'active' : '' }}">
                                 <span class="hide-menu"> Petugas</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="{{ route('jenis.softDelete.index') }}" class="sidebar-link {{ $miniMenu == 'outlet' ? 'active' : '' }}">
+                            <a href="{{ route('admin.index') }}" class="sidebar-link {{ $miniMenu == 'admin' ? 'active' : '' }}">
                                 <span class="hide-menu"> Admin</span>
                             </a>
                         </li>

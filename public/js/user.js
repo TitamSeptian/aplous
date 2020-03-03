@@ -32,6 +32,7 @@ $('body').on('submit', '#form-store', function (e) {
 		data: data,
 		success: res => {
 			$('#tableUser').DataTable().ajax.reload();
+			$('#tableAdmin').DataTable().ajax.reload();
 			Swal.fire({
 				title:'Sukses !',
 				type:'success',
@@ -91,6 +92,7 @@ $('body').on('submit', '#form-edit', function (e) {
 		data: data,
 		success: res => {
 			$('#tableUser').DataTable().ajax.reload();
+			$('#tableAdmin').DataTable().ajax.reload();
 			Swal.fire({
 				title:'Sukses !',
 				type:'success',
@@ -182,6 +184,7 @@ $('body').on('click', '.btn-delete', function (e) {
 					});
 
 					$('#tableUser').DataTable().ajax.reload();
+					$('#tableAdmin').DataTable().ajax.reload();
 				},
 
 				error: function(xhr){
@@ -232,6 +235,7 @@ $('body').on('click', '.btn-restore', function (e) {
 					});
 
 					$('#tableUser').DataTable().ajax.reload();
+					$('#tableAdmin').DataTable().ajax.reload();
 				},
 
 				error: function(xhr){
@@ -284,6 +288,7 @@ $('body').on('click', '.btn-force-delete', function (e) {
 					});
 
 					$('#tableUser').DataTable().ajax.reload();
+					$('#tableAdmin').DataTable().ajax.reload();
 				},
 
 				error: function(xhr){
@@ -334,6 +339,7 @@ $('body').on('click', '.btn-restore-all-outlet', function (e) {
 						});
 
 						$('#tableUser').DataTable().ajax.reload();
+						$('#tableAdmin').DataTable().ajax.reload();
 					},
 
 					error: function(xhr){
@@ -393,6 +399,7 @@ $('body').on('click', '.btn-delete-all-outlet', function (e) {
 						});
 
 						$('#tableUser').DataTable().ajax.reload();
+						$('#tableAdmin').DataTable().ajax.reload();
 					},
 
 					error: function(xhr){
@@ -418,4 +425,5 @@ $('body').on('click', '.btn-delete-all-outlet', function (e) {
 
 $('body').on('click', '.btn-refresh', function (e) {
 	$('#tableUser').DataTable().ajax.reload();
+	$('#tableAdmin').DataTable().ajax.reload();
 });

@@ -65,13 +65,13 @@ class UserController extends Controller
 
         $data = User::create([
             'username' => $request->username,
-            'password' => $request->password,
+            'password' => bcrypt($request->password),
             'level' => 'outlet',
         ]);
 
         $user = TbUser::create([
             'username' => $request->username,
-            'password' => $request->password,
+            'password' => bcrypt($request->password),
             'role' => $request->role,
             'id_outlet' => $request->outlet,
             'nama' => $request->nama,
@@ -149,7 +149,6 @@ class UserController extends Controller
             ];
             $data_tb_user = [
                 'username' => $request->username,
-                // 'password' => $request->password,
                 'role' => $request->role,
                 'id_outlet' => $request->outlet,
                 'nama' => $request->nama,
@@ -157,11 +156,11 @@ class UserController extends Controller
         }else{
             $data_update = [
                 'username' => $request->username,
-                'password' => $request->password,
+                'password' => bcrypt($request->password),
             ];
             $data_tb_user = [
                 'username' => $request->username,
-                // 'password' => $request->password,
+                'password' => bcrypt($request->password),
                 'role' => $request->role,
                 'id_outlet' => $request->outlet,
                 'nama' => $request->nama,
@@ -191,6 +190,11 @@ class UserController extends Controller
         $data = User::findOrFail($id);
         $user = TbUser::where('id_user', $data->id)->delete();
         $data->delete();
+
+        Log::create([
+            'user_id' => Auth::id(),
+            'msg' => 'Menghapus Pengguna '. $data->admin->nama
+        ]);
 
         return response()->json(['msg' => $data->username." Berhasil dihapus"]);
     }

@@ -1,4 +1,4 @@
-@extends('partials.master', [$titlePage = 'Pengguna', $activePage = 'pengguna', $miniMenu = ''])
+@extends('partials.master', [$titlePage = 'Pengguna', $activePage = 'pengguna', $miniMenu = 'outlet'])
 @push('css')
 <link rel="stylesheet" type="text/css" href="{{ asset('vendor/assets/extra-libs/select2/css/select2.min.css') }}">
 @endpush
@@ -41,7 +41,7 @@
         serverSide: true,
         bFilter: true,
         bLengthChange: false, // un active show entri
-        ajax: "{{ route('user.data') }}",
+        ajax: "{{ route('admin.data') }}",
         columns: [
             { data: "DT_RowIndex", orderable: false, searchable: false },
             { data: "username" },
