@@ -41,7 +41,7 @@
         serverSide: true,
         bFilter: true,
         bLengthChange: false, // un active show entri
-        ajax: "{{ route('admin.data') }}",
+        ajax: "{{ route('user.data') }}",
         columns: [
             { data: "DT_RowIndex", orderable: false, searchable: false },
             { data: "username" },

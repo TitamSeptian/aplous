@@ -41,25 +41,25 @@ Route::middleware('auth')->group(function () {
     Route::resource('/paket', 'PaketController');
     Route::get('d/p', 'PaketController@datatables')->name('paket.data');
     Route::get('d/p/sel2', 'JenisController@findPaket')->name('paket.data.sel2'); //data select 2
+    Route::get('d/p/outlet', 'PaketController@findPaketByOutlet')->name('paket.data.outlet');
 
     // member
     Route::resource('/member', 'MemberController');
     Route::get('d/m', 'MemberController@datatables')->name('member.data');
-    // Route::get('d/p/sel2', 'JenisController@findPaket')->name('paket.data.sel2'); //data select 2
-
-    // user (people can login[kasir,owner]) 
-    // Route::get('d/u/sel2', 'UserController@findUser')->name('user.data.sel2'); //data select 2
+    Route::get('d/m/sel2', 'MemberController@findMember')->name('member.data.sel2'); //data select 2
 
     // admin
     Route::group(['prefix' => '/pengguna'], function () {
         Route::resource('/user', 'UserController');
         Route::get('d/u', 'UserController@datatables')->name('user.data');
 
-        Route::resource('/admin', 'AdminController')->except([
-            'show'
-        ]);
+        Route::resource('/admin', 'AdminController')->except(['show']);
         Route::get('d/a', 'AdminController@datatables')->name('admin.data');
     });
+
+    // transaksi
+    Route::resource('/transaksi', 'TransaksiController');
+    Route::get('d/t', 'MemberController@datatables')->name('transaksi.data');
 
     Route::group(['prefix' => '/trash'], function () {
         // ooutlet soft delete data
@@ -99,18 +99,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/laporan', function () {
         return view('pages.laporan.laporan');
     });
-    Route::get('/transaksi', function () {
-        $date = date('Y-m-d');
-        return view('pages.transaksi.index',[
-            'date' => $date,
-        ]);
-    });
 
-    Route::get('/transaksi/create', function () {
-        $date = date('Y-m-d');
-        return view('pages.transaksi.create',[
-            'date' => $date,
-        ]);
-    });
 });
 

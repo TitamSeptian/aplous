@@ -32,7 +32,7 @@ class JenisSeeder extends Seeder
         ];
 
         foreach ($jenis as $a) {
-        	Jenis::create($a)
+        	Jenis::create($a);
         }
     }
 }

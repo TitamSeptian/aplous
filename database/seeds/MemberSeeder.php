@@ -12,22 +12,22 @@ class MemberSeeder extends Seeder
      */
     public function run()
     {
-        members = [
+        $members = [
         	[
         		'nama' => 'Richard Joe',
-        		'telp' => '0812345674',
+        		'tlp' => '0812345674',
         		'alamat' => 'Jl. Kacang Kapri Muda Kav. 13',
         		'jenis_kelamin' => 'P',
         	],
         	[
         		'nama' => 'Barry Allen',
-        		'telp' => '081234587',
+        		'tlp' => '081234587',
         		'alamat' => 'Jl. Durian Kapri Muda Kav. 13',
         		'jenis_kelamin' => 'L',
         	],
         	[
         		'nama' => 'Joe West',
-        		'telp' => '08123458712',
+        		'tlp' => '08123458712',
         		'alamat' => 'Jl. Anggur Kapri Muda Kav. 13',
         		'jenis_kelamin' => 'L',
         	],

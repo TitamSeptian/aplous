@@ -248,4 +248,10 @@ class PaketController extends Controller
         $data = Paket::where('deleted_at', null)->where('nama_paket', 'LIKE', "%". request('q'). "%")->get();
         return response()->json(["items" => $data], 200);
     }
+
+    public function findPaketByOutlet()
+    {
+        $paket = Paket::query()->where('id_outlet', request('q'))->with(['jenis', 'outlet']);
+        return DataTables::of($paket)->addIndexColumn()->make(true);
+    }
 }

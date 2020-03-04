@@ -26,13 +26,14 @@ class CreateTransaksisTable extends Migration
             $table->integer('pajak')->nullable();
             $table->enum('status', ['baru', 'proses', 'selesai', 'diambil'])->default('baru');
             $table->enum('dibayar', ['dibayar', 'belum_dibayar'])->default('belum_dibayar');
-            $table->unsignedInteger('id_user'); //
+            $table->unsignedInteger('id_user')->nullable(); //
             $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('id_outlet')->on('tb_outlet')->references('id')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('id_member')->on('tb_member')->references('id')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('id_user')->on('tb_user')->references('id')->onUpdate('cascade')->onDelete('cascade');
+            // $table->foreign('id_user')->on('users')->references('id')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
