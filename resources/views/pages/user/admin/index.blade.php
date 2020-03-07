@@ -45,7 +45,7 @@
         ajax: "{{ route('admin.data') }}",
         columns: [
             { data: "DT_RowIndex", orderable: false, searchable: false },
-            { data: "admin.nama" },
+            { data: "tb_user.nama" },
             { data: "username" },
             { data: 'action', orderable: false, searchable: false },
         ]

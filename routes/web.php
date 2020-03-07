@@ -16,6 +16,10 @@ Route::get('/', 'AuthController@getLogin')->name('getLogin')->middleware('guest'
 Route::post('/log', 'AuthController@postLogin')->name('postLogin');
 Route::post('logout', 'AuthController@logout')->name('logout')->middleware('auth');
 
+Route::get('/123qwe123', function () {
+    $jenis = \App\Jenis::first();
+    dd($jenis->id);
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('dashboard', function () {

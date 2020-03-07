@@ -67,8 +67,8 @@ class AdminController extends Controller
         ]);
 
         $admin = TbUser::create([
-            'username' => $request->username,
-            'password' => bcrypt($request->password),
+            // 'username' => $request->username,
+            // 'password' => bcrypt($request->password),
             'role' => 'admin',
             'id_outlet' => null,
             'nama' => $request->nama,
@@ -142,9 +142,8 @@ class AdminController extends Controller
                 'username' => $request->username,
             ];
             $data_admin = [
-                'username' => $request->username,
+                // 'username' => $request->username,
                 'role' => $request->role,
-                'id_outlet' => null,
                 'nama' => $request->nama,
                 'id_user' => $data->id,
             ];
@@ -154,10 +153,9 @@ class AdminController extends Controller
                 'password' => bcrypt($request->password),
             ];
             $data_admin = [
-                'username' => $request->username,
-                'password' => bcrypt($request->password),
+                // 'username' => $request->username,
+                // 'password' => bcrypt($request->password),
                 'role' => $request->role,
-                'id_outlet' => null,
                 'nama' => $request->nama,
                 'id_user' => $data->id,
             ];
@@ -182,7 +180,7 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        $data = User::findOrFail($id);7
+        $data = User::findOrFail($id);
         if (Auth::id() == $id) {
             return response()->json(['msg' => 'User Sedang Login'], 401);
         }else{
@@ -200,7 +198,7 @@ class AdminController extends Controller
 
     public function datatables()
     {
-        $admin = User::query()->where('level', 'admin')->with(['admin']);
+        $admin = User::query()->where('level', 'admin')->with(['tbUser']);
         return DataTables::of($admin)->addColumn('action', function ($admin){
             return view('pages.user.admin.action', [
                 'model' => $admin,

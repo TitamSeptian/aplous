@@ -16,8 +16,8 @@ class CreateTbUsersTable extends Migration
         Schema::create('tb_user', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nama', 100);
-            $table->string('username', 30)->unique();
-            $table->text('password');
+            // $table->string('username', 30)->unique();
+            // $table->text('password');
             $table->enum('role', ['owner', 'kasir', 'admin']);
             $table->unsignedInteger('id_outlet')->nullable();;
             $table->unsignedInteger('id_user');

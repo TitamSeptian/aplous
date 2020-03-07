@@ -23,6 +23,7 @@
                 <thead>
                     <tr>
                         <th>No</th>
+                        <th>Nama</th>
                         <th>Nama Pengguna</th>
                         <th class="text-center"></th>
                     </tr>
@@ -44,6 +45,7 @@
         ajax: "{{ route('user.data') }}",
         columns: [
             { data: "DT_RowIndex", orderable: false, searchable: false },
+            { data: "tb_user.nama" },
             { data: "username" },
             { data: 'action', orderable: false, searchable: false },
         ]

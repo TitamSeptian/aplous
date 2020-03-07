@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\User;
 use App\TbUser;
-use App\Admin;
+use App\Outlet;
 
 class UserSeeder extends Seeder
 {
@@ -14,7 +14,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-
+        $outlet = Outlet::first();
         $users = [
             [
                 'username' => 'admin', 
@@ -24,23 +24,23 @@ class UserSeeder extends Seeder
             [
                 'username' => 'kasir', 
                 'password' => bcrypt('123qwe123'), 
-                'level' => 'outlet'
+                'level' => 'kasir'
             ],
                 [
                 'username' => 'owner', 
                 'password' => bcrypt('123qwe123'), 
-                'level' => 'outlet'
+                'level' => 'owner'
             ]
-        ]
+        ];
 
         foreach ($users as $data) {
         	$user = User::create($data);
         	TbUser::create([
-        		'username' => $user->username, 
-        		'password' => $user->password, 
-        		'role' => $user->role, 
-        		"nama" => 'Jhon '. $user->role, 
-        		'id_outlet' => $user->role == 'admin' ? '' : $user->role, 
+        		// 'username' => $user->username, 
+        		// 'password' => $user->password, 
+        		'role' => $user->level, 
+        		"nama" => 'Jhon '. $user->level, 
+        		'id_outlet' => $outlet->id, 
         		'id_user' => $user->id
         	]);
         }

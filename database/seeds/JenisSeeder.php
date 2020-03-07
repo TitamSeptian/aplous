@@ -18,16 +18,12 @@ class JenisSeeder extends Seeder
         		'ket' => 'Baju kiloan'
         	],
         	[
-        		'name' => 'Selimut', 
-        		'ket' => 'Selimut'
+        		'name' => 'Selimut (M)', 
+        		'ket' => 'Selimut kecil'
         	],
         	[
         		'name' => 'Bed Cover', 
         		'ket' => 'Bed Cover'
-        	],
-        	[
-        		'name' => 'Kaos', 
-        		'ket' => 'Kaos'
         	],
         ];
 

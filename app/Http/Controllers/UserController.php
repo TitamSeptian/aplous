@@ -66,12 +66,12 @@ class UserController extends Controller
         $data = User::create([
             'username' => $request->username,
             'password' => bcrypt($request->password),
-            'level' => 'outlet',
+            'level' => $request->role,
         ]);
 
         $user = TbUser::create([
-            'username' => $request->username,
-            'password' => bcrypt($request->password),
+            // 'username' => $request->username,
+            // 'password' => bcrypt($request->password),
             'role' => $request->role,
             'id_outlet' => $request->outlet,
             'nama' => $request->nama,
@@ -148,7 +148,7 @@ class UserController extends Controller
                 'username' => $request->username,
             ];
             $data_tb_user = [
-                'username' => $request->username,
+                // 'username' => $request->username,
                 'role' => $request->role,
                 'id_outlet' => $request->outlet,
                 'nama' => $request->nama,
@@ -159,8 +159,8 @@ class UserController extends Controller
                 'password' => bcrypt($request->password),
             ];
             $data_tb_user = [
-                'username' => $request->username,
-                'password' => bcrypt($request->password),
+                // 'username' => $request->username,
+                // 'password' => bcrypt($request->password),
                 'role' => $request->role,
                 'id_outlet' => $request->outlet,
                 'nama' => $request->nama,
@@ -201,7 +201,7 @@ class UserController extends Controller
 
     public function datatables()
     {
-        $user = User::query()->where('level', 'outlet')->orderBy('created_at', 'DESC')->with(['tbUser']);
+        $user = User::query()->where('level', 'kasir')->orWhere('level', 'owner')->orderBy('created_at', 'DESC')->with(['tbUser']);
 
         return DataTables::of($user)->addColumn('action', function ($user) {
             return view('pages.user.outlet.action', [
