@@ -6,7 +6,7 @@
             <ul id="sidebarnav">
                 <li class="sidebar-item {{ $activePage == 'dashboard' ? 'selected' : '' }}"> <a class="sidebar-link sidebar-link" href="index.html" aria-expanded="false"><i data-feather="home" class="feather-icon"></i><span class="hide-menu">Dashboard</span></a></li>
                 {{-- if admin and kasir --}}
-                @if(Auth::user()->level == 'admin' || Auth::user()->tbUser->role == 'kasir')
+                @if(Auth::user()->level == 'admin' || Auth::user()->level == 'kasir')
                 <li class="list-divider"></li>
                 <li class="nav-small-cap"><span class="hide-menu">Transaksi</span></li>
                 <li class="sidebar-item {{ $activePage == 'transaksi' ? 'selected' : '' }}"> <a class="sidebar-link" href="{{ route('transaksi.index') }}" aria-expanded="false"><i class="fas fa-pallet"></i><span class="hide-menu">Transakasi

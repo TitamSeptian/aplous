@@ -3,7 +3,7 @@
 		<tr>
 			<td width="200">Nama</td>
 			<td width="10">:</td>
-			<td>{{ $data->level == 'admin' ? $data->admin->nama : $data->tbUser->nama }}</td>
+			<td>{{ $data->tbUser->nama }}</td>
 		</tr>
 		<tr>
 			<td>Nama Pengguna</td>
@@ -16,7 +16,7 @@
 			<td>Peran</td>
 			<td>:</td>
 			<td>
-				<b>{{ $data->level == 'admin' ? 'admin' : $data->tbUser->role }}</b>
+				<b>{{ $data->tbUser->role }}</b>
 			</td>
 		</tr>
 		@if($data->level == 'outlet')

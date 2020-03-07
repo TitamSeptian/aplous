@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Admin;
 use App\User;
+use App\TbUser;
 use App\Log;
 use Date;
 use Auth;
@@ -66,10 +66,15 @@ class AdminController extends Controller
             'level' => 'admin',
         ]);
 
-        $admin = Admin::create([
+        $admin = TbUser::create([
+            'username' => $request->username,
+            'password' => bcrypt($request->password),
+            'role' => 'admin',
+            'id_outlet' => null,
             'nama' => $request->nama,
-            'user_id' => $data->id,
+            'id_user' => $data->id,
         ]);
+
 
 
         Log::create([
@@ -137,7 +142,11 @@ class AdminController extends Controller
                 'username' => $request->username,
             ];
             $data_admin = [
+                'username' => $request->username,
+                'role' => $request->role,
+                'id_outlet' => null,
                 'nama' => $request->nama,
+                'id_user' => $data->id,
             ];
         }else{
             $data_update = [
@@ -145,11 +154,16 @@ class AdminController extends Controller
                 'password' => bcrypt($request->password),
             ];
             $data_admin = [
+                'username' => $request->username,
+                'password' => bcrypt($request->password),
+                'role' => $request->role,
+                'id_outlet' => null,
                 'nama' => $request->nama,
+                'id_user' => $data->id,
             ];
         }
         $data->update($data_update);
-        $data->admin->update($data_admin);
+        $data->tbUser->update($data_admin);
 
 
         Log::create([
@@ -168,11 +182,11 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        $data = User::findOrFail($id);
+        $data = User::findOrFail($id);7
         if (Auth::id() == $id) {
             return response()->json(['msg' => 'User Sedang Login'], 401);
         }else{
-            $user = Admin::where('user_id', $data->id)->delete();
+            $admin = TbUser::where('user_id', $data->id)->delete();
             $data->delete();
             Log::create([
                 'user_id' => Auth::id(),

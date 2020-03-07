@@ -28,8 +28,4 @@ class User extends Authenticatable
         return $this->hasOne(TbUser::class, 'id_user');
     }
 
-    public function admin()
-    {
-        return $this->hasOne(Admin::class);
-    }
 }

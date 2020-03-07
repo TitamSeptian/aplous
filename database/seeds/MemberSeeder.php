@@ -36,5 +36,8 @@ class MemberSeeder extends Seeder
         foreach ($members as $member) {
         	Member::create($member);
         }
+
+        foreach ($members as $member) {
+        }
     }
 }

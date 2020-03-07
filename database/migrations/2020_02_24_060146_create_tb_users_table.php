@@ -19,7 +19,7 @@ class CreateTbUsersTable extends Migration
             $table->string('username', 30)->unique();
             $table->text('password');
             $table->enum('role', ['owner', 'kasir', 'admin']);
-            $table->unsignedInteger('id_outlet');
+            $table->unsignedInteger('id_outlet')->nullable();;
             $table->unsignedInteger('id_user');
             $table->timestamps();
             $table->foreign('id_user')->on('users')->references('id')->onUpdate('cascade')->onDelete('cascade');
