@@ -8,11 +8,14 @@ const outlet = $('#outlet');
 const tambah = $('#tambah');
 const member = $('#member');
 const diskon = $('#diskon');
+const biaya_tambahan = $('#biaya_tambahan');
 const qty = $('#qty');
 const tbody = $('#tbody');
 window.onload = init();
 function init() {
 	paket.val('');
+	diskon.val('');
+	biaya_tambahan.val('');
 }
 
 // click slected paket
@@ -63,13 +66,16 @@ function toTable() {
 	            <input type="hidden" name="res_harga[]" class="res_harga" value="${paket.data('harga')}">
 	            <td>${i++}</td>
 	            <td>
-	                <input type="text" name="nama_paket[]" class="cl-line nama_paket" value="${paket.val()}" readonly>
+	                <input type="text" name="nama_paket[]" autocomplete="off" class="cl-line nama_paket" value="${paket.val()}" readonly>
 	            </td>
 	            <td>
-	                <input type="text" name="qty[]" class="grey-line qty" value="${qty.val()}">
+	                <input type="text" name="qty[]" autocomplete="off" class="grey-line qty" value="${qty.val()}">
 	            </td>
 	            <td>
 	                <input type="text" name="harga[]" class="cl-line harga" value="${parseFloat(qty.val()) * parseInt(harga)}" readonly>
+	            </td>
+	            <td>
+	                <textarea class="grey-line ket" name="ket" autocomplete="off" style="width: 100%;"></textarea>
 	            </td>
 	            <td>
 	                <a href="javascript:void(0)" class="rmv"><i class="fa fa-times text-danger"></i></a>
@@ -90,8 +96,7 @@ function total() {
 		sub_total += sub;
 	});
 	$('#subtot').html(` 
-		Sub Total ${sub_total}
-		`)
+		Sub Total ${sub_total}`)
 }
 
 function brg() {
@@ -125,6 +130,8 @@ $('body').on('change', '.qty', function () {
 $('body').on('click', '#btn-pesan', function (e) {
 	let paketId = $('#paket-id').val();
 	let there = $(`[data-paket-id=${paketId}]`);
+	$('.form-group').find('.form-control').removeClass('is-invalid')
+	$('form').find('.help-block').remove()
 	if (there.length != 0) {
 		$('#form-transaksi').submit();
 	}else{
@@ -146,6 +153,9 @@ $('body').on('submit', '#form-transaksi', function (e) {
 		type: 'POST',
 		data: data,
 		success: res => {
+			window.open(res.url,'_blank')
+			window.location.href = res.back;
+			
 			// Swal.fire({
 			// 	title:'Sukses !',
 			// 	type:'success',
@@ -178,13 +188,41 @@ $('body').on('submit', '#form-transaksi', function (e) {
 				});
 			}
 
-			// $.each(errors.errors, function (key, value) {
-			// 	$('#'+key).closest('.form-group .form-control').addClass('is-invalid')
-			// 	$('#' + key).closest('.form-group').append(`<span class="help-block text-danger">`+value+`</span>`)
-			// });
+			if (xhr.status == 422) {
+				$.each(errors.errors, function (key, value) {
+					if (key == 'hd_outlet') {
+						Swal.fire({
+							title:'Aduh !',
+							type:'warning',
+							text: 'Pilih Outlet',
+							showConfirmButton: false,
+							timer: 2000
+						});
+					}
+
+					if (key == 'member') {
+						Swal.fire({
+							title:'Aduh !',
+							type:'warning',
+							text: 'Pilih Pelanggan',
+							showConfirmButton: false,
+							timer: 2000
+						});
+					}
+					$('#' + key).closest('.form-group .form-control').addClass('is-invalid')
+					$('#' + key).closest('.form-group').append(`<span class="help-block text-danger">`+value+`</span>`)
+				});
+			}
 		}
 	})
 });
+
+$('body').on('click', '#fresh', function () {
+    outlet.prop("disabled", false);
+	tbody.html('');
+	total();
+	brg();
+})
 setInterval(()=> {
 	$('#hd_outlet').val(outlet.val())
 	$('#hd_member').val($("#member").val())

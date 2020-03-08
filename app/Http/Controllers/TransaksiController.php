@@ -13,14 +13,59 @@ use Auth;
 use Date;
 use DataTables;
 use DB;
+use Validator;
 
 class TransaksiController extends Controller
 {
-
-    public function pajak()
+    function __construct()
     {
-        return 10;
+        // pajak setup
+        $this->pajak = 10;
+        $this->status = ['baru', 'proses', 'selesai', 'diambil'];
+        $this->dibayar = ['dibayar', 'belum_dibayar'];
+        $this->rules_kasir = [
+            'rules' => [
+                "biaya_tambahan" => 'nullable|numeric',
+                'tgl_selesai' => 'required',
+                'member' => 'required',
+                'diskon' => 'nullable|numeric|min:1|max:100',
+            ],
+            'messages' => [
+                'tgl_selesai.required' => 'Estimasi Tanggal Harus diisi',
+                'member.required' => 'Pilih Member',
+                'diskon.digits_between' => 'Masukan ratusan',
+                'biaya_tambahan.numeric' => 'Biaya Tambah hanya diisi angka',
+                'diskon.numeric' => 'Diskon hanya diisi angka',
+                'diskon.min' => 'Minimal 1%',
+                'diskon.max' => 'Maksimal 100%',
+            ],
+        ];
+
+        $this->rules_admin = [
+            'rules' => [
+                "biaya_tambahan" => 'nullable|numeric',
+                'tgl_selesai' => 'required',
+                'member' => 'required',
+                'hd_outlet' => 'required',
+                'diskon' => 'nullable|numeric|min:1|max:100',
+            ],
+            'messages' => [
+                'tgl_selesai.required' => 'Estimasi Tanggal Harus diisi',
+                'member.required' => 'Pilih Member',
+                'diskon.digits_between' => 'Masukan ratusan',
+                'biaya_tambahan.numeric' => 'Biaya Tambah hanya diisi angka',
+                'diskon.numeric' => 'Diskon hanya diisi angka',
+                'hd_outlet' => 'Pilih Outlet',
+                'diskon.min' => 'Minimal 1%',
+                'diskon.max' => 'Maksimal 100%',
+            ],
+        ];
     }
+
+    // public function pajak()
+    // {
+    //     return 10;
+    // }
 
     public function kode_invoice()
     {
@@ -56,20 +101,52 @@ class TransaksiController extends Controller
     // store
     public function store(Request $request)
     {
-        dd($request);
+        if (Auth::user()->level == 'admin') {
+            $validator = Validator::make($request->all(), $this->rules_admin['rules'], $this->rules_admin['messages']);
+        }else if (Auth::user()->level == 'kasir'){
+            $validator = Validator::make($request->all(), $this->rules_kasir['rules'], $this->rules_kasir['messages']);
+        }else{
+            return response()->json(['msg' => 'Terjadi Kesalahan dengan Hak Akses'], 500);
+        }
+        if ($validator->fails()) {
+            return response()->json(["errors" => $validator->errors()], 422);
+        }
+        // dd(Date::parse($request->tgl_selesai)->format('Y-m-d H:i:s'));
+
         $transaksi = Transaksi::create([
-            'id_outlet' => $request->hd_outlet,
+            'id_outlet' => Auth::user()->level == 'admin' ? $request->hd_outlet : Auth::user()->tbUser->id_outlet,
+            'id_member' => $request->member,
             'kode_invoice' => $this->kode_invoice(),
-            'tgl' => date('y-m-d H:i:s'),
-            'batas_waktu' => Date::parse($request->tgl_selesai)->format('y-m-d H:i:s'),
-            // 'tgl_bayar' => null,
+            'tgl' => Date::now(),
+            'batas_waktu' => Date::parse($request->tgl_selesai)->format('Y-m-d H:i:s'),
             'biaya_tambahan' => $request->biaya_tambahan,
             'diskon' => $request->diskon,
-            'pajak' => $this->pajak(),
-            'status' => 'baru',
-            'dibayar' => 'belum_dibayar',
-            'user_id' => Auth::id(),
+            'pajak' => $this->pajak,
+            'status' => $this->status[0],
+            'dibayar' => $this->dibayar[0],
+            'id_user' => Auth::user()->tbUser->id,
         ]);
+
+        if (!$transaksi) {
+            return response()->json(['msg' => 'Terjadi Kesalahan'], 500);
+        }
+        if (count($request->p_id) > 0) {
+            foreach ($request->p_id as $key => $value) {
+                $data = [
+                    'id_transaksi' => $transaksi->id,
+                    'keterangan' => $request->ket[$key],
+                    'id_paket' => $request->p_id[$key],
+                    'qty' => $request->qty[$key]
+                ];
+                $det_transaksi = DetailTransaksi::create($data);
+            }
+        }
+
+        return response()->json([
+            'msg' => 'Berhasil Memesan',
+            'url' => route('nota.print', $transaksi->id),
+            'back' => route('transaksi.index')
+        ], 200);
         
     }
 
@@ -116,5 +193,17 @@ class TransaksiController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function notaPrint($id)
+    {
+        $ts = Transaksi::findOrFail($id);
+        $data = [];
+
+        $data['data'] = $ts;
+        $data['masuk'] = Date::parse($ts->tgl)->format('d F Y');
+        $data['esti'] = Date::parse($ts->batas_waktu)->format('d F Y');
+
+        return view('laporan.nota.nota', $data); 
     }
 }

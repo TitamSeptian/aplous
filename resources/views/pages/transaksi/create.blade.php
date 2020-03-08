@@ -11,7 +11,7 @@
         color: #858796;
     }
 
-    input.grey-line{
+    .grey-line{
         display: block;
         padding: 0.100rem 0.05rem;
         font-size: 1rem;
@@ -27,7 +27,10 @@
 </style>
 @endpush
 @section('content')
-<a href="/transaksi" class="btn btn-danger btn-sm mb-4">Kembali</a>
+<div class="">
+    <a href="/transaksi" class="btn btn-danger btn-sm mb-4">Kembali</a>
+    <button type="button" class="fresh btn btn-sm btn-outline-secondary ml-auto float-right" id="fresh">Refresh</button>
+</div>
 <div class="card">
     <div class="card-body">
         <h3>Tambah Transaksi</h3>
@@ -37,10 +40,7 @@
             <select name="outlet" class="form-control" style="width: 100%" id="outlet"></select>
         </div>
         @endif
-        <div class="form-group">
-            <label>Member</label>
-            <select name="member" class="form-control" style="width: 100%" id="member"></select>
-        </div>
+        
         
         <hr>
         <div class="row">
@@ -54,13 +54,13 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="">jumlah KG/Satuan</label>
-                    <input type="text" name="" class="form-control" class="qty" id="qty" placeholder="Quantitas">
+                    <input type="text" name="" class="form-control" class="qty" id="qty" placeholder="Quantitas" autocomplete="off">
                 </div>
             </div>
         </div>
         <button type="button" class="btn btn-block btn-sm btn-outline-primary" id="tambah">Tambah</button>
         <hr>
-        <h4 id="jml-barang">
+        <h4 id="jml-barang" style="font-weight: bold;">
             Jumlah Barang : 0
         </h4>
         <form method="POST" action="{{ route('transaksi.store') }}" id="form-transaksi">
@@ -74,6 +74,7 @@
                     <th>Paket</th>
                     <th>KG/Satuan</th>
                     <th>Harga</th>
+                    <th>Ket</th>
                     <th></th>
                 </tr>
             </thead>
@@ -81,7 +82,7 @@
                 
             </tbody>
             </table>
-            <h4 id="subtot">
+            <h4 id="subtot" style="font-weight: bold;">
                 Sub Total : 0
             </h4>
             <hr>
@@ -95,13 +96,17 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="">Diskon(%)</label>
-                        <input type="number" name="diskon" class="form-control" name="diskon" id="diskon" placeholder="Diskon">
+                        <input type="text" name="diskon" class="form-control" name="diskon" id="diskon" placeholder="Diskon" autocomplete="off">
                     </div>
                 </div>
             </div>
             <div class="form-group">
-                <label for="">Biaya Tambahan</label>
-                <input type="number" name="biaya_tambahan" id="biaya_tambahan" class="form-control" placeholder="Biaya Tambahan">
+                <label for="">Biaya Tambahan(Rp)</label>
+                <input type="text" name="biaya_tambahan" id="biaya_tambahan" class="form-control" placeholder="Biaya Tambahan" autocomplete="off">
+            </div>
+            <div class="form-group">
+                <label>Member</label>
+                <select name="member" class="form-control" style="width: 100%" id="member"></select>
             </div>
             <button type="button" id="btn-pesan" class="btn btn-block btn-success btn-sm">Pesan</button>
         </form>
@@ -137,7 +142,7 @@
     $('body').on('change', '#outlet', function () {
         $('tablePaket').attr('data-outlet', $(this).val());
         $('#paket').val('');
-        $(this).attr('readonly', '')
+        $(this).prop("disabled", true);
         // if (('#tbody').data('cek') == true) {
         //     ('#tbody').html('')
         // }else{
@@ -276,7 +281,7 @@
             },
             cache: true
         },
-        placeholder: 'Cari Member',
+        placeholder: 'Cari Pelanggan',
         // minimumInputLength: 1,
         templateResult: function(repo) {
             if (repo.loading) {

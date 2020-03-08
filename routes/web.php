@@ -16,10 +16,10 @@ Route::get('/', 'AuthController@getLogin')->name('getLogin')->middleware('guest'
 Route::post('/log', 'AuthController@postLogin')->name('postLogin');
 Route::post('logout', 'AuthController@logout')->name('logout')->middleware('auth');
 
-Route::get('/123qwe123', function () {
-    $jenis = \App\Jenis::first();
-    dd($jenis->id);
-});
+// Route::get('/123qwe123', function () {
+//     $jenis = \App\Jenis::first();
+//     dd($jenis->id);
+// });
 
 Route::middleware('auth')->group(function () {
     Route::get('dashboard', function () {
@@ -63,7 +63,8 @@ Route::middleware('auth')->group(function () {
 
     // transaksi
     Route::resource('/transaksi', 'TransaksiController');
-    Route::get('d/t', 'MemberController@datatables')->name('transaksi.data');
+    Route::get('d/t', 'TransaksiController@datatables')->name('transaksi.data');
+    Route::get('nota/{id}', 'TransaksiController@notaPrint')->name('nota.print');
 
     Route::group(['prefix' => '/trash'], function () {
         // ooutlet soft delete data
