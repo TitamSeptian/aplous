@@ -87,6 +87,7 @@
             },
             success: res => {
                 console.log(res)
+                $('#cari').blur();
             },
             error: xhr => {
                 console.log(xhr)

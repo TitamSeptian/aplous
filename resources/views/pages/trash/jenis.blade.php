@@ -86,10 +86,11 @@
             type: 'post',
             data: {
                 'search' : e.target.value,
-                'place' : 'Jenis'
+                'place' : 'Sampah Jenis'
             },
             success: res => {
                 console.log(res)
+                $('#cari').blur();
             },
             error: xhr => {
                 console.log(xhr)

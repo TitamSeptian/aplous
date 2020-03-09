@@ -88,10 +88,11 @@
             type: 'post',
             data: {
                 'search' : e.target.value,
-                'place' : 'Paket'
+                'place' : 'Sampah Paket'
             },
             success: res => {
                 console.log(res)
+                $('#cari').blur();
             },
             error: xhr => {
                 console.log(xhr)

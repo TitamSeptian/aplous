@@ -86,10 +86,11 @@
             type: 'post',
             data: {
                 'search' : e.target.value,
-                'place' : 'Outlet'
+                'place' : 'Sampah Outlet'
             },
             success: res => {
                 console.log(res)
+                $('#cari').blur();
             },
             error: xhr => {
                 console.log(xhr)
