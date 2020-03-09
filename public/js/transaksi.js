@@ -222,7 +222,93 @@ $('body').on('click', '#fresh', function () {
 	tbody.html('');
 	total();
 	brg();
-})
+});
+
+$('body').on('click', '.btn-refresh', function (e) {
+	e.preventDefault();
+	$('#tableTransaksi').DataTable().ajax.reload();
+});
+
+
+$('body').on('click', '.btn-show', function (e) {
+	e.preventDefault();
+	const url = $(this).data('url');
+	const title = $(this).data('title');
+	$.ajax({
+		url: url,
+		dataType: 'html',
+		success: (res) => {
+			$('#modal-body').html(res)
+			$('#modal-title').html("Paket "+title)
+			$('#modal-lg').modal('show');
+		}
+	})
+	// $('#tableTransaksi').DataTable().ajax.reload();
+});
+
+$('body').on('click', '.btn-ts', function (e) {
+	e.preventDefault();
+	const url = $(this).data('url');
+	const title = $(this).data('title');
+	$.ajax({
+		url: url,
+		dataType: 'html',
+		success: (res) => {
+			$('#modal-body').html(res)
+			$('#modal-title').html("Paket "+title)
+			$('#modal-lg').modal('show');
+		}
+	})
+	// $('#tableTransaksi').DataTable().ajax.reload();
+});
+
+$('body').on('click', '.status', function (e) {
+	let v = $(this).val();
+	let url = $('#url').val();
+	$.ajax({
+		url: url,
+		type: 'POST',
+		data: {
+			_method: 'PUT',
+			status: v,
+		},
+		success: res => {
+			console.log('success')
+		},
+		error: xhr => {
+			// $(this).find(':input[type=submit]').prop('disabled', false);
+			errors = xhr.responseJSON;
+			if (xhr.status == 500) {
+				Swal.fire({
+					title:'Aduh !',
+					type:'warning',
+					text: "Terjadi Kesalahan",
+					showConfirmButton: false,
+					timer: 2000
+				});
+			}
+
+			if (xhr.status == 401) {
+				Swal.fire({
+					title:'Aduh !',
+					type:'warning',
+					text: errors.msg,
+					showConfirmButton: false,
+					timer: 2000
+				});
+			}
+
+		}
+	})
+});
+
+
+//when modal cloes/hide event
+$("#modal-lg").on('hidden.bs.modal', function(){
+    $('#tableTransaksi').DataTable().ajax.reload();
+});
+
+
 setInterval(()=> {
 	$('#hd_outlet').val(outlet.val())
 	$('#hd_member').val($("#member").val())

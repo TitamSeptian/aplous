@@ -1,4 +1,4 @@
-@extends('partials.master', [$titlePage = 'Transaksi', $activePage = 'transaksi', $miniMenu = ''])
+@extends('partials.master', [$titlePage = 'Transaksi', $activePage = 'transaksi', $miniMenu = 'transaksi'])
 @push('css')
 <link rel="stylesheet" type="text/css" href="{{ asset('vendor/assets/extra-libs/select2/css/select2.min.css') }}">
 <style>

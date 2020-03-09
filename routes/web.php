@@ -65,6 +65,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('/transaksi', 'TransaksiController');
     Route::get('d/t', 'TransaksiController@datatables')->name('transaksi.data');
     Route::get('nota/{id}', 'TransaksiController@notaPrint')->name('nota.print');
+    Route::get('/transaksi/ts/{id}', 'TransaksiController@viewStatus')->name('transaksi.transaksi');
+    Route::put('/transaksi/stts/ts/{id}', 'TransaksiController@updateStatus')->name('transaksi.status');
 
     Route::group(['prefix' => '/trash'], function () {
         // ooutlet soft delete data

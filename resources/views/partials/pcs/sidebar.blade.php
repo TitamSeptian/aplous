@@ -9,9 +9,27 @@
                 @if(Auth::user()->level == 'admin' || Auth::user()->level == 'kasir')
                 <li class="list-divider"></li>
                 <li class="nav-small-cap"><span class="hide-menu">Transaksi</span></li>
-                <li class="sidebar-item {{ $activePage == 'transaksi' ? 'selected' : '' }}"> <a class="sidebar-link" href="{{ route('transaksi.index') }}" aria-expanded="false"><i class="fas fa-pallet"></i><span class="hide-menu">Transakasi
-                        </span></a>
+
+                <li class="sidebar-item {{ $activePage == 'transaksi' ? 'selected' : '' }}"> <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-users"></i><span class="hide-menu"> Transaksi </span></a>
+                    <ul aria-expanded="false" class="collapse  first-level base-level-line">
+                        <li class="sidebar-item">
+                            <a href="{{ route('transaksi.index') }}" class="sidebar-link {{ $miniMenu == 'transaksi' ? 'active' : '' }}">
+                                <span class="hide-menu"> Transaksi</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="{{ route('admin.index') }}" class="sidebar-link {{ $miniMenu == 'transaksi_selesai' ? 'active' : '' }}">
+                                <span class="hide-menu"> Selesai</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
+
+                {{-- <li class="sidebar-item {{ $activePage == 'transaksi' ? 'selected' : '' }}"> <a class="sidebar-link" href="{{ route('transaksi.index') }}" aria-expanded="false"><i class="fas fa-pallet"></i><span class="hide-menu">Transakasi
+                        </span></a>
+                </li> --}}
+
+
                 <li class="list-divider"></li>
                 <li class="nav-small-cap"><span class="hide-menu">Lainya</span></li>
                 <li class="sidebar-item {{ $activePage == 'member' ? 'selected' : '' }}"> <a class="sidebar-link sidebar-link" href="{{ route('member.index') }}" aria-expanded="false"><i class="fas fa-user"></i><span class="hide-menu">Member

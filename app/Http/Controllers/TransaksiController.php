@@ -22,7 +22,7 @@ class TransaksiController extends Controller
         // pajak setup
         $this->pajak = 10;
         $this->status = ['baru', 'proses', 'selesai', 'diambil'];
-        $this->dibayar = ['dibayar', 'belum_dibayar'];
+        $this->dibayar = ['belum_dibayar', 'dibayar'];
         $this->rules_kasir = [
             'rules' => [
                 "biaya_tambahan" => 'nullable|numeric',
@@ -142,6 +142,7 @@ class TransaksiController extends Controller
             }
         }
 
+
         return response()->json([
             'msg' => 'Berhasil Memesan',
             'url' => route('nota.print', $transaksi->id),
@@ -158,7 +159,17 @@ class TransaksiController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = [];
+        $data['data'] = Transaksi::findOrFail($id);
+        $data['a'] = DB::table('tb_detail_transaksi')
+                    ->join('tb_paket', 'tb_detail_transaksi.id_paket', '=', 'tb_paket.id')
+                    ->select(DB::raw('SUM(tb_detail_transaksi.qty * tb_paket.harga) AS total'))
+                    ->where('tb_detail_transaksi.id_transaksi', $id)
+                    ->first();
+        $data['pajak'] = $pajak = $data['data']->pajak/100 * $data['a']->total;
+        $data['diskon'] = $diskon = $data['data']->diskon/100 * $data['a']->total;
+        $data['total'] = $data['a']->total + $pajak - $diskon + $data['data']->biaya_tambahan;
+        return view('pages.transaksi.show', $data);
     }
 
     /**
@@ -193,6 +204,62 @@ class TransaksiController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function viewStatus($id)
+    {
+        $data = [];
+        $data['data'] = Transaksi::findOrFail($id);
+        $data['a'] = DB::table('tb_detail_transaksi')
+                    ->join('tb_paket', 'tb_detail_transaksi.id_paket', '=', 'tb_paket.id')
+                    ->select(DB::raw('SUM(tb_detail_transaksi.qty * tb_paket.harga) AS total'))
+                    ->where('tb_detail_transaksi.id_transaksi', $id)
+                    ->first();
+        $data['pajak'] = $pajak = $data['data']->pajak/100 * $data['a']->total;
+        $data['diskon'] = $diskon = $data['data']->diskon/100 * $data['a']->total;
+        $data['total'] = $data['a']->total + $pajak - $diskon + $data['data']->biaya_tambahan;
+        return view('pages.transaksi.ts', $data);
+    }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $data = Transaksi::findOrFail($id);
+        $data->update(['status' => $request->status]);
+
+        return response()->json(['msg' => 'Status Berhasil Dirubah'], 200);
+
+    }
+
+    public function datatables()
+    {
+        $ts = '';
+        if (Auth::user()->level == 'admin') {
+            $ts = Transaksi::query()->orderBy('created_at', 'DESC')->with(['outlet', 'tbUser', 'detailTransaksi', 'member'])->where('dibayar', 'belum_dibayar');
+        }else if(Auth::user()->level == 'kasir'){
+            $ts = Transaksi::query()->orderBy('created_at', 'DESC')->with(['outlet', 'tbUser', 'detailTransaksi', 'member'])->where('id_outlet', Auth::user()->tbUser->id_outlet)->where('dibayar', 'belum_dibayar');
+        }
+
+        return DataTables::of($ts)
+            ->addColumn('total_harga', function ($ts){
+                $a = DB::table('tb_detail_transaksi')
+                    ->join('tb_paket', 'tb_detail_transaksi.id_paket', '=', 'tb_paket.id')
+                    ->select(DB::raw('SUM(tb_detail_transaksi.qty * tb_paket.harga) AS total'))
+                    ->where('tb_detail_transaksi.id_transaksi', $ts->id)
+                    // ->count();
+                    ->first();
+                $pajak = $ts->pajak/100 * $a->total;
+                $diskon = $ts->diskon/100 * $a->total;
+                return $a->total + $pajak - $diskon + $ts->biaya_tambahan;
+            })
+            ->addColumn('action', function($ts){
+                return view('pages.transaksi.action', [
+                    'model' => $ts,
+                    'url_transaksi' => route('transaksi.transaksi', $ts->id),
+                    'url_edit' => route('transaksi.edit', $ts->id),
+                    'url_show' => route('transaksi.show', $ts->id),
+                    'url_delete' => route('transaksi.destroy', $ts->id),
+                ]);
+            })->rawColumns(['action', 'total_harga'])->addIndexColumn()->make(true);
     }
 
     public function notaPrint($id)
