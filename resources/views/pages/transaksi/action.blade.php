@@ -1,4 +1,4 @@
-<a href="javascript:void(0)" data-title="{{ $model->kode_invoice }}" data-url="{{ $url_transaksi }}" class="badge badge-success btn-ts">
+<a href="javascript:void(0)" data-title="{{ $model->kode_invoice }}" data-url="{{ $url_transaksi }}" class="badge badge-cyan btn-ts">
 	<i class="far fa-money-bill-alt"></i> Transaksi
 </a>
 <a href="javascript:void(0)" data-title="{{ $model->kode_invoice }}" data-url="{{ $url_show }}" class="badge badge-info btn-show">

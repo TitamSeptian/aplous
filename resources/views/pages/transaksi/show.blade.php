@@ -33,6 +33,7 @@
 							<th>Qty</th>
 							<th>Harga</th>
 							<th>Sub Total</th>
+							<th>Ket</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -42,6 +43,7 @@
 							<td>{{ $q->qty }}</td>
 							<td>{{ $q->paket->harga }}</td>
 							<td class="text-right">{{ $q->qty * $q->paket->harga }}</td>
+							<td>{{ $q->keterangan == null ? '-' : $q->keterangan }}</td>
 						</tr>
 						@endforeach
 					</tbody>
@@ -82,7 +84,7 @@
 		<tr>
 			<td>Potongan</td>
 			<td>:</td>
-			<td>{{ $diskon == null ? '0' : $data->diskon }}</td>
+			<td>{{ $diskon }}</td>
 		</tr>
 		<tr>
 			<td colspan="3"><hr></td>

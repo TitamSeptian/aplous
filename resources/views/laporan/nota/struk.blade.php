@@ -25,3 +25,18 @@
 @section('biaya_tambah', $data->biaya_tambahan == null ? '0' : $data->biaya_tambahan)
 @section('kode_invoice', $data->kode_invoice)
 @section('redir', route('transaksi.index'))
+@section('struk')
+<tr>
+    <td colspan="3">
+        <hr class="ml-3 mr-3">
+    </td>
+</tr>
+<tr>
+    <td colspan="2" class="text-right">Bayar</td>
+    <td class="text-right" id="bayar">{{ $data->bayar }}</td>
+</tr>
+<tr>
+    <td colspan="2" class="text-right">Kembailan</td>
+    <td class="text-right" id="kembalian"></td>
+</tr>
+@endsection

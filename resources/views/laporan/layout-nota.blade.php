@@ -129,8 +129,9 @@
                 </tr>
                 <tr>
                     <td colspan="2" class="text-right">Total</td>
-                    <td class="text-right" id="total"><b></b></td>
+                    <td class="text-right" id="total"></td>
                 </tr>
+                @yield('struk')
                 <tr>
                     <td colspan="3" class="text-center">
                         <hr class="ml-3 mr-3">
@@ -163,7 +164,6 @@
                 sub_total += tot;
             });
             $('#sub-total').html(sub_total);
-
         }
 
         function total() {
@@ -176,6 +176,14 @@
             $('#diskon').html(diskon)
             let res = pajak + dataSub + parseInt($('#biaya-tambah').html()) - diskon;
             $('#total').html(res);
+        }
+
+        function kembalian() {
+            let total = parseInt($('#total').html())
+            let bayar = parseInt($('#bayar').html())
+            console.log(total);
+            console.log(bayar)
+            $('#kembalian').html(bayar - total);
 
         }
 
@@ -183,6 +191,7 @@
         totalItem();
         subTotal();
         total();
+        kembalian();
         window.print();
     });
     </script>

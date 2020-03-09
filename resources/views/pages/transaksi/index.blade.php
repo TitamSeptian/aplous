@@ -105,7 +105,7 @@
             type: 'post',
             data: {
                 'search' : e.target.value,
-                'place' : 'Jenis'
+                'place' : 'Transaksi'
             },
             success: res => {
                 console.log(res)

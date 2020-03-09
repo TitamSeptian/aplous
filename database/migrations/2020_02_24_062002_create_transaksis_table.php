@@ -21,6 +21,7 @@ class CreateTransaksisTable extends Migration
             $table->dateTime('tgl');
             $table->dateTime('batas_waktu');
             $table->dateTime('tgl_bayar')->nullable();
+            $table->integer('bayar')->nullable();
             $table->integer('biaya_tambahan')->nullable();
             $table->double('diskon')->nullable();
             $table->integer('pajak')->nullable();

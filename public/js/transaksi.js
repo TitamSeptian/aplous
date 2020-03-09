@@ -52,7 +52,7 @@ function toTable() {
 	// let dataQty = qty.val();
 	// let dataDiskon = diskon.val();
 	let paketId = $('#paket-id').val();
-	let harga = paket.data('harga');
+	let harga = paket.attr('data-harga');
 	let there = $(`[data-paket-id=${paketId}]`);
 	if (there.length != 0) {
 		let thereQty = there.find('.qty').val();
@@ -63,7 +63,7 @@ function toTable() {
 		tbody.prepend(` 
 			<tr data-paket-id="${paketId}">
 	            <input type="hidden" name="p_id[]" value="${paketId}">
-	            <input type="hidden" name="res_harga[]" class="res_harga" value="${paket.data('harga')}">
+	            <input type="hidden" name="res_harga[]" class="res_harga" value="${harga}">
 	            <td>${i++}</td>
 	            <td>
 	                <input type="text" name="nama_paket[]" autocomplete="off" class="cl-line nama_paket" value="${paket.val()}" readonly>
@@ -128,19 +128,20 @@ $('body').on('change', '.qty', function () {
 })
 
 $('body').on('click', '#btn-pesan', function (e) {
-	let paketId = $('#paket-id').val();
-	let there = $(`[data-paket-id=${paketId}]`);
+	let there = $('#tbody tr').length
 	$('.form-group').find('.form-control').removeClass('is-invalid')
 	$('form').find('.help-block').remove()
-	if (there.length != 0) {
-		$('#form-transaksi').submit();
-	}else{
+	if (there == 0) {
 		Swal.fire({
 			title:'Peringatan !',
 			type:'warning',
 			text: "Tidak Ada Paket",
 		});
+	}else{
+		$('#form-transaksi').submit();
 	}
+	// let paketId = $('#paket-id').val();
+	// let there = $(`[data-paket-id=${paketId}]`);
 });
 
 $('body').on('submit', '#form-transaksi', function (e) {
@@ -155,7 +156,6 @@ $('body').on('submit', '#form-transaksi', function (e) {
 		success: res => {
 			window.open(res.url,'_blank')
 			window.location.href = res.back;
-			
 			// Swal.fire({
 			// 	title:'Sukses !',
 			// 	type:'success',
@@ -262,6 +262,7 @@ $('body').on('click', '.btn-ts', function (e) {
 	// $('#tableTransaksi').DataTable().ajax.reload();
 });
 
+//click radio button status on transaksi
 $('body').on('click', '.status', function (e) {
 	let v = $(this).val();
 	let url = $('#url').val();
@@ -301,6 +302,60 @@ $('body').on('click', '.status', function (e) {
 		}
 	})
 });
+
+$('body').on('submit', '#form-bayar', function (e) {
+	e.preventDefault();
+	const bayar = parseInt($('#bayar').val())
+	const total = parseInt($('#total-ts').html())
+	const url = $(this).attr('action');
+	const data = $(this).serializeArray();
+	$(this).find(':input[type=submit]').prop('disabled', true);
+	if (bayar < total) {
+		$(this).find(':input[type=submit]').prop('disabled', false);
+		Swal.fire({
+			title:'Aduh !',
+			type:'warning',
+			text: "Uang Kurang",
+			showConfirmButton: false,
+			timer: 2000
+		});
+	}else{
+		$.ajax({
+		url: url,
+		type: 'POST',
+		data: data,
+		success: res => {
+			$('#modal-lg').modal('hide');
+			window.open(res.url,'_blank')
+			window.location.href = res.back;
+		},
+		error: xhr => {
+			// $(this).find(':input[type=submit]').prop('disabled', false);
+			errors = xhr.responseJSON;
+			if (xhr.status == 500) {
+				Swal.fire({
+					title:'Aduh !',
+					type:'warning',
+					text: "Terjadi Kesalahan",
+					showConfirmButton: false,
+					timer: 2000
+				});
+			}
+
+			if (xhr.status == 401) {
+				Swal.fire({
+					title:'Aduh !',
+					type:'warning',
+					text: errors.msg,
+					showConfirmButton: false,
+					timer: 2000
+				});
+			}
+
+		}
+	})
+	}
+})
 
 
 //when modal cloes/hide event

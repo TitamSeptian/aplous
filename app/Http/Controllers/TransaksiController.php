@@ -142,6 +142,10 @@ class TransaksiController extends Controller
             }
         }
 
+        Log::create([
+            'user_id' => Auth::id(),
+            'msg' => 'Membuat Transaksi '.$transaksi->kode_invoice
+        ]);
 
         return response()->json([
             'msg' => 'Berhasil Memesan',
@@ -226,6 +230,11 @@ class TransaksiController extends Controller
         $data = Transaksi::findOrFail($id);
         $data->update(['status' => $request->status]);
 
+        Log::create([
+            'user_id' => Auth::id(),
+            'msg' => 'Mengubah Status Barang '.$data->kode_invoice
+        ]);
+
         return response()->json(['msg' => 'Status Berhasil Dirubah'], 200);
 
     }
@@ -271,6 +280,60 @@ class TransaksiController extends Controller
         $data['masuk'] = Date::parse($ts->tgl)->format('d F Y');
         $data['esti'] = Date::parse($ts->batas_waktu)->format('d F Y');
 
+        Log::create([
+            'user_id' => Auth::id(),
+            'msg' => 'Mambuat Nota '.$ts->kode_invoice
+        ]);
+
         return view('laporan.nota.nota', $data); 
+    }
+
+    public function bayar(Request $request, $id)
+    {
+        $rules = [
+            'bayar' => 'required|numeric',
+        ];
+        $messages = [
+            'bayar.required' => 'Tidak ada Uang',
+            'bayar.numeric' => 'Hanya di Isi Angka'
+        ];
+        $validator = Validator::make($request->all(), $rules, $messages);
+        if ($validator->fails()) {
+            return response()->json(["errors" => $validator->errors()], 422);
+        }
+        $data = Transaksi::findOrFail($id);
+        $data->update([
+            'dibayar' => $this->dibayar[1],
+            'bayar' => $request->bayar,
+            'tgl_bayar' => Date::now(),
+        ]);
+
+        Log::create([
+            'user_id' => Auth::id(),
+            'msg' => "Melakukan Pembayaran $data->kode_invoice",
+        ]);
+
+        return response()->json([
+            'msg' => 'Pembayaran Berhasil',
+            'url' => route('struk.print', $data->id),
+            'back' => route('transaksi.index'),
+        ], 200);
+    }
+
+    public function strukPrint($id)
+    {
+        $ts = Transaksi::findOrFail($id);
+        $data = [];
+
+        $data['data'] = $ts;
+        $data['masuk'] = Date::parse($ts->tgl)->format('d F Y');
+        $data['esti'] = Date::parse($ts->batas_waktu)->format('d F Y');
+
+        Log::create([
+            'user_id' => Auth::id(),
+            'msg' => 'Mambuat Struk '.$ts->kode_invoice,
+        ]);
+
+        return view('laporan.nota.struk', $data); 
     }
 }
