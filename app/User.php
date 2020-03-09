@@ -20,7 +20,7 @@ class User extends Authenticatable
 
     public function log()
     {
-        return $this->belongsTo(Log::class);
+        return $this->hasMany(Log::class);
     }
 
     public function tbUser()

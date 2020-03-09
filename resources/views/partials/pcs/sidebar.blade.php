@@ -78,8 +78,8 @@
                 {{-- only admin --}}
                 <li class="nav-small-cap"><span class="hide-menu">Extra</span></li>
                 @if(Auth::user()->level == "admin")
-                <li class="sidebar-item">
-                    <a class="sidebar-link sidebar-link" href="authentication-login1.html" aria-expanded="false">
+                <li class="sidebar-item {{ $activePage == 'riwayat' ? 'selected' : '' }}">
+                    <a class="sidebar-link sidebar-link" href="{{ route('log.index') }}" aria-expanded="false">
                         <i class="fas fa-history"></i>
                         <span class="hide-menu">Riwayat</span>
                     </a>

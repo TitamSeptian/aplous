@@ -29,6 +29,10 @@ Route::middleware('auth')->group(function () {
     // log
     // store serach
     Route::post('/ss', 'LogController@searchStore')->name('log.search.store');
+    Route::get('riwayat', 'LogController@index')->name('log.index');
+    Route::delete('riwayat/{id}', 'LogController@destroy')->name('log.destroy');
+    Route::get('log/d', 'LogController@datatables')->name('log.data');
+    Route::post('riwayat/del', 'LogController@deleteAll')->name('log.delete-all');
 
     // outlet
     Route::resource('/outlet', 'OutletController');
