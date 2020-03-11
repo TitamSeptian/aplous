@@ -10,7 +10,7 @@
                 <li class="list-divider"></li>
                 <li class="nav-small-cap"><span class="hide-menu">Transaksi</span></li>
 
-                <li class="sidebar-item {{ $activePage == 'transaksi' ? 'selected' : '' }}"> <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-users"></i><span class="hide-menu"> Transaksi </span></a>
+                <li class="sidebar-item {{ $activePage == 'transaksi' ? 'selected' : '' }}"> <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-calendar-check"></i><span class="hide-menu"> Transaksi </span></a>
                     <ul aria-expanded="false" class="collapse  first-level base-level-line">
                         <li class="sidebar-item">
                             <a href="{{ route('transaksi.index') }}" class="sidebar-link {{ $miniMenu == 'transaksi' ? 'active' : '' }}">
@@ -18,7 +18,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="{{ route('admin.index') }}" class="sidebar-link {{ $miniMenu == 'transaksi_selesai' ? 'active' : '' }}">
+                            <a href="{{ route('transaksi.done.index') }}" class="sidebar-link {{ $miniMenu == 'transaksi_selesai' ? 'active' : '' }}">
                                 <span class="hide-menu"> Selesai</span>
                             </a>
                         </li>
@@ -91,7 +91,7 @@
                         </span>
                     </a>
                 </li> --}}
-                <li class="sidebar-item {{ $activePage == 'laporan' ? 'selected' : '' }}"> <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-trash"></i><span
+                <li class="sidebar-item {{ $activePage == 'trash' ? 'selected' : '' }}"> <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-trash"></i><span
                             class="hide-menu"> Sampah </span></a>
                     <ul aria-expanded="false" class="collapse  first-level base-level-line">
                         <li class="sidebar-item">
@@ -114,6 +114,12 @@
                                 <span class="hide-menu"> Member</span>
                             </a>
                         </li>
+                        <li class="sidebar-item">
+                            <a href="{{ route('transaksi.softDelete.index') }}" class="sidebar-link {{ $miniMenu == 'transaksi' ? 'active' : '' }}">
+                                <span class="hide-menu"> Transaksi</span>
+                            </a>
+                        </li>
+                        
                     </ul>
                 </li>
                 @endif

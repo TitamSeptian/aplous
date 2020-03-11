@@ -48,17 +48,19 @@
                     @endif
                     <div class="dropdown-menu dropdown-menu-left mailbox animated bounceInDown">
                         <ul class="list-style-none">
+                            @foreach(\App\Log::take(5)->get() as $q)
                             <li>
                                 <div class="message-center notifications position-relative">
                                     <!-- Message -->
                                     <a href="javascript:void(0)" class="message-item d-flex align-items-center border-bottom px-3 py-2">
                                         <div class="w-75 d-inline-block v-middle pl-2">
-                                            <h6 class="message-title mb-0 mt-1">Laurel kumar</h6> <span class="font-12 text-nowrap d-block text-muted">Menambahkan Paket</span>
-                                            <span class="font-12 text-nowrap d-block text-muted">9:02 AM</span>
+                                            <h6 class="message-title mb-0 mt-1">{{ $q->user->tbUser->nama}}</h6> <span class="font-12 text-nowrap d-block text-muted">{{ $q->msg }}</span>
+                                            <span class="font-12 text-nowrap d-block text-muted">{{ $q->created_at }}</span>
                                         </div>
                                     </a>
                                 </div>
                             </li>
+                            @endforeach
                             <li>
                                 <a class="nav-link pt-3 text-center text-dark" href="javascript:void(0);">
                                     <b>Lihat Semua Riwayat</b>

@@ -11,4 +11,11 @@ class HandleController extends Controller
 	{
 	    return view('pages.trash.index');
 	}
+
+	public function laporanIndex()
+	{
+		$data = [];
+		$data['outlet'] = \App\Outlet::all();
+		return view('pages.laporan.index', $data);
+	}
 }

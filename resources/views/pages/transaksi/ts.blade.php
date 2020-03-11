@@ -83,6 +83,7 @@
             <td><b id="total-ts">{{ $total }}</b></td>
         </tr>
     </table>
+    @if($data->dibayar == 'belum_dibayar')
     <form id="form-bayar" action="{{ route('transaksi.bayar', $data->id) }}" method="POST">
         @csrf
         <div class="form-group">
@@ -91,4 +92,5 @@
         </div>
         <button type="submit" class="btn btn-sm btn-block btn-cyan">Bayar</button>
     </form>
+    @endif
 </div>

@@ -16,10 +16,9 @@ Route::get('/', 'AuthController@getLogin')->name('getLogin')->middleware('guest'
 Route::post('/log', 'AuthController@postLogin')->name('postLogin');
 Route::post('logout', 'AuthController@logout')->name('logout')->middleware('auth');
 
-// Route::get('/123qwe123', function () {
-//     $jenis = \App\Jenis::first();
-//     dd($jenis->id);
-// });
+Route::get('/123qwe123', function () {
+    return view('laporan.layout-pdf');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('dashboard', function () {
@@ -51,6 +50,10 @@ Route::middleware('auth')->group(function () {
     Route::get('d/p/sel2', 'JenisController@findPaket')->name('paket.data.sel2'); //data select 2
     Route::get('d/p/outlet', 'PaketController@findPaketByOutlet')->name('paket.data.outlet');
 
+    // paket laporan
+    Route::get('j/pdf', 'PaketController@pdf')->name('paket.pdf');
+    Route::get('j/pdf/{outlet}', 'PaketController@pdfOutlet')->name('paket.pdf.outlet');
+
     // member
     Route::resource('/member', 'MemberController');
     Route::get('d/m', 'MemberController@datatables')->name('member.data');
@@ -72,9 +75,18 @@ Route::middleware('auth')->group(function () {
     Route::put('/transaksi/stts/ts/{id}', 'TransaksiController@updateStatus')->name('transaksi.status');
     Route::post('/transaksi/pay/ts/{id}', 'TransaksiController@bayar')->name('transaksi.bayar');
 
+    Route::get('d/ts/sel2', 'TransaksiController@findTransaksi')->name('transaksi.data.sel2'); //data select 2
+
+    // transaksi done;
+    Route::get('/transaksi/done/a', 'TransaksiController@doneIndex')->name('transaksi.done.index');
+    Route::get('d/t/done', 'TransaksiController@doneDatatables')->name('transaksi.done.data');
+
+
     Route::get('nota/{id}', 'TransaksiController@notaPrint')->name('nota.print');
     Route::get('struk/{id}', 'TransaksiController@strukPrint')->name('struk.print');
 
+
+    Route::get('/laporan', 'HandleController@laporanIndex')->name('laporan.index');
 
     Route::group(['prefix' => '/trash'], function () {
         // ooutlet soft delete data
@@ -106,13 +118,14 @@ Route::middleware('auth')->group(function () {
         Route::delete('/m/{id}', 'MemberController@deletePermanent')->name('member.softDelete.deletePermanent');
         Route::match(['post', 'put'],'/m/all', 'MemberController@all')->name('member.softDelete.all');
 
-    });
 
+        Route::get('/transaksi', 'TransaksiController@softDeleteIndex')->name('transaksi.softDelete.index');
+        Route::get('d/ts', 'TransaksiController@softDeleteData')->name('transaksi.softDelete.data');
+        Route::post('/{id}/ts', 'TransaksiController@restoreData')->name('transaksi.softDelete.restore');
+        Route::delete('/ts/{id}', 'TransaksiController@deletePermanent')->name('transaksi.softDelete.deletePermanent');
+        Route::match(['post', 'put'],'/ts/all', 'TransaksiController@all')->name('transaksi.softDelete.all');
+        
 
-
-    
-    Route::get('/laporan', function () {
-        return view('pages.laporan.laporan');
     });
 
 });

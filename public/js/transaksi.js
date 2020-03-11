@@ -363,6 +363,304 @@ $("#modal-lg").on('hidden.bs.modal', function(){
     $('#tableTransaksi').DataTable().ajax.reload();
 });
 
+$('body').on('click', '.btn-delete', function (e) {
+	e.preventDefault();
+	const url = $(this).data('url');
+	// const data = $(this).data('title');
+
+	Swal.fire({
+		title:'Anda Yakin ?',
+		type:'warning',
+		text:'Transaksi Akan Dibuang',
+		showCancelButton: true,
+		confirmButtonColor:'#ff4f70',
+		cancelButtonColor:'#8A8A8A',
+		confirmButtonText:'Ya, Buang !',
+		cancelButtonText:'Batal',
+	})
+	.then(res=>{
+		if (res.value) {
+			$.ajax({
+				url:url,
+				type:'POST',
+				data: {
+					'_method':'DELETE'
+				},
+				success: function(res){
+					$('#myModal').modal('hide');
+
+					Swal.fire({
+						title:'Sukses !',
+						type:'success',
+						text:res.msg,
+						showConfirmButton: false,
+						timer: 1800
+					});
+
+					$('#tableTransaksi').DataTable().ajax.reload();
+				},
+
+				error: function(xhr){
+					const errors = xhr.responseJSON;
+
+					Swal.fire({
+						title:'Peringatan !',
+						type:'warning',
+						text:errors.msg,
+					});
+				}
+			});
+		}
+	})
+});
+
+
+// =====================================================================================
+
+
+
+// when click button delete will be returned spesifik data  form storage using softDeelet
+$('body').on('click', '.btn-restore', function (e) {
+	e.preventDefault();
+	const url = $(this).data('url');
+	const data = $(this).data('title');
+
+	Swal.fire({
+		title:'Anda Yakin ?',
+		type:'warning',
+		text:data + ' Akan Dikembalikan',
+		showCancelButton: true,
+		confirmButtonColor:'##5f76e8;',
+		cancelButtonColor:'#8A8A8A',
+		confirmButtonText:'Ya, Kembalikan !',
+		cancelButtonText:'Batal',
+	})
+	.then(res=>{
+		if (res.value) {
+			$.ajax({
+				url:url,
+				type:'POST',
+				data: {},
+				success: function(res){
+					$('#myModal').modal('hide');
+
+					Swal.fire({
+						title:'Sukses !',
+						type:'success',
+						text:res.msg,
+						showConfirmButton: false,
+						timer: 1800
+					});
+
+					$('#tableTransaksi').DataTable().ajax.reload();
+				},
+
+				error: function(xhr){
+					const error = xhr.responseJSON;
+
+					Swal.fire({
+						title:'Peringatan !',
+						type:'warning',
+						text:error.msg,
+					});
+				}
+			});
+		}
+	})
+});
+
+// when click button delete will be returned spesifik data  form storage PERMANENT
+$('body').on('click', '.btn-force-delete', function (e) {
+	e.preventDefault();
+	const url = $(this).data('url');
+	const data = $(this).data('title');
+
+	Swal.fire({
+		title:'Anda Yakin ?',
+		type:'warning',
+		text:data + ' Akan Dihapus Permanen',
+		showCancelButton: true,
+		confirmButtonColor:'#EF2E2E',
+		cancelButtonColor:'#8A8A8A',
+		confirmButtonText:'Ya, Hapus !',
+		cancelButtonText:'Batal',
+	})
+	.then(res=>{
+		if (res.value) {
+			$.ajax({
+				url:url,
+				type:'POST',
+				data: {
+					'_method':'DELETE'
+				},
+				success: function(res){
+					$('#myModal').modal('hide');
+
+					Swal.fire({
+						title:'Sukses !',
+						type:'success',
+						text:res.msg,
+						showConfirmButton: false,
+						timer: 1800
+					});
+
+					$('#tableTransaksi').DataTable().ajax.reload();
+				},
+
+				error: function(xhr){
+					const error = xhr.responseJSON;
+
+					Swal.fire({
+						title:'Peringatan !',
+						type:'warning',
+						text:error.msg,
+					});
+				}
+			});
+		}
+	})
+});
+
+// restore all data
+$('body').on('click', '.btn-restore-all-outlet', function (e) {
+	let empty = $('#tableTransaksi tbody').find('.dataTables_empty');
+	e.preventDefault();
+	const url = $(this).data('url');
+	if (empty.length == 0) {
+		Swal.fire({
+			title:'Anda Yakin ?',
+			type:'warning',
+			text:'Akan Dikembalikan Semua',
+			showCancelButton: true,
+			confirmButtonColor:'##5f76e8;',
+			cancelButtonColor:'#8A8A8A',
+			confirmButtonText:'Ya, Kembalikan !',
+			cancelButtonText:'Batal',
+		})
+		.then(res=>{
+			if (res.value) {
+				$.ajax({
+					url:url,
+					type:'POST',
+					data: {},
+					success: function(res){
+						$('#myModal').modal('hide');
+
+						Swal.fire({
+							title:'Sukses !',
+							type:'success',
+							text:res.msg,
+							showConfirmButton: false,
+							timer: 1800
+						});
+
+						$('#tableTransaksi').DataTable().ajax.reload();
+					},
+
+					error: function(xhr){
+						const error = xhr.responseJSON;
+
+						Swal.fire({
+							title:'Peringatan !',
+							type:'warning',
+							text:error.msg,
+						});
+					}
+				});
+			}
+		})
+	}else{
+		Swal.fire({
+			title:'Peringatan !',
+			type:'warning',
+			text:"Data Kosong",
+		});
+	}
+})
+
+// delete all data
+$('body').on('click', '.btn-delete-all-outlet', function (e) {
+	e.preventDefault();
+	const url = $(this).data('url');
+	let empty = $('#tableTransaksi tbody').find('.dataTables_empty');
+	if (empty.length == 0) {
+		Swal.fire({
+			title:'Anda Yakin ?',
+			type:'warning',
+			text:'Akan Dihapus Semua',
+			showCancelButton: true,
+			confirmButtonColor:'##5f76e8;',
+			cancelButtonColor:'#8A8A8A',
+			confirmButtonText:'Ya, Kembalikan !',
+			cancelButtonText:'Batal',
+		})
+		.then(res=>{
+			if (res.value) {
+				$.ajax({
+					url:url,
+					type:'POST',
+					data: {
+						'_method': 'DELETE'
+					},
+					success: function(res){
+						$('#myModal').modal('hide');
+
+						Swal.fire({
+							title:'Sukses !',
+							type:'success',
+							text:res.msg,
+							showConfirmButton: false,
+							timer: 1800
+						});
+
+						$('#tableTransaksi').DataTable().ajax.reload();
+					},
+
+					error: function(xhr){
+						const error = xhr.responseJSON;
+
+						Swal.fire({
+							title:'Peringatan !',
+							type:'warning',
+							text:error.msg,
+						});
+					}
+				});
+			}
+		})
+	}else{
+		Swal.fire({
+			title:'Peringatan !',
+			type:'warning',
+			text:"Data Kosong",
+		});
+	}
+});
+
+
+$('body').on('click', '.btn-print', function (e) {
+	e.preventDefault();
+	const url = $(this).data('url');
+	const title = $(this).data('title');
+	Swal.fire({
+			title:'Anda Yakin ?',
+			type:'warning',
+			text:`Akan Membuat Struk ${title} ?`,
+			showCancelButton: true,
+			confirmButtonColor:'#5f76e8;',
+			cancelButtonColor:'#8A8A8A',
+			confirmButtonText:'Ya, Buat !',
+			cancelButtonText:'Batal',
+		})
+		.then(res=>{
+			if (res.value) {
+				window.open(url,'_blank')
+				// window.location.href = res.back;
+			}
+		})
+	
+})
+
 
 setInterval(()=> {
 	$('#hd_outlet').val(outlet.val())

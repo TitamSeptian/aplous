@@ -11,6 +11,7 @@ use Auth;
 use Validator;
 use Date;
 use DataTables;
+use PDF;
 
 class PaketController extends Controller
 {
@@ -253,5 +254,32 @@ class PaketController extends Controller
     {
         $paket = Paket::query()->where('id_outlet', request('q'))->with(['jenis', 'outlet']);
         return DataTables::of($paket)->addIndexColumn()->make(true);
+    }
+
+    public function pdf()
+    {
+        $data = [];
+        if (Auth::user()->level == 'admin') {
+            $data['data'] = Paket::orderBy('id_outlet', 'ASC')->get();;
+        }else{
+            $data['data'] = Paket::orderBy('id_outlet', 'ASC')->where('id_outlet', Auth::user()->tbUser->id_outlet)->get();
+        }
+        $data['tanggal'] = Date::now()->format('d F Y');
+
+        $pdf = PDF::loadView('laporan.pdf.paket', $data);
+
+        return $pdf->download('Paket.pdf');
+        // return view('laporan.pdf.paket', $data);
+    }
+
+    public function pdfOutlet($id)
+    {
+        $data = [];
+        $data['data'] = Paket::where('id_outlet', $id)->get();
+        $data['tanggal'] = Date::now()->format('d F Y');
+
+        $pdf = PDF::loadView('laporan.pdf.paket', $data);
+
+        return $pdf->download('Paket.pdf');
     }
 }

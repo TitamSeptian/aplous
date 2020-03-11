@@ -207,7 +207,23 @@ class TransaksiController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = Transaksi::findOrFail($id);
+        if ($data->dibayar == 'belum_dibayar') {
+            return response()->json(['msg' => 'Transaksi Belum Melakukan Pembayaran'], 401);
+        }
+        if ($data->status != 'diambil') {
+            return response()->json(['msg' => 'Barang Belum Diambil'], 401);
+        }
+
+        $data->delete();
+
+        Log::create([
+            'user_id' => Auth::id(),
+            'msg' => 'Membuang Transaksi '. $data->kode_invoice
+        ]);
+
+        return response()->json(['msg' => 'Transaksi Berhasil Dibuang'], 200);
+
     }
 
     public function viewStatus($id)
@@ -232,7 +248,7 @@ class TransaksiController extends Controller
 
         Log::create([
             'user_id' => Auth::id(),
-            'msg' => 'Mengubah Status Barang '.$data->kode_invoice
+            'msg' => 'Mengubah Status Barang '.$data->kode_invoice . " Menjadi $request->status"
         ]);
 
         return response()->json(['msg' => 'Status Berhasil Dirubah'], 200);
@@ -243,9 +259,16 @@ class TransaksiController extends Controller
     {
         $ts = '';
         if (Auth::user()->level == 'admin') {
-            $ts = Transaksi::query()->orderBy('created_at', 'DESC')->with(['outlet', 'tbUser', 'detailTransaksi', 'member'])->where('dibayar', 'belum_dibayar');
+            $ts = Transaksi::query()->orderBy('created_at', 'DESC')
+                    ->where('dibayar', '!=' ,'dibayar')
+                    ->orWhere('status', '!=', 'diambil')
+                    ->with(['outlet', 'tbUser', 'detailTransaksi', 'member']);
         }else if(Auth::user()->level == 'kasir'){
-            $ts = Transaksi::query()->orderBy('created_at', 'DESC')->with(['outlet', 'tbUser', 'detailTransaksi', 'member'])->where('id_outlet', Auth::user()->tbUser->id_outlet)->where('dibayar', 'belum_dibayar');
+            $ts = Transaksi::query()->orderBy('created_at', 'DESC')
+                    ->where('id_outlet', Auth::user()->tbUser->id_outlet)
+                    ->where('dibayar', '!=' ,'dibayar')
+                    ->orWhere('status', '!=', 'diambil')
+                    ->with(['outlet', 'tbUser', 'detailTransaksi', 'member']);
         }
 
         return DataTables::of($ts)
@@ -335,5 +358,140 @@ class TransaksiController extends Controller
         ]);
 
         return view('laporan.nota.struk', $data); 
+    }
+
+    public function softDeleteIndex()
+    {
+        return view('pages.trash.transaksi');
+    }
+
+     public function softDeleteData()
+    {
+        $transaksi = Transaksi::query()->onlyTrashed()->orderBy('deleted_at', "DESC");
+        return DataTables::of($transaksi)
+            ->addColumn('total_harga', function ($transaksi){
+                $a = DB::table('tb_detail_transaksi')
+                    ->join('tb_paket', 'tb_detail_transaksi.id_paket', '=', 'tb_paket.id')
+                    ->select(DB::raw('SUM(tb_detail_transaksi.qty * tb_paket.harga) AS total'))
+                    ->where('tb_detail_transaksi.id_transaksi', $transaksi->id)
+                    // ->count();
+                    ->first();
+                $pajak = $transaksi->pajak/100 * $a->total;
+                $diskon = $transaksi->diskon/100 * $a->total;
+                return $a->total + $pajak - $diskon + $transaksi->biaya_tambahan;
+            })
+            ->addColumn('delete_time', function ($transaksi){
+                $time = Date::parse($transaksi->deleted_at)->format('d F Y h:i');
+                return $time;
+            })
+            ->addColumn('action', function ($transaksi) {
+                return view('pages.transaksi.softDel-action', [
+                    'model' => $transaksi,
+                    'url_restore' => route('transaksi.softDelete.restore', $transaksi->id),
+                    'url_delete' => route('transaksi.softDelete.deletePermanent', $transaksi->id),
+                ]);
+            })->rawColumns(['action'])->addIndexColumn()->make(true);
+    }
+
+    // function for retore data 
+    public function restoreData(Request $request, $id)
+    {
+        $data = Transaksi::onlyTrashed()->where('id', $id);
+        $myData = $data->first();
+        $data->restore();
+        Log::create([
+            'user_id' => Auth::id(),
+            'msg' => "Mengembalikan Transaksi ". $myData->name
+        ]);
+        return response()->json(['msg' => $myData->name. ' Berhasil Dikembalikan'], 200);
+    }
+
+    // delete permanent spesifik data dorm storrage
+    public function deletePermanent($id)
+    {
+        $data = Transaksi::onlyTrashed()->where('id', $id);
+        $myData = $data->first();
+        $data->forceDelete();
+        Log::create([
+            'user_id' => Auth::id(),
+            'msg' => "Menghapus Permanen Transaksi ". $myData->name
+        ]);
+        return response()->json(['msg' => $myData->name. ' Berhasil Dihapus'], 200);
+    }
+
+    // restore all data
+    public function all(Request $request)
+    {
+        $data = Transaksi::onlyTrashed();
+        if (request()->isMethod("POST")) {
+            $data->restore();
+            Log::create([
+                'user_id' => Auth::id(),
+                'msg' => "Mengembalikan Semua Transaksi"
+            ]);
+            return response()->json(['msg' => 'Berhasil Dikembalikan'], 200);
+        }else if (request()->isMethod("PUT")) {
+            $data->forceDelete();
+            Log::create([
+                'user_id' => Auth::id(),
+                'msg' => "Mengembalikan Semua Transaksi"
+            ]);
+            return response()->json(['msg' => 'Berhasil Dihapus'], 200);
+        }
+    }
+
+    public function findTransaksi()
+    {
+        $data = Transaksi::where('deleted_at', null)->where('name', 'LIKE', "%". request('q'). "%")->get();
+        return response()->json(["items" => $data], 200);
+    }
+
+    # ------ DONE --------
+    // ===================================================================================================
+
+    public function doneIndex()
+    {
+        // return 'aaaa';
+        return view('pages.transaksi.done.index');
+    }
+
+    public function doneDatatables()
+    {
+        $ts = '';
+        if (Auth::user()->level == 'admin') {
+            $ts = Transaksi::query()->orderBy('created_at', 'DESC')
+                    ->where('dibayar' ,'dibayar')
+                    ->orWhere('status', 'diambil')
+                    ->with(['outlet', 'tbUser', 'detailTransaksi', 'member']);
+        }else if(Auth::user()->level == 'kasir'){
+            $ts = Transaksi::query()->orderBy('created_at', 'DESC')
+                    ->where('id_outlet', Auth::user()->tbUser->id_outlet)
+                    ->where('dibayar' ,'dibayar')
+                    ->orWhere('status', 'diambil')
+                    ->with(['outlet', 'tbUser', 'detailTransaksi', 'member']);
+        }
+        // dd($ts);
+
+        return DataTables::of($ts)
+            ->addColumn('total_harga', function ($ts){
+                $a = DB::table('tb_detail_transaksi')
+                    ->join('tb_paket', 'tb_detail_transaksi.id_paket', '=', 'tb_paket.id')
+                    ->select(DB::raw('SUM(tb_detail_transaksi.qty * tb_paket.harga) AS total'))
+                    ->where('tb_detail_transaksi.id_transaksi', $ts->id)
+                    // ->count();
+                    ->first();
+                $pajak = $ts->pajak/100 * $a->total;
+                $diskon = $ts->diskon/100 * $a->total;
+                return $a->total + $pajak - $diskon + $ts->biaya_tambahan;
+            })
+            ->addColumn('action', function($ts){
+                return view('pages.transaksi.done.action', [
+                    'model' => $ts,
+                    // 'url_transaksi' => route('transaksi.transaksi', $ts->id),
+                    // 'url_edit' => route('transaksi.edit', $ts->id),
+                    'url_show' => route('transaksi.show', $ts->id),
+                    'url_delete' => route('transaksi.destroy', $ts->id),
+                ]);
+            })->rawColumns(['action', 'total_harga'])->addIndexColumn()->make(true);
     }
 }
