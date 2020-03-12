@@ -82,7 +82,14 @@
         </div>
         <div id="transaksiColl" class="collapse" data-parent="#accordion">
             <div class="card-body">
-                <span class="badge badge-cyan badge-pill">Transaksi</span>
+                <div class="d-flex">
+                <a href="{{ route('transaksi.pdf') }}" class="badge badge-danger badge-pill"><i class="far fa-file-pdf"></i> Transaksi</a>
+                @if(Auth::user()->level == 'admin')
+                @foreach($outlet as $a)
+                    <a href="{{ route('transaksi.pdf.outlet', $a->id) }}" class="ml-3 badge badge-danger badge-pill"><i class="far fa-file-pdf"></i> Transaksi {{ $a->nama }}</a>
+                @endforeach
+                @endif
+                </div>
             </div>
         </div>
     </div> <!-- end card-->

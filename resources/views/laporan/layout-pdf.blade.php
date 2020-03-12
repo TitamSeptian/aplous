@@ -61,15 +61,15 @@ body {
 }
 
 @media screen and (max-width: 600px) {
-    table {
+    .table {
         border: 0;
     }
 
-    table caption {
+    .table caption {
         font-size: 1.3em;
     }
 
-    table thead {
+    .table thead {
         border: none;
         clip: rect(0 0 0 0);
         height: 1px;
@@ -80,22 +80,22 @@ body {
         width: 1px;
     }
 
-    table tr {
+    .table tr {
         border-bottom: 3px solid #ddd;
         display: block;
         margin-bottom: .625em;
     }
 
-    table td {
+    .table td {
         border-bottom: 1px solid #ddd;
         display: block;
         font-size: .8em;
         text-align: right;
     }
 
-    table td::before {
+    .table td::before {
         /*
-    * aria-label has no advantage, it won't be read inside a table
+    * aria-label has no advantage, it won't be read inside a .table
     content: attr(aria-label);
     */
         content: attr(data-label);
@@ -104,7 +104,7 @@ body {
         text-transform: uppercase;
     }
 
-    table td:last-child {
+    .table td:last-child {
         border-bottom: 0;
     }
 }

@@ -83,10 +83,12 @@ Route::middleware('auth')->group(function () {
     // transaksi done;
     Route::get('/transaksi/done/a', 'TransaksiController@doneIndex')->name('transaksi.done.index');
     Route::get('d/t/done', 'TransaksiController@doneDatatables')->name('transaksi.done.data');
-
-
+    // nota & struk
     Route::get('nota/{id}', 'TransaksiController@notaPrint')->name('nota.print');
     Route::get('struk/{id}', 'TransaksiController@strukPrint')->name('struk.print');
+    // transaksi laporan
+    Route::get('t/pdf', 'TransaksiController@pdf')->name('transaksi.pdf');
+    Route::get('t/pdf/{outlet}', 'TransaksiController@pdfOutlet')->name('transaksi.pdf.outlet');
 
 
     Route::get('/laporan', 'HandleController@laporanIndex')->name('laporan.index');

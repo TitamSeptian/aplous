@@ -14,6 +14,7 @@ use Date;
 use DataTables;
 use DB;
 use Validator;
+use PDF;
 
 class TransaksiController extends Controller
 {
@@ -493,5 +494,44 @@ class TransaksiController extends Controller
                     'url_delete' => route('transaksi.destroy', $ts->id),
                 ]);
             })->rawColumns(['action', 'total_harga'])->addIndexColumn()->make(true);
+    }
+
+    public function pdf()
+    {
+        $data = [];
+        if (Auth::user()->level == 'admin') {
+            $data['data'] = Transaksi::orderBy('id_outlet', 'ASC')->get();;
+        }else{
+            $data['data'] = Transaksi::orderBy('tgl', 'DESC')->where('id_outlet', Auth::user()->tbUser->id_outlet)->get();
+        }
+        $data['tanggal'] = Date::now()->format('d F Y');
+
+        $pdf = PDF::loadView('laporan.pdf.transaksi', $data);
+        $pdf->setPaper('a4', 'landscape');
+
+        Log::create([
+            'user_id' => Auth::id(),
+            'msg' => "Membuat Laporan PDF Transaksi"
+        ]);
+
+        return $pdf->download('Transaksi.pdf');
+        // return view('laporan.pdf.transaksi', $data);
+    }
+
+    public function pdfOutlet($id)
+    {
+        $data = [];
+        $data['data'] = Transaksi::where('id_outlet', $id)->get();
+        $data['tanggal'] = Date::now()->format('d F Y');
+        $out = \App\Outlet::findOrFail($id);
+
+        $pdf = PDF::loadView('laporan.pdf.transaksi', $data);
+
+        Log::create([
+            'user_id' => Auth::id(),
+            'msg' => "Membuat Laporan PDF Transaksi di $out->nama"
+        ]);
+
+        return $pdf->download('Transaksi - '.$out->nama.'.pdf');
     }
 }
