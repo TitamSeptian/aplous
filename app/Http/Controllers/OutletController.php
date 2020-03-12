@@ -9,6 +9,7 @@ use DataTables;
 use Auth;
 use Validator;
 use Date;
+use PDF;
 
 class OutletController extends Controller
 {
@@ -230,5 +231,21 @@ class OutletController extends Controller
     public function findOutletById($id)
     {
         return response()->json(['data' => Outlet::findOrFail($id)]);
+    }
+
+    public function pdf()
+    {
+        $data = [];
+        $data['data'] = Outlet::orderBy('nama', 'ASC')->get();;
+        $data['tanggal'] = Date::now()->format('d F Y');
+
+        $pdf = PDF::loadView('laporan.pdf.outlet', $data);
+        Log::create([
+            'user_id' => Auth::id(),
+            'msg' => "Membuat Laporan PDF Outlet"
+        ]);
+
+        return $pdf->download('Outlet.pdf');
+        // return view('laporan.pdf.paket', $data);
     }
 }

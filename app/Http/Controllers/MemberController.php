@@ -10,6 +10,7 @@ use App\Transaksi;
 use Date;
 use DataTables;
 use Validator;
+use PDF;
 
 class MemberController extends Controller
 {
@@ -269,4 +270,20 @@ class MemberController extends Controller
     // {
     //     return response()->json(['data' => Outlet::findOrFail($id)]);
     // }
+
+    public function pdf()
+    {
+        $data = [];
+        $data['data'] = Member::orderBy('nama', 'ASC')->get();;
+        $data['tanggal'] = Date::now()->format('d F Y');
+
+        $pdf = PDF::loadView('laporan.pdf.member', $data);
+        Log::create([
+            'user_id' => Auth::id(),
+            'msg' => "Membuat Laporan PDF Paket"
+        ]);
+
+        return $pdf->download('Member.pdf');
+        // return view('laporan.pdf.paket', $data);
+    }
 }

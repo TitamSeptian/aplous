@@ -42,11 +42,12 @@
         </div>
         <div id="memberColl" class="collapse" data-parent="#accordion">
             <div class="card-body">
-                <span class="badge badge-cyan badge-pill">Member</span>
+                <a href="{{ route('member.pdf') }}" class="badge badge-danger badge-pill"><i class="far fa-file-pdf"></i> Member</a>
             </div>
         </div>
     </div> <!-- end card-->
     {{-- outlet --}}
+    @if(Auth::user()->level == 'admin')
     <div class="card mb-0">
         <div class="card-header">
             <h5 class="m-0">
@@ -61,10 +62,11 @@
         </div>
         <div id="outletColl" class="collapse" data-parent="#accordion">
             <div class="card-body">
-                <span class="badge badge-cyan badge-pill">Outlet</span>
+                <a href="{{ route('outlet.pdf') }}" class="badge badge-danger badge-pill"><i class="far fa-file-pdf"></i> Outlet</a>
             </div>
         </div>
     </div> <!-- end card-->
+    @endif
     {{-- transaksi --}}
     <div class="card mb-0">
         <div class="card-header">

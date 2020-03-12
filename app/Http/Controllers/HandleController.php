@@ -16,6 +16,7 @@ class HandleController extends Controller
 	{
 		$data = [];
 		$data['outlet'] = \App\Outlet::all();
+		$data['member'] = \App\Member::all();
 		return view('pages.laporan.index', $data);
 	}
 }

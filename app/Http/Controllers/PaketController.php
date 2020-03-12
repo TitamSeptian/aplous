@@ -262,11 +262,16 @@ class PaketController extends Controller
         if (Auth::user()->level == 'admin') {
             $data['data'] = Paket::orderBy('id_outlet', 'ASC')->get();;
         }else{
-            $data['data'] = Paket::orderBy('id_outlet', 'ASC')->where('id_outlet', Auth::user()->tbUser->id_outlet)->get();
+            $data['data'] = Paket::orderBy('nama_paket', 'ASC')->where('id_outlet', Auth::user()->tbUser->id_outlet)->get();
         }
         $data['tanggal'] = Date::now()->format('d F Y');
 
         $pdf = PDF::loadView('laporan.pdf.paket', $data);
+
+        Log::create([
+            'user_id' => Auth::id(),
+            'msg' => "Membuat Laporan PDF Paket"
+        ]);
 
         return $pdf->download('Paket.pdf');
         // return view('laporan.pdf.paket', $data);
@@ -277,9 +282,15 @@ class PaketController extends Controller
         $data = [];
         $data['data'] = Paket::where('id_outlet', $id)->get();
         $data['tanggal'] = Date::now()->format('d F Y');
+        $out = \App\Outlet::findOrFail($id);
 
         $pdf = PDF::loadView('laporan.pdf.paket', $data);
 
-        return $pdf->download('Paket.pdf');
+        Log::create([
+            'user_id' => Auth::id(),
+            'msg' => "Membuat Laporan PDF Paket di $out->nama"
+        ]);
+
+        return $pdf->download('Paket - '.$out->nama.'.pdf');
     }
 }

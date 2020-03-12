@@ -38,6 +38,8 @@ Route::middleware('auth')->group(function () {
     Route::get('d/o', 'OutletController@datatables')->name('outlet.data');
     Route::get('d/o/sel2', 'OutletController@findOutlet')->name('outlet.data.sel2'); //data select 2
     Route::get('d/o/{id}', 'OutletController@findOutletById')->name('outlet.data.id'); //data select 2
+    // laporan outlet
+    Route::get('o/pdf', 'OutletController@pdf')->name('outlet.pdf');
 
     // jenis
     Route::resource('/jenis', 'JenisController');
@@ -49,7 +51,6 @@ Route::middleware('auth')->group(function () {
     Route::get('d/p', 'PaketController@datatables')->name('paket.data');
     Route::get('d/p/sel2', 'JenisController@findPaket')->name('paket.data.sel2'); //data select 2
     Route::get('d/p/outlet', 'PaketController@findPaketByOutlet')->name('paket.data.outlet');
-
     // paket laporan
     Route::get('j/pdf', 'PaketController@pdf')->name('paket.pdf');
     Route::get('j/pdf/{outlet}', 'PaketController@pdfOutlet')->name('paket.pdf.outlet');
@@ -58,6 +59,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('/member', 'MemberController');
     Route::get('d/m', 'MemberController@datatables')->name('member.data');
     Route::get('d/m/sel2', 'MemberController@findMember')->name('member.data.sel2'); //data select 2
+    // member laporan
+    Route::get('m/pdf', 'MemberController@pdf')->name('member.pdf');
 
     // admin
     Route::group(['prefix' => '/pengguna'], function () {
