@@ -15,13 +15,6 @@
             <label class="form-check-label" for="role">Owner</label>
         </div>
     </div>
-	{{-- <div class="form-group">
-		<label>Peran</label>
-		<select name="role" id="role" class="form-control">
-			<option value="kasir">Kasir</option>
-			<option value="owner">Owner</option>
-		</select>
-	</div> --}}
 	<div class="form-group outlet">
 		<label>Outlet</label>
 		<select name="outlet" class="form-control" required style="width: 100%" id="outlet"></select>

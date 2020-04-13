@@ -9,7 +9,7 @@
                     aria-hidden="true">×</button>
             </div>
             <div class="modal-body" id="modal-body">
-                ...
+                Loading
             </div>
         </div>
     </div>

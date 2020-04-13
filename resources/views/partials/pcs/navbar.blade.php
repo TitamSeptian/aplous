@@ -8,7 +8,7 @@
             <!-- ============================================================== -->
             <div class="navbar-brand">
                 <!-- Logo icon -->
-                <a href="index.html">
+                <a href="{{ route('dashboard') }}">
                     <b class="logo-icon">
                         <!-- Dark Logo icon -->
                         <img src="{{ asset ('img/rsz_1aplous-logo.png') }}" alt="homepage" class="dark-logo" />
@@ -62,7 +62,7 @@
                             </li>
                             @endforeach
                             <li>
-                                <a class="nav-link pt-3 text-center text-dark" href="javascript:void(0);">
+                                <a class="nav-link pt-3 text-center text-dark" href="{{ route('log.index') }}">
                                     <b>Lihat Semua Riwayat</b>
                                     <i class="fa fa-angle-right"></i>
                                 </a>

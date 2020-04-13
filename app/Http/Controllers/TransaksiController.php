@@ -262,15 +262,19 @@ class TransaksiController extends Controller
         if (Auth::user()->level == 'admin') {
             $ts = Transaksi::query()->orderBy('created_at', 'DESC')
                     ->where('dibayar', '!=' ,'dibayar')
-                    ->orWhere('status', '!=', 'diambil')
+                    // ->orWhere('status', '!=', 'diambil')
                     ->with(['outlet', 'tbUser', 'detailTransaksi', 'member']);
         }else if(Auth::user()->level == 'kasir'){
-            $ts = Transaksi::query()->orderBy('created_at', 'DESC')
-                    ->where('id_outlet', Auth::user()->tbUser->id_outlet)
-                    ->where('dibayar', '!=' ,'dibayar')
-                    ->orWhere('status', '!=', 'diambil')
-                    ->with(['outlet', 'tbUser', 'detailTransaksi', 'member']);
+            $ts = Transaksi::orderBy('created_at', 'DESC')
+                    ->where('id_outlet', '=', Auth::user()->tbUser->id_outlet)
+                    // ->whereIn('status', ['baru', 'proses', 'selesai'])
+                    // ->where('id_outlet', Auth::user()->tbUser->id_outlet)
+                    // ->where('dibayar', '!=' ,'dibayar')
+                    ->where('dibayar', '!=', 'dibayar')
+                    ->with(['outlet', 'tbUser', 'detailTransaksi', 'member'])
+                    ;// ->get();
         }
+        // dd($ts);
 
         return DataTables::of($ts)
             ->addColumn('total_harga', function ($ts){
@@ -462,13 +466,13 @@ class TransaksiController extends Controller
         if (Auth::user()->level == 'admin') {
             $ts = Transaksi::query()->orderBy('created_at', 'DESC')
                     ->where('dibayar' ,'dibayar')
-                    ->orWhere('status', 'diambil')
+                    // ->orWhere('status', 'diambil')
                     ->with(['outlet', 'tbUser', 'detailTransaksi', 'member']);
         }else if(Auth::user()->level == 'kasir'){
             $ts = Transaksi::query()->orderBy('created_at', 'DESC')
                     ->where('id_outlet', Auth::user()->tbUser->id_outlet)
                     ->where('dibayar' ,'dibayar')
-                    ->orWhere('status', 'diambil')
+                    // ->orWhere('status', 'diambil')
                     ->with(['outlet', 'tbUser', 'detailTransaksi', 'member']);
         }
         // dd($ts);
@@ -488,7 +492,7 @@ class TransaksiController extends Controller
             ->addColumn('action', function($ts){
                 return view('pages.transaksi.done.action', [
                     'model' => $ts,
-                    // 'url_transaksi' => route('transaksi.transaksi', $ts->id),
+                    'url_transaksi' => route('transaksi.transaksi', $ts->id),
                     // 'url_edit' => route('transaksi.edit', $ts->id),
                     'url_show' => route('transaksi.show', $ts->id),
                     'url_delete' => route('transaksi.destroy', $ts->id),

@@ -23,9 +23,6 @@ $('body').on('submit', '#formLogin', function (e) {
 			setTimeout(() => {
 				window.location = '/dashboard';
 			}, 1000)
-			// setTimeout(() => {
-			// 	$('#preload').css('display', 'none');
-			// }, 500)
 		},
 		error: (xhr) => {
 			$(this).find(':input[type=submit]').prop('disabled', false);

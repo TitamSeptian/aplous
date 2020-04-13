@@ -22,7 +22,7 @@
 	<div class="form-group outlet">
 		<label>Outlet</label>
 		<select class="form-control" id="outlet" name="outlet" style="width: 100%">
-			@if($data->level == 'outlet')
+			@if($data->level != 'admin')
 				@foreach(\App\Outlet::all() as $q)
 				<option value="{{ $q->id }}" {{ $data->tbUser->id_outlet == $q->id ? 'selected' : '' }}>{{ $q->nama }}</option>
 				@endforeach

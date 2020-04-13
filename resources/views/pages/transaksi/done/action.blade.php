@@ -1,6 +1,6 @@
-{{-- <a href="javascript:void(0)" data-title="{{ $model->kode_invoice }}" data-url="{{ $url_transaksi }}" class="badge badge-cyan btn-ts">
+<a href="javascript:void(0)" data-title="{{ $model->kode_invoice }}" data-url="{{ $url_transaksi }}" class="badge badge-cyan btn-ts">
 	<i class="far fa-money-bill-alt"></i> Transaksi
-</a> --}}
+</a>
 <a href="javascript:void(0)" data-title="{{ $model->kode_invoice }}" data-url="{{ $url_show }}" class="badge badge-info btn-show">
 	<i class="fas fa-eye"></i> Detail
 </a>

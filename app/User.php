@@ -9,14 +9,8 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     use Notifiable;
-
-    protected $guarded = [
-        'id',
-    ];
-
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+    protected $guarded = ['id',];
+    protected $hidden = ['password', 'remember_token',];
 
     public function log()
     {

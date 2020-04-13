@@ -4,7 +4,7 @@
         <!-- Sidebar navigation-->
         <nav class="sidebar-nav">
             <ul id="sidebarnav">
-                <li class="sidebar-item {{ $activePage == 'dashboard' ? 'selected' : '' }}"> <a class="sidebar-link sidebar-link" href="{{ asset('dashboard') }}" aria-expanded="false"><i data-feather="home" class="feather-icon"></i><span class="hide-menu">Dashboard</span></a></li>
+                <li class="sidebar-item {{ $activePage == 'dashboard' ? 'selected' : '' }}"> <a class="sidebar-link sidebar-link" href="{{ route('dashboard') }}" aria-expanded="false"><i data-feather="home" class="feather-icon"></i><span class="hide-menu">Dasbor</span></a></li>
                 {{-- if admin and kasir --}}
                 @if(Auth::user()->level == 'admin' || Auth::user()->level == 'kasir')
                 <li class="list-divider"></li>
@@ -14,12 +14,12 @@
                     <ul aria-expanded="false" class="collapse  first-level base-level-line">
                         <li class="sidebar-item">
                             <a href="{{ route('transaksi.index') }}" class="sidebar-link {{ $miniMenu == 'transaksi' ? 'active' : '' }}">
-                                <span class="hide-menu"> Transaksi</span>
+                                <span class="hide-menu"> Belum Bayar</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a href="{{ route('transaksi.done.index') }}" class="sidebar-link {{ $miniMenu == 'transaksi_selesai' ? 'active' : '' }}">
-                                <span class="hide-menu"> Selesai</span>
+                                <span class="hide-menu"> Dibayar</span>
                             </a>
                         </li>
                     </ul>

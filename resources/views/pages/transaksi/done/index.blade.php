@@ -29,7 +29,7 @@
                         @if(Auth::user()->level == 'admin')
                         <th>Outlet</th>
                         @endif
-                        <th>status pembayaran</th>
+                        {{-- <th>status pembayaran</th> --}}
                         <th>status cucian</th>
                         <th></th>
                     </tr>
@@ -57,13 +57,6 @@
             @if(Auth::user()->level == 'admin')
             { data: "outlet.nama" },
             @endif
-            { data: "dibayar", render: function (a,b,c) {
-                if (c.dibayar == 'dibayar') {
-                    return 'Dibayar'
-                }else if (c.dibayar == 'belum_dibayar') {
-                    return 'Belum Dibayar'
-                }
-            } },
             { data: "status" },
             { data: 'action', orderable: false, searchable: false },
         ]
