@@ -5,7 +5,7 @@
         <input type="text" name="nama" id="nama" class="form-control" autocomplete="off">
     </div>
     <div class="form-group">
-        <label>Outlet</label>
+        <label>Toko</label>
         <select class="form-control" name="outlet" id="outlet" style="width: 100%"></select>
     </div>
     <div class="form-group">
@@ -38,7 +38,7 @@ $(document).ready(function() {
             },
             cache: true
         },
-        placeholder: 'Cari Outlet',
+        placeholder: 'Cari Toko',
         // minimumInputLength: 1,
         templateResult: function(repo) {
             if (repo.loading) {

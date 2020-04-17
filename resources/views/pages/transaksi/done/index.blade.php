@@ -7,7 +7,7 @@
     <div class="card-body">
         <div class="d-flex">
             <h3 class="">Transaksi</h3>
-            <a href="{{ route('transaksi.create') }}" class="btn btn-primary btn-sm mb-3 ml-auto"><i class="fas fa-plus"></i> Tambah</a>
+            <a href="{{ route('transaksi.create') }}" class="btn btn-success btn-sm mb-3 ml-auto"><i class="fas fa-plus"></i> Tambah</a>
         </div>
         <br>
         <div class="form-row">
@@ -42,6 +42,7 @@
 @push('js')
 <script src="{{ asset('vendor/assets/extra-libs/select2/js/select2.min.js') }}"></script>
 <script>
+    let tableTitle = "Transaksi";
     let table =$('#tableTransaksi').DataTable({
         responsive: true,
         processing: true,
@@ -59,7 +60,20 @@
             @endif
             { data: "status" },
             { data: 'action', orderable: false, searchable: false },
-        ]
+        ],
+        oLanguage: {
+            sEmptyTable: tableTitle+ " Masih Kosong",
+            sInfo: "Total _TOTAL_ "+tableTitle+" Untuk Ditampilkan (_START_ - _END_)",
+            sInfoFiltered: " - Dari _MAX_ "+ tableTitle,
+            sLoadingRecords: "Memuat...",
+            sZeroRecords: tableTitle+ "Tidak Ditemukan",
+            sProcessing: "Sedang Memuat...",
+            sInfoEmpty: tableTitle + " Tidak ada",
+            oPaginate: {
+                sNext: "Selanjutnya",
+                sPrevious: "Sebelumnya",
+            }
+       }
     })
 
     // hide default search

@@ -14,19 +14,19 @@ class MemberSeeder extends Seeder
     {
         $members = [
         	[
-        		'nama' => 'Richard Joe',
-        		'tlp' => '0812345674',
+        		'nama' => 'Rahma dewi',
+        		'tlp' => '08123456744',
         		'alamat' => 'Jl. Kacang Kapri Muda Kav. 13',
         		'jenis_kelamin' => 'P',
         	],
         	[
-        		'nama' => 'Barry Allen',
-        		'tlp' => '081234587',
+        		'nama' => 'Yomi Adlan',
+        		'tlp' => '081234581',
         		'alamat' => 'Jl. Durian Kapri Muda Kav. 13',
         		'jenis_kelamin' => 'L',
         	],
         	[
-        		'nama' => 'Joe West',
+        		'nama' => 'Saputra Kurnia',
         		'tlp' => '08123458712',
         		'alamat' => 'Jl. Anggur Kapri Muda Kav. 13',
         		'jenis_kelamin' => 'L',

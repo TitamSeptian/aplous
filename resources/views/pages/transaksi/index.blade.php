@@ -7,12 +7,12 @@
     <div class="card-body">
         <div class="d-flex">
             <h3 class="">Transaksi</h3>
-            <a href="{{ route('transaksi.create') }}" class="btn btn-primary btn-sm mb-3 ml-auto"><i class="fas fa-plus"></i> Tambah</a>
+            <a href="{{ route('transaksi.create') }}" class="btn btn-success btn-sm mb-3 ml-auto"><i class="fas fa-plus"></i> Tambah</a>
         </div>
         <br>
         <div class="form-row">
             <div class="col-md-8">
-                <a href="javascript:void(0)" class="btn btn-sm btn-secondary btn-refresh mt-3">Refresh</a>
+                <a href="javascript:void(0)" class="btn btn-sm btn-secondary btn-refresh mt-3">Segarkan</a>
             </div>
             <div class="col-md-4">
                 <input type="text" name="cari" class="form-control mt-3 mb-3" id="cari" placeholder="Cari Transaksi">
@@ -42,6 +42,7 @@
 @push('js')
 <script src="{{ asset('vendor/assets/extra-libs/select2/js/select2.min.js') }}"></script>
 <script>
+    let tableTitle = "Transaksi";
     let table =$('#tableTransaksi').DataTable({
         responsive: true,
         processing: true,
@@ -51,21 +52,43 @@
         ajax: "{{ route('transaksi.data') }}",
         columns: [
             { data: "DT_RowIndex", orderable: false, searchable: false },
-            { data: "kode_invoice" },
-            { data: "member.nama" },
+            { data: "kode_invoice", orderable: false },
+            { data: "member.nama", orderable: false },
             // { data: "total_harga" },
             @if(Auth::user()->level == 'admin')
-            { data: "outlet.nama" },
+            { data: "outlet.nama", orderable: false },
             @endif
-            { data: "status" },
+            { data: "status", orderable: false },
             { data: 'action', orderable: false, searchable: false },
-        ]
+        ],
+        oLanguage: {
+            sEmptyTable: tableTitle+ " Masih Kosong",
+            sInfo: "Total _TOTAL_ "+tableTitle+" Untuk Ditampilkan (_START_ - _END_)",
+            sInfoFiltered: " - Dari _MAX_ "+ tableTitle,
+            sLoadingRecords: "Memuat...",
+            sZeroRecords: tableTitle+ "Tidak Ditemukan",
+            sProcessing: "Sedang Memuat...",
+            sInfoEmpty: tableTitle + " Tidak ada",
+            oPaginate: {
+                sNext: "Selanjutnya",
+                sPrevious: "Sebelumnya",
+            }
+       }
     })
 
     // hide default search
     let def_search = $('div#tableTransaksi_filter');
     def_search.css('display', 'none');
 
+    
+
+    // previeus and next translate to indonesia
+    // let prev = $('#tableTransaksi_previous');
+    // // prev.html('Sebelumnya');
+    // console.log(prev);
+
+    // let next = $('li#tableTransaksi_next a');
+    // next.html('Berikutnya')
     // define function search
     var search = $.fn.dataTable.util.throttle(function(val) {
             table.search(val).draw();

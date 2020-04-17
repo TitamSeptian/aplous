@@ -14,19 +14,19 @@ class OutletSeeder extends Seeder
     {
         $outlets = [
         	[
-        		'nama' => 'Aplous Cabang 1', 
-        		'alamat' => 'Subang 1', 
-        		'tlp' => '0811101810'
+        		'nama' => 'Toko Aplous Pusat', 
+        		'alamat' => 'Jalan Siliwangi 27 RT 07 RW 18 Kelurahan Kalijati Kecamatan Bumi Indah Kota Bandung Jawa Barat  45132', 
+        		'tlp' => '082548367835'
         	],
         	[
-        		'nama' => 'Aplous Cabang 2', 
-        		'alamat' => 'Subang 2', 
-        		'tlp' => '0811101810'
+        		'nama' => 'Toko Aplous Cabang 2', 
+        		'alamat' => ' Jalan Batu Tulis No. 05 Kota Bandung Jawa Barat 1456', 
+        		'tlp' => '089638258256'
         	],
         	[
-        		'nama' => 'Aplous Cabang 2', 
-        		'alamat' => 'Subang 3', 
-        		'tlp' => '0811101810'
+        		'nama' => 'Toko Aplous Cabang 3', 
+        		'alamat' => 'Jalan Arief Rahman Hakin 35 41212 Subang Jawa Barat', 
+        		'tlp' => '085493427351'
         	],
         ];
 

@@ -29,7 +29,7 @@ class AuthController extends Controller
             // insert to log
     		Log::create([
     			'user_id' => Auth::id(),
-    			'msg' => "Login"
+    			'msg' => "Masuk"
     		]);
     		return response()->json(['msg' => 'Login Berhasil'], 200);
     	}else{
@@ -38,9 +38,9 @@ class AuthController extends Controller
     		$pwd = User::where('password', $request->pwd)->first();
 
     		if (!$uname) {
-    			return response()->json(['msg' => 'Username tidak valid'], 401);
+    			return response()->json(['msg' => 'Nama Pengguna tidak Valid'], 401);
     		} else if (!$pwd) {
-    			return response()->json(['msg' => 'Password tidak valid'], 401);
+    			return response()->json(['msg' => 'Kata Sandi tidak valid'], 401);
     		} else {
                 return response()->json(['msg' => 'Terjadi Kesalahan'], 500);
             }

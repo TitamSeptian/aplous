@@ -8,7 +8,7 @@
                     <div class="d-inline-flex align-items-center">
                         <h2 class="text-dark mb-1 font-weight-medium">{{ $member }}</h2>
                     </div>
-                    <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Pengguna</h6>
+                    <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Pelanggan</h6>
                 </div>
                 <div class="ml-auto mt-md-3 mt-lg-0">
                     <span class="opacity-7 text-muted"><i data-feather="user-plus"></i></span>
@@ -37,7 +37,7 @@
                     <div class="d-inline-flex align-items-center">
                         <h2 class="text-dark mb-1 font-weight-medium">{{ $paket }}</h2>
                     </div>
-                    <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Produk</h6>
+                    <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Paket </h6>
                 </div>
                 <div class="ml-auto mt-md-3 mt-lg-0">
                     <span class="opacity-7 text-muted"><i class="fas fa-shopping-cart"></i></span>
@@ -51,7 +51,7 @@
             <div class="d-flex d-lg-flex d-md-block align-items-center">
                 <div>
                     <h2 class="text-dark mb-1 font-weight-medium">{{ $outlet }}</h2>
-                    <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Outlet</h6>
+                    <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Toko</h6>
                 </div>
                 <div class="ml-auto mt-md-3 mt-lg-0">
                     <span class="opacity-7 text-muted"><i class="fas fa-hospital-alt"></i></span>

@@ -5,7 +5,7 @@
 {{-- =============================================================== --}}
 <div class="card">
     <div class="card-body">
-        <h3 class="mb-3">Outlet</h3>
+        <h3 class="mb-3">Sampah Toko</h3>
         <div class="form-row">
             <div class="col-md-8 mt-3">
                 <a href="javascript:void(0)" class="btn btn-sm btn-info btn-restore-all-outlet" data-url="{{ route('outlet.softDelete.all') }}">Kembalikan</a>
@@ -13,7 +13,7 @@
                 <a href="javascript:void(0)" class="ml-1 btn btn-sm btn-secondary btn-refresh">Segarkan</a>
             </div>
             <div class="col-md-4">
-                <input type="text" name="cari" class="form-control mt-3 mb-3" id="cariOutlet" placeholder="Cari Outlet">
+                <input type="text" name="cari" class="form-control mt-3 mb-3" id="cariOutlet" placeholder="Cari Toko">
             </div>
         </div>
         <div class="table-responsive">
@@ -39,6 +39,7 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+    let tableTitle = "Toko";
     let table = $('#tableOutlet').DataTable({
         responsive: true,
         processing: true,
@@ -52,7 +53,20 @@
             { data: "tlp" },
             { data: "delete_time" },
             { data: 'action', orderable: false, searchable: false },
-        ]
+        ],
+        oLanguage: {
+            sEmptyTable: tableTitle+ " Masih Kosong",
+            sInfo: "Total _TOTAL_ "+tableTitle+" Untuk Ditampilkan (_START_ - _END_)",
+            sInfoFiltered: " - Dari _MAX_ "+ tableTitle,
+            sLoadingRecords: "Memuat...",
+            sZeroRecords: tableTitle+ "Tidak Ditemukan",
+            sProcessing: "Sedang Memuat...",
+            sInfoEmpty: tableTitle + " Tidak ada",
+            oPaginate: {
+                sNext: "Selanjutnya",
+                sPrevious: "Sebelumnya",
+            }
+       }
     })
 
     // hide default search

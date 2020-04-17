@@ -33,7 +33,7 @@ class TransaksiController extends Controller
             ],
             'messages' => [
                 'tgl_selesai.required' => 'Estimasi Tanggal Harus diisi',
-                'member.required' => 'Pilih Member',
+                'member.required' => 'Pilih Pelanggan',
                 'diskon.digits_between' => 'Masukan ratusan',
                 'biaya_tambahan.numeric' => 'Biaya Tambah hanya diisi angka',
                 'diskon.numeric' => 'Diskon hanya diisi angka',
@@ -52,7 +52,7 @@ class TransaksiController extends Controller
             ],
             'messages' => [
                 'tgl_selesai.required' => 'Estimasi Tanggal Harus diisi',
-                'member.required' => 'Pilih Member',
+                'member.required' => 'Pilih Pelanggan',
                 'diskon.digits_between' => 'Masukan ratusan',
                 'biaya_tambahan.numeric' => 'Biaya Tambah hanya diisi angka',
                 'diskon.numeric' => 'Diskon hanya diisi angka',

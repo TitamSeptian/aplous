@@ -1,15 +1,15 @@
-@extends('partials.master', [$titlePage = 'Member', $activePage = 'member', $miniMenu = ''])
+@extends('partials.master', [$titlePage = 'Pelanggan', $activePage = 'member', $miniMenu = ''])
 @section('content')
 <div class="card">
     <div class="card-body">
         <div class="d-flex">
-            <h3 class="">Member</h3>
+            <h3 class="">Pelanggan</h3>
             <a href="javascript:void(0)" class="btn btn-success btn-sm mb-3 ml-auto" id="btn-create" data-url="{{ route('member.create') }}" data-toggle="modal" data-target="#modal-lg"><i class="fas fa-plus"></i> Tambah</a>
         </div>
         <br>
         <div class="form-row">
             <div class="col-md-8">
-                <a href="javascript:void(0)" class="btn btn-sm btn-secondary btn-refresh mt-3">Refresh</a>            
+                <a href="javascript:void(0)" class="btn btn-sm btn-secondary btn-refresh mt-3">Segarkan</a>            
             </div>
             <div class="col-md-4">
                 <input type="text" name="cari" class="form-control mt-3 mb-3" id="cari" placeholder="Cari Member">
@@ -32,6 +32,7 @@
 @endsection
 @push('js')
 <script>
+    let tableTitle = "Pelanggan";
     let table =$('#tableMember').DataTable({
         responsive: true,
         processing: true,
@@ -44,7 +45,20 @@
             { data: "nama" },
             { data: "tlp" },
             { data: 'action', orderable: false, searchable: false },
-        ]
+        ],
+        oLanguage: {
+            sEmptyTable: tableTitle+ " Masih Kosong",
+            sInfo: "Total _TOTAL_ "+tableTitle+" Untuk Ditampilkan (_START_ - _END_)",
+            sInfoFiltered: " - Dari _MAX_ "+ tableTitle,
+            sLoadingRecords: "Memuat...",
+            sZeroRecords: tableTitle+ "Tidak Ditemukan",
+            sProcessing: "Sedang Memuat...",
+            sInfoEmpty: tableTitle + " Tidak ada",
+            oPaginate: {
+                sNext: "Selanjutnya",
+                sPrevious: "Sebelumnya",
+            }
+       }
     })
 
     // hide default search

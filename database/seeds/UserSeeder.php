@@ -39,7 +39,7 @@ class UserSeeder extends Seeder
         		// 'username' => $user->username, 
         		// 'password' => $user->password, 
         		'role' => $user->level, 
-        		"nama" => 'Jhon '. $user->level, 
+        		"nama" => 'Petugas '. $user->level, 
         		'id_outlet' => $outlet->id, 
         		'id_user' => $user->id
         	]);

@@ -13,7 +13,7 @@ $('body').on('click', '#btn-create', function (e) {
 		dataType: 'html',
 		success: (res) => {
 			$('#modal-body').html(res)
-			$('#modal-title').html("Tambah Outlet")
+			$('#modal-title').html("Tambah Toko")
 			$('#modal-lg').modal('show');		
 		}
 	})

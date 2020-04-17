@@ -3,7 +3,7 @@
 	@method('PUT')
 	<div class="form-group">
 		<label>Nama</label>
-		<input type="text" name="nama" id="nama" class="form-control" autocomplete="off" value="{{ $data->admin->nama }}">
+		<input type="text" name="nama" id="nama" class="form-control" autocomplete="off" value="{{ $data->tbUser->nama }}">
 	</div>
 	<div class="form-group">
 		<label>username</label>

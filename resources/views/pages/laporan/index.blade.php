@@ -56,13 +56,13 @@
                     href="#outletColl" 
                     aria-expanded="true" 
                     aria-controls="outletColl">
-                    <i class="fas fa-hospital-alt"></i> Outlet <span class="float-right"><i class="mdi mdi-chevron-down accordion-arrow"></i></span>
+                    <i class="fas fa-hospital-alt"></i> Toko <span class="float-right"><i class="mdi mdi-chevron-down accordion-arrow"></i></span>
                 </a>
             </h5>
         </div>
         <div id="outletColl" class="collapse" data-parent="#accordion">
             <div class="card-body">
-                <a href="{{ route('outlet.pdf') }}" class="badge badge-danger badge-pill"><i class="far fa-file-pdf"></i> Outlet</a>
+                <a href="{{ route('outlet.pdf') }}" class="badge badge-danger badge-pill"><i class="far fa-file-pdf"></i> Toko</a>
             </div>
         </div>
     </div> <!-- end card-->

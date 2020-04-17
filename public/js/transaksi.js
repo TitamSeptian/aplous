@@ -34,13 +34,19 @@ $('body').on('click', '.p-paket', function(e) {
 
 $('body').on('click', '#tambah', function(e) {
     e.preventDefault();
-    if (qty.val() == '') {
+    if ($('#paket-id').val() == '') {
+        Swal.fire({
+            title: 'Peringatan !',
+            type: 'warning',
+            text: "Pilih Paket",
+        });
+    } else if (qty.val() == '') {
         Swal.fire({
             title: 'Peringatan !',
             type: 'warning',
             text: "Masukan Quantitas",
         });
-    } else {
+    } else{   
         toTable();
     }
 });

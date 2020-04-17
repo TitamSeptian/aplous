@@ -11,7 +11,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
-    <title>Aplous - Login</title>
+    <title>Aplous - Masuk</title>
     <!-- Custom CSS -->
     <link href="{{ asset('vendor/dist/css/style.min.css') }}" rel="stylesheet">
 </head>
@@ -40,14 +40,14 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group uname">
-                                        <label class="text-dark" for="uname">Username</label>
-                                        <input class="form-control" id="uname" name="uname" type="text" placeholder="masukan username" autofocus autocomplete="off">
+                                        <label class="text-dark" for="uname">Nama Pengguna</label>
+                                        <input class="form-control" id="uname" name="uname" type="text" placeholder="Nama Pengguna" autofocus autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group pwd">
-                                        <label class="text-dark" for="pwd">Password</label>
-                                        <input class="form-control" id="pwd" name="pwd" type="password" placeholder="masukan password">
+                                        <label class="text-dark" for="pwd">Kata Sandi</label>
+                                        <input class="form-control" id="pwd" name="pwd" type="password" placeholder="Kata Sandi">
                                     </div>
                                 </div>
                                 <div class="col-lg-12 text-center">

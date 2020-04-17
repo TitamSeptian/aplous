@@ -32,12 +32,12 @@
 
                 <li class="list-divider"></li>
                 <li class="nav-small-cap"><span class="hide-menu">Lainya</span></li>
-                <li class="sidebar-item {{ $activePage == 'member' ? 'selected' : '' }}"> <a class="sidebar-link sidebar-link" href="{{ route('member.index') }}" aria-expanded="false"><i class="fas fa-user"></i><span class="hide-menu">Member
+                <li class="sidebar-item {{ $activePage == 'member' ? 'selected' : '' }}"> <a class="sidebar-link sidebar-link" href="{{ route('member.index') }}" aria-expanded="false"><i class="fas fa-user"></i><span class="hide-menu">Pelanggan
                         </span></a>
                 </li>
                 {{-- only admin --}}
                 @if(Auth::user()->level == "admin")
-                <li class="sidebar-item {{ $activePage == 'outlet' ? 'selected' : '' }}"> <a class="sidebar-link sidebar-link" href="{{ route('outlet.index') }}" aria-expanded="false"><i class="fas fa-hospital-alt"></i><span class="hide-menu">Outlet
+                <li class="sidebar-item {{ $activePage == 'outlet' ? 'selected' : '' }}"> <a class="sidebar-link sidebar-link" href="{{ route('outlet.index') }}" aria-expanded="false"><i class="fas fa-hospital-alt"></i><span class="hide-menu">Toko
                         </span></a>
                 </li>
                 <li class="sidebar-item {{ $activePage == 'paket' ? 'selected' : '' }}"> <a class="sidebar-link sidebar-link" href="{{ route('paket.index') }}" aria-expanded="false"><i class="fas fa-shopping-cart"></i><span class="hide-menu">Paket
@@ -96,7 +96,7 @@
                     <ul aria-expanded="false" class="collapse  first-level base-level-line">
                         <li class="sidebar-item">
                             <a href="{{ route('outlet.softDelete.index') }}" class="sidebar-link {{ $miniMenu == 'outlet' ? 'active' : '' }}">
-                                <span class="hide-menu"> Outlet</span>
+                                <span class="hide-menu"> Toko</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
@@ -124,7 +124,7 @@
                 </li>
                 @endif
                 <li class="sidebar-item">
-                    <a class="sidebar-link sidebar-link" href="authentication-login1.html" aria-expanded="false">
+                    <a class="sidebar-link sidebar-link" href="#" aria-expanded="false">
                         <i class="fas fa-exclamation"></i>
                         <span class="hide-menu">Tentang</span>
                     </a>

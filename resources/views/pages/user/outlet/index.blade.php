@@ -1,4 +1,4 @@
-@extends('partials.master', [$titlePage = 'Pengguna', $activePage = 'pengguna', $miniMenu = 'outlet'])
+@extends('partials.master', [$titlePage = 'Pengguna Petugas', $activePage = 'pengguna', $miniMenu = 'outlet'])
 @push('css')
 <link rel="stylesheet" type="text/css" href="{{ asset('vendor/assets/extra-libs/select2/css/select2.min.css') }}">
 @endpush
@@ -6,16 +6,16 @@
 <div class="card">
     <div class="card-body">
         <div class="d-flex">
-            <h3 class="">Pengguna</h3>
+            <h3 class="">Pengguna Petugas</h3>
             <a href="javascript:void(0)" class="btn btn-success btn-sm mb-3 ml-auto" id="btn-create" data-url="{{ route('user.create') }}" data-toggle="modal" data-target="#modal-lg"><i class="fas fa-plus"></i> Tambah</a>
         </div>
         <br>
         <div class="form-row">
             <div class="col-md-8">
-                <a href="javascript:void(0)" class="btn btn-sm btn-secondary btn-refresh mt-3">Refresh</a>            
+                <a href="javascript:void(0)" class="btn btn-sm btn-secondary btn-refresh mt-3">Segarkan</a>            
             </div>
             <div class="col-md-4">
-                <input type="text" name="cari" class="form-control mt-3 mb-3" id="cari" placeholder="Cari User">
+                <input type="text" name="cari" class="form-control mt-3 mb-3" id="cari" placeholder="Cari Petugas">
             </div>
         </div>
         <div class="table-responsive">
@@ -36,6 +36,7 @@
 @push('js')
 <script src="{{ asset('vendor/assets/extra-libs/select2/js/select2.min.js') }}"></script>
 <script>
+    let tableTitle = "Pengguna";
     let table =$('#tableUser').DataTable({
         responsive: true,
         processing: true,
@@ -48,7 +49,20 @@
             { data: "tb_user.nama" },
             { data: "username" },
             { data: 'action', orderable: false, searchable: false },
-        ]
+        ],
+        oLanguage: {
+            sEmptyTable: tableTitle+ " Masih Kosong",
+            sInfo: "Total _TOTAL_ "+tableTitle+" Untuk Ditampilkan (_START_ - _END_)",
+            sInfoFiltered: " - Dari _MAX_ "+ tableTitle,
+            sLoadingRecords: "Memuat...",
+            sZeroRecords: tableTitle+ "Tidak Ditemukan",
+            sProcessing: "Sedang Memuat...",
+            sInfoEmpty: tableTitle + " Tidak ada",
+            oPaginate: {
+                sNext: "Selanjutnya",
+                sPrevious: "Sebelumnya",
+            }
+       }
     })
 
     // hide default search

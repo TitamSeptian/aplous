@@ -36,7 +36,7 @@
         <h3>Tambah Transaksi</h3>
         @if(Auth::user()->level == 'admin')
         <div class="form-group">
-            <label>Outlet</label>
+            <label>Toko</label>
             <select name="outlet" class="form-control" style="width: 100%" id="outlet"></select>
         </div>
         @endif
@@ -105,7 +105,7 @@
                 <input type="text" name="biaya_tambahan" id="biaya_tambahan" class="form-control" placeholder="Biaya Tambahan" autocomplete="off">
             </div>
             <div class="form-group">
-                <label>Member</label>
+                <label>Pelanggan</label>
                 <select name="member" class="form-control" style="width: 100%" id="member"></select>
             </div>
             <button type="button" id="btn-pesan" class="btn btn-block btn-success btn-sm">Pesan</button>
@@ -155,7 +155,7 @@
                 Swal.fire({
                     title:'Peringatan !',
                     type:'warning',
-                    text:"Pilih Outlet",
+                    text:"Pilih Toko",
                 });
             }else{
                 let id = $('#outlet').val()
@@ -229,7 +229,7 @@
             },
             cache: true
         },
-        placeholder: 'Cari Outlet',
+        placeholder: 'Cari Toko',
         // minimumInputLength: 1,
         templateResult: function(repo) {
             if (repo.loading) {

@@ -6,7 +6,7 @@
         <input type="text" name="nama" id="nama" class="form-control" autocomplete="off" value="{{ $data->nama_paket }}">
     </div>
     <div class="form-group">
-        <label>Outlet</label>
+        <label>Toko</label>
         <select class="form-control" name="outlet" id="outlet" style="width: 100%">
             @foreach($outlet as $o)
             {{ $data->id == $o->id ? 'selected' : '' }}
@@ -48,7 +48,7 @@ $(document).ready(function() {
             },
             cache: true
         },
-        placeholder: 'Cari Outlet',
+        placeholder: 'Cari Toko',
         // minimumInputLength: 1,
         templateResult: function(repo) {
             if (repo.loading) {

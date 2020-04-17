@@ -8,8 +8,8 @@
         <h3 class="mb-3">Transaksi</h3>
         <div class="form-row">
             <div class="col-md-8 mt-3">
-                <a href="javascript:void(0)" class="btn btn-sm btn-info btn-restore-all-outlet" data-url="{{ route('jenis.softDelete.all') }}">Kembalikan</a>
-                <a href="javascript:void(0)" class="ml-1 btn btn-sm btn-danger btn-delete-all-outlet" data-url="{{ route('jenis.softDelete.all') }}">Hapus</a>
+                <a href="javascript:void(0)" class="btn btn-sm btn-info btn-restore-all-outlet" data-url="{{ route('transaksi.softDelete.all') }}">Kembalikan</a>
+                <a href="javascript:void(0)" class="ml-1 btn btn-sm btn-danger btn-delete-all-outlet" data-url="{{ route('transaksi.softDelete.all') }}">Hapus</a>
                 <a href="javascript:void(0)" class="ml-1 btn btn-sm btn-secondary btn-refresh">Segarkan</a>
             </div>
             <div class="col-md-4">
@@ -38,6 +38,7 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+    let tableTitle = "Transaksi";
     let table = $('#tableTransaksi').DataTable({
         responsive: true,
         processing: true,
@@ -50,7 +51,20 @@
             { data: "kode_invoice" },
             { data: "delete_time" },
             { data: 'action', orderable: false, searchable: false },
-        ]
+        ],
+        oLanguage: {
+            sEmptyTable: tableTitle+ " Masih Kosong",
+            sInfo: "Total _TOTAL_ "+tableTitle+" Untuk Ditampilkan (_START_ - _END_)",
+            sInfoFiltered: " - Dari _MAX_ "+ tableTitle,
+            sLoadingRecords: "Memuat...",
+            sZeroRecords: tableTitle+ "Tidak Ditemukan",
+            sProcessing: "Sedang Memuat...",
+            sInfoEmpty: tableTitle + " Tidak ada",
+            oPaginate: {
+                sNext: "Selanjutnya",
+                sPrevious: "Sebelumnya",
+            }
+       }
     })
 
     // hide default search
