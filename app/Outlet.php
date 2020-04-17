@@ -28,4 +28,10 @@ class Outlet extends Model
     {
     	return $this->hasMany(Transaksi::class, 'id_outlet');
     }
+
+    public function pengeluaran()
+    {
+        return $this->hasMany(Pengeluaran::class, 'id_outlet');
+    }
+
 }

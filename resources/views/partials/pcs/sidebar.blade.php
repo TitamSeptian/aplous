@@ -6,8 +6,8 @@
             <ul id="sidebarnav">
                 <li class="sidebar-item {{ $activePage == 'dashboard' ? 'selected' : '' }}"> <a class="sidebar-link sidebar-link" href="{{ route('dashboard') }}" aria-expanded="false"><i data-feather="home" class="feather-icon"></i><span class="hide-menu">Dasbor</span></a></li>
                 {{-- if admin and kasir --}}
-                @if(Auth::user()->level == 'admin' || Auth::user()->level == 'kasir')
                 <li class="list-divider"></li>
+                @if(Auth::user()->level == 'admin' || Auth::user()->level == 'kasir')
                 <li class="nav-small-cap"><span class="hide-menu">Transaksi</span></li>
 
                 <li class="sidebar-item {{ $activePage == 'transaksi' ? 'selected' : '' }}"> <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-calendar-check"></i><span class="hide-menu"> Transaksi </span></a>
@@ -24,12 +24,18 @@
                         </li>
                     </ul>
                 </li>
+                @endif
+                @if(Auth::user()->level != 'kasir')
+                <li class="sidebar-item {{ $activePage == 'pengeluaran' ? 'selected' : '' }}"> <a class="sidebar-link sidebar-link" href="{{ route('pengeluaran.index') }}" aria-expanded="false"><i class="fas fa-archive"></i><span class="hide-menu">Pengeluaran
+                        </span></a>
+                </li>
+                @endif
 
                 {{-- <li class="sidebar-item {{ $activePage == 'transaksi' ? 'selected' : '' }}"> <a class="sidebar-link" href="{{ route('transaksi.index') }}" aria-expanded="false"><i class="fas fa-pallet"></i><span class="hide-menu">Transakasi
                         </span></a>
                 </li> --}}
 
-
+                @if(Auth::user()->level == 'admin' || Auth::user()->level == 'kasir')
                 <li class="list-divider"></li>
                 <li class="nav-small-cap"><span class="hide-menu">Lainya</span></li>
                 <li class="sidebar-item {{ $activePage == 'member' ? 'selected' : '' }}"> <a class="sidebar-link sidebar-link" href="{{ route('member.index') }}" aria-expanded="false"><i class="fas fa-user"></i><span class="hide-menu">Pelanggan
@@ -76,7 +82,7 @@
                 </li>
                 <li class="list-divider"></li>
                 {{-- only admin --}}
-                <li class="nav-small-cap"><span class="hide-menu">Extra</span></li>
+                <li class="nav-small-cap"><span class="hide-menu">Ekstra</span></li>
                 @if(Auth::user()->level == "admin")
                 <li class="sidebar-item {{ $activePage == 'riwayat' ? 'selected' : '' }}">
                     <a class="sidebar-link sidebar-link" href="{{ route('log.index') }}" aria-expanded="false">
@@ -117,6 +123,11 @@
                         <li class="sidebar-item">
                             <a href="{{ route('transaksi.softDelete.index') }}" class="sidebar-link {{ $miniMenu == 'transaksi' ? 'active' : '' }}">
                                 <span class="hide-menu"> Transaksi</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="{{ route('pengeluaran.softDelete.index') }}" class="sidebar-link {{ $miniMenu == 'pengeluaran' ? 'active' : '' }}">
+                                <span class="hide-menu"> Pengeluaran</span>
                             </a>
                         </li>
                         

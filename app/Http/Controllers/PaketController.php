@@ -156,6 +156,12 @@ class PaketController extends Controller
     public function destroy($id)
     {
         $data = Paket::findOrFail($id);
+
+        Log::create([
+            'user_id' => Auth::id(),
+            'msg' => 'Menghapus Paket '. $data->nama_paket
+        ]);
+
         $data->delete();
         return response()->json(['msg' => "$data->nama_paket Berhasil Dibuang"], 200);
     }

@@ -1,9 +1,10 @@
+@include('partials.pcs.function')
 <div class="container">
 	<table class="mb-3">
 		<tr>
 			<td width="200">Nama</td>
 			<td width="10">:</td>
-			<td>{{ $data->nama_paket }}</td>
+			<td>{{ $data->nama }}</td>
 		</tr>
 		<tr>
 			<td>Toko</td>
@@ -15,9 +16,9 @@
 			</td>
 		</tr>
 		<tr>
-			<td>Jenis</td>
+			<td>Bulan</td>
 			<td>:</td>
-			<td>{{ $data->jenis->name }}</td>
+			<td>{{ cekBulan($data->bulan) }}</td>
 		</tr>
 		<tr>
 			<td>Harga</td>

@@ -52,6 +52,8 @@ Route::middleware('auth')->group(function () {
         Route::get('j/pdf', 'PaketController@pdf')->name('paket.pdf');
         Route::get('j/pdf/{outlet}', 'PaketController@pdfOutlet')->name('paket.pdf.outlet');
 
+        
+
         // admin
         Route::group(['prefix' => '/pengguna'], function () {
             Route::resource('/user', 'UserController');
@@ -91,12 +93,19 @@ Route::middleware('auth')->group(function () {
             Route::delete('/m/{id}', 'MemberController@deletePermanent')->name('member.softDelete.deletePermanent');
             Route::match(['post', 'put'],'/m/all', 'MemberController@all')->name('member.softDelete.all');
 
-
+            // transaksi
             Route::get('/transaksi', 'TransaksiController@softDeleteIndex')->name('transaksi.softDelete.index');
             Route::get('d/ts', 'TransaksiController@softDeleteData')->name('transaksi.softDelete.data');
             Route::post('/{id}/ts', 'TransaksiController@restoreData')->name('transaksi.softDelete.restore');
             Route::delete('/ts/{id}', 'TransaksiController@deletePermanent')->name('transaksi.softDelete.deletePermanent');
             Route::match(['post', 'put'],'/ts/all', 'TransaksiController@all')->name('transaksi.softDelete.all');
+
+            // pengeluaran softdelete
+            Route::get('/pengeluaran', 'PengeluaranController@softDeleteIndex')->name('pengeluaran.softDelete.index');
+            Route::get('d/pout', 'PengeluaranController@softDeleteData')->name('pengeluaran.softDelete.data');
+            Route::post('/{id}/pout', 'PengeluaranController@restoreData')->name('pengeluaran.softDelete.restore');
+            Route::delete('/pout/{id}', 'PengeluaranController@deletePermanent')->name('pengeluaran.softDelete.deletePermanent');
+            Route::match(['post', 'put'],'/pout/all', 'PengeluaranController@all')->name('pengeluaran.softDelete.all');
         });
     });
 
@@ -111,7 +120,14 @@ Route::middleware('auth')->group(function () {
     // paket
     Route::get('d/p/sel2', 'JenisController@findPaket')->name('paket.data.sel2'); //data select 2
     Route::get('d/p/outlet', 'PaketController@findPaketByOutlet')->name('paket.data.outlet');
-    
+
+    // pengeluaran
+    Route::resource('/pengeluaran', 'PengeluaranController');
+    Route::get('d/pout', 'PengeluaranController@datatables')->name('pengeluaran.data');
+    Route::get('d/pout/{outlet}', 'PengeluaranController@datatables2')->name('pengeluaran.data.out');
+    // pengeluaran laporan
+    Route::get('pengout/pdf', 'PengeluaranController@pdf')->name('pengeluaran.pdf');
+    Route::get('pengout/pdf/{outlet}', 'PengeluaranController@pdfOutlet')->name('pengeluaran.pdf.outlet');    
 
 
     // transaksi
