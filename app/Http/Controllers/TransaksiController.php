@@ -131,16 +131,31 @@ class TransaksiController extends Controller
         if (!$transaksi) {
             return response()->json(['msg' => 'Terjadi Kesalahan'], 500);
         }
+
         if (count($request->p_id) > 0) {
-            foreach ($request->p_id as $key => $value) {
-                $data = [
-                    'id_transaksi' => $transaksi->id,
-                    'keterangan' => $request->ket[$key],
-                    'id_paket' => $request->p_id[$key],
-                    'qty' => $request->qty[$key]
-                ];
-                $det_transaksi = DetailTransaksi::create($data);
+            if(!$request->ket){
+                // dd($request);
+                foreach ($request->p_id as $key => $value) {
+                    $data = [
+                        'id_transaksi' => $transaksi->id,
+                        'id_paket' => $request->p_id[$key],
+                        'qty' => $request->qty[$key]
+                    ];
+                    $det_transaksi = DetailTransaksi::create($data);
+                }
+            }else{
+                // dd($request);
+                foreach ($request->p_id as $key => $value) {
+                    $data = [
+                        'id_transaksi' => $transaksi->id,
+                        'keterangan' => $request->ket[$key],
+                        'id_paket' => $request->p_id[$key],
+                        'qty' => $request->qty[$key]
+                    ];
+                    $det_transaksi = DetailTransaksi::create($data);
+                }
             }
+
         }
 
         Log::create([
