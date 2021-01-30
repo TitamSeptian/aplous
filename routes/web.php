@@ -152,7 +152,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/laporan', 'HandleController@laporanIndex')->name('laporan.index');
 
-    
+    Route::get('/tentang', 'HandleController@about')->name('tentang.index');
 
 });
 
