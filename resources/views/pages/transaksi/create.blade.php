@@ -159,7 +159,7 @@
                 });
             }else{
                 let id = $('#outlet').val()
-                let url = 'http://127.0.0.1:8000/d/p/outlet?q='+id 
+                let url = 'http://47.254.194.238:83/d/p/outlet?q='+id 
                 $('#tablePaket').DataTable({
                     destroy: true,
                     ajax : url,
@@ -181,7 +181,7 @@
     @else
         $('body').on('click', '#paket', function () {
             let id = "{{ Auth::user()->tbUser->id_outlet }}"
-            let url = 'http://127.0.0.1:8000/d/p/outlet?q='+id 
+            let url = 'http://47.254.194.238:83/d/p/outlet?q='+id 
             $('#tablePaket').DataTable({
                 destroy: true,
                 ajax : url,
