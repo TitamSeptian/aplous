@@ -159,13 +159,7 @@
                 });
             }else{
                 let id = $('#outlet').val()
-<<<<<<< HEAD
-                let url = 'http://47.254.194.238:83/d/p/outlet?q='+id 
-=======
-                // let url = 'http://127.0.0.1:8000/d/p/outlet?q='+id 
                 let url = "{{ asset('') }}d/p/outlet?q="+id 
-                // let url = "{{-- route('paket.data.outlet') --}}" ;
->>>>>>> 25df0b0df812f06985fa73df87b710646a1f6541
                 $('#tablePaket').DataTable({
                     destroy: true,
                     ajax : url,
@@ -187,12 +181,7 @@
     @else
         $('body').on('click', '#paket', function () {
             let id = "{{ Auth::user()->tbUser->id_outlet }}"
-<<<<<<< HEAD
-            let url = 'http://47.254.194.238:83/d/p/outlet?q='+id 
-=======
             let url = "{{ asset('') }}d/p/outlet?q="+id 
-            // let url = "{{-- route('paket.data.outlet') --}}" ;
->>>>>>> 25df0b0df812f06985fa73df87b710646a1f6541
             $('#tablePaket').DataTable({
                 destroy: true,
                 ajax : url,
