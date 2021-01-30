@@ -48,4 +48,9 @@ class HandleController extends Controller
 
 		return view('dashboard', $data);
 	}
+
+	public function about()
+	{
+		return view('pages.tentang.about');
+	}
 }

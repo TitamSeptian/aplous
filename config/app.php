@@ -168,7 +168,11 @@ return [
         Yajra\DataTables\DataTablesServiceProvider::class,
         // Milon\Barcode\BarcodeServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+<<<<<<< HEAD
    	// Maatwebsite\Excel\ExcelServiceProvider::class,
+=======
+        // Maatwebsite\Excel\ExcelServiceProvider::class,
+>>>>>>> 25df0b0df812f06985fa73df87b710646a1f6541
 
         /*
          * Application Service Providers...
@@ -234,7 +238,11 @@ return [
         // 'DNS2D' => Milon\Barcode\Facades\DNS2DFacade::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Date' => Jenssegers\Date\Date::class,
+<<<<<<< HEAD
         //'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+=======
+        // 'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+>>>>>>> 25df0b0df812f06985fa73df87b710646a1f6541
 
     ],
 

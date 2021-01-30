@@ -134,8 +134,8 @@
                     </ul>
                 </li>
                 @endif
-                <li class="sidebar-item">
-                    <a class="sidebar-link sidebar-link" href="#" aria-expanded="false">
+                <li class="sidebar-item {{ $activePage == 'tentang' ? 'selected' : '' }}">
+                    <a class="sidebar-link sidebar-link" href="{{ route('tentang.index') }}" aria-expanded="false">
                         <i class="fas fa-exclamation"></i>
                         <span class="hide-menu">Tentang</span>
                     </a>

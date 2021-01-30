@@ -258,7 +258,8 @@ class PaketController extends Controller
 
     public function findPaketByOutlet()
     {
-        $paket = Paket::query()->where('id_outlet', request('q'))->with(['jenis', 'outlet']);
+        $req = request('q');
+        $paket = Paket::query()->where('id_outlet', $req)->with(['jenis', 'outlet']);
         return DataTables::of($paket)->addIndexColumn()->make(true);
     }
 
